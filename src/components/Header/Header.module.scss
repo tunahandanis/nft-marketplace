@@ -38,3 +38,19 @@
   font-size: 1.1rem;
   cursor: pointer;
 }
+
+.connectWallet {
+  color: $secondary-color;
+  padding: 0.3em 0.8em;
+  font-size: 1rem;
+  cursor: pointer;
+  border: 1.5px solid $secondary-color;
+  background-color: transparent;
+  transition: all 0.3s ease;
+  border-radius: 5px;
+
+  &:hover {
+    background-color: $secondary-color;
+    color: #fff;
+  }
+}
