@@ -7,13 +7,12 @@ const Header = () => {
   return (
     <div className={styles.header}>
       <PageHeader
-        className={styles.pageHeader}
         ghost={false}
         avatar={{
           src: "https://storage.googleapis.com/opensea-static/Logomark/Logomark-Blue.png",
         }}
         title={
-          <Link href="/" className="heading">
+          <Link href="/" className={styles.heading}>
             NFT Marketplace
           </Link>
         }

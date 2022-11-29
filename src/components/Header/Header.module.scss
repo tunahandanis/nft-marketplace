@@ -2,7 +2,14 @@
 
 .header {
   height: 10vh;
-  margin: 0 1em;
+  padding: 1em 1em;
+  background-color: transparent;
+}
+
+.heading {
+  color: $secondary-color;
+  font-weight: 300;
+  letter-spacing: 1px;
 }
 
 .headerList {
@@ -13,6 +20,7 @@
 
   li {
     margin: 0 1.5em;
+    color: $secondary-color;
   }
 }
 

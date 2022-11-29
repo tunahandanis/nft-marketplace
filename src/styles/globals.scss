@@ -8,6 +8,10 @@
   font-family: "Roboto", "sans-serif";
 }
 
+body {
+  background-color: $primary-color !important;
+}
+
 /*
 ===============
 ANTD SUBCLASSES
@@ -20,4 +24,12 @@ ANTD SUBCLASSES
 
 .ant-dropdown-menu-title-content {
   white-space: nowrap;
+}
+
+.ant-page-header {
+  background-color: transparent !important;
+}
+
+.ant-page-header-heading-sub-title {
+  color: darken($secondary-color, 10%) !important;
 }
