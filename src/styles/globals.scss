@@ -41,3 +41,15 @@ ANTD SUBCLASSES
   align-items: center;
   padding: 2em 0;
 }
+
+.ant-segmented-item {
+  background-color: lighten($primary-color, 30%);
+  color: #fff;
+
+  transition: all 0.5s ease;
+}
+
+.ant-segmented-item-selected {
+  background-color: $secondary-color !important;
+  transition: all 0.5s ease;
+}

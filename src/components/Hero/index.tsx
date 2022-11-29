@@ -18,11 +18,13 @@ const Hero = () => {
               Explore
             </button>
           </Link>
-          <button
-            className={`${styles.heroButton} ${styles.heroButtonGenerate}`}
-          >
-            Generate
-          </button>
+          <Link href="/create">
+            <button
+              className={`${styles.heroButton} ${styles.heroButtonGenerate}`}
+            >
+              Create
+            </button>
+          </Link>
         </div>
       </div>
       <img

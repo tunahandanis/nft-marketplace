@@ -1,0 +1,32 @@
+@import "/src/styles/colors.scss";
+
+.create {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 2em;
+
+  &TypeButton {
+    background-color: lighten($primary-color, 25%);
+    color: #fff;
+    font-size: 1.2rem;
+    padding: 0.45em 1.2em;
+    border: none;
+    transition: all 0.4s ease;
+    cursor: pointer;
+    width: 120px;
+  }
+
+  &TypeButtonSelected {
+    background-color: $secondary-color;
+    transition: all 0.4s ease;
+  }
+
+  &TypeButtonUpload {
+    border-radius: 7px 0 0 7px;
+  }
+
+  &TypeButtonGenerate {
+    border-radius: 0 7px 7px 0;
+  }
+}

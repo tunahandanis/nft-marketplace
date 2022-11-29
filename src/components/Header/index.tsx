@@ -48,7 +48,9 @@ const Header = () => {
                     <Menu>
                       <Menu.Item>Profile</Menu.Item>
                       <Menu.Item>My Collections</Menu.Item>
-                      <Menu.Item>Generate</Menu.Item>
+                      <Link href="/create">
+                        <Menu.Item>Create</Menu.Item>
+                      </Link>
                     </Menu>
                   }
                   placement="bottom"

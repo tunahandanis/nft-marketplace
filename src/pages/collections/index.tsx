@@ -1,5 +1,5 @@
-import { Card, Row, Col } from "antd";
-import styles from "./Collections.module.scss";
+import { Row, Col } from "antd";
+import styles from "../../styles/path-styles/Collections.module.scss";
 
 const Collections = () => {
   return (
