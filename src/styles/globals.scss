@@ -1,0 +1,23 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap");
+@import "./colors.scss";
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  font-family: "Roboto", "sans-serif";
+}
+
+/*
+===============
+ANTD SUBCLASSES
+===============
+*/
+
+.ant-dropdown-menu-item {
+  font-size: 0.95rem !important;
+}
+
+.ant-dropdown-menu-title-content {
+  white-space: nowrap;
+}

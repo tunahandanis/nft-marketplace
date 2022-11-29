@@ -1,11 +1,13 @@
 import Link from "next/link";
-import { PageHeader } from "antd";
+import { PageHeader, Dropdown, Menu, Space } from "antd";
+import { UserOutlined } from "@ant-design/icons";
+import styles from "./Header.module.scss";
 
 const Header = () => {
   return (
-    <div className="header">
+    <div className={styles.header}>
       <PageHeader
-        className="page-header"
+        className={styles.pageHeader}
         ghost={false}
         avatar={{
           src: "https://storage.googleapis.com/opensea-static/Logomark/Logomark-Blue.png",
@@ -15,7 +17,48 @@ const Header = () => {
             NFT Marketplace
           </Link>
         }
-        subTitle="Generate your artwork through AI and get it as NFT"
+        subTitle="Generate artwork through AI secure it as NFT"
+        extra={
+          <>
+            <ul className={styles.headerList}>
+              <li>
+                <Space className={styles.navChild}>Explore</Space>
+              </li>
+              <li>
+                <Space className={styles.navChild}>Stats</Space>
+              </li>
+              <li>
+                <Dropdown
+                  overlay={
+                    <Menu>
+                      <Menu.Item>Help Center</Menu.Item>
+                      <Menu.Item>Docs</Menu.Item>
+                    </Menu>
+                  }
+                  placement="bottom"
+                  arrow
+                >
+                  <Space className={styles.navChild}>Learn</Space>
+                </Dropdown>
+              </li>
+              <li>
+                <Dropdown
+                  overlay={
+                    <Menu>
+                      <Menu.Item>Profile</Menu.Item>
+                      <Menu.Item>My Collections</Menu.Item>
+                      <Menu.Item>Generate</Menu.Item>
+                    </Menu>
+                  }
+                  placement="bottom"
+                  arrow
+                >
+                  <UserOutlined className={styles.userLogo} />
+                </Dropdown>
+              </li>
+            </ul>
+          </>
+        }
       />
     </div>
   );

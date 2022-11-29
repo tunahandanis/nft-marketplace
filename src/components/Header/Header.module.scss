@@ -1,0 +1,27 @@
+@import "/src/styles/colors.scss";
+
+.header {
+  height: 10vh;
+  margin: 0 1em;
+}
+
+.headerList {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  height: 100%;
+
+  li {
+    margin: 0 1.5em;
+  }
+}
+
+.userLogo {
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.navChild {
+  font-size: 1.1rem;
+  cursor: pointer;
+}
