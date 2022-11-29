@@ -16,12 +16,12 @@ const Header = () => {
             NFT Marketplace
           </Link>
         }
-        subTitle="Generate artwork through AI secure it as NFT"
+        subTitle="Generate artwork through AI, secure it as NFT"
         extra={
           <>
             <ul className={styles.headerList}>
               <li>
-                <Space className={styles.navChild}>Explore</Space>
+                <Space className={styles.navChild}>Collections</Space>
               </li>
               <li>
                 <Space className={styles.navChild}>Stats</Space>
