@@ -1,26 +1,17 @@
-import { useEffect, useState } from "react";
 import Link from "next/link";
 import { PageHeader, Dropdown, Menu, Space } from "antd";
 import { UserOutlined } from "@ant-design/icons";
+import { connectWallet, useAccountContext } from "contexts/accountContext";
 import styles from "./Header.module.scss";
-const xrpl = require("xrpl");
 
 const Header = () => {
-  const [wallet, setWallet] = useState();
+  const [accountState, accountDispatch] = useAccountContext();
 
-  const generateWallet = async () => {
-    const api = new xrpl.Client("wss://s.altnet.rippletest.net:51233");
-
-    await api.connect();
-
-    const wallet = xrpl.Wallet.generate();
-
-    setWallet(wallet);
+  const generateWallet = () => {
+    connectWallet(accountDispatch);
   };
 
-  useEffect(() => {
-    console.log(wallet);
-  }, [wallet]);
+  console.log(accountState);
 
   return (
     <div className={styles.header}>
@@ -61,7 +52,7 @@ const Header = () => {
                 </Dropdown>
               </li>
               <li>
-                {wallet ? (
+                {accountState.account?.classicAddress ? (
                   <Dropdown
                     overlay={
                       <Menu>

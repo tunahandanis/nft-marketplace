@@ -77,13 +77,7 @@ module.exports = {
 
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/no-explicit-any": ["error", { ignoreRestArgs: true }],
-    "@typescript-eslint/naming-convention": [
-      "error",
-      {
-        selector: ["enumMember", "enum"],
-        format: ["PascalCase"],
-      },
-    ],
+    "@typescript-eslint/naming-convention": "off",
     "@typescript-eslint/ban-types": [
       "error",
       {
