@@ -34,3 +34,10 @@ ANTD SUBCLASSES
   margin-top: 0.3em;
   color: darken($secondary-color, 10%) !important;
 }
+
+.ant-col {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  padding: 2em 0;
+}

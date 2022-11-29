@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Typography } from "antd";
 import styles from "./Hero.module.scss";
 
@@ -10,11 +11,13 @@ const Hero = () => {
           Generate, collect and sell extraordinary NFTs
         </Title>
         <div className={styles.heroButtonContainer}>
-          <button
-            className={`${styles.heroButton} ${styles.heroButtonExplore}`}
-          >
-            Explore
-          </button>
+          <Link href="/collections">
+            <button
+              className={`${styles.heroButton} ${styles.heroButtonExplore}`}
+            >
+              Explore
+            </button>
+          </Link>
           <button
             className={`${styles.heroButton} ${styles.heroButtonGenerate}`}
           >

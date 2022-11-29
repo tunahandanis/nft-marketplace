@@ -20,9 +20,11 @@ const Header = () => {
         extra={
           <>
             <ul className={styles.headerList}>
-              <li>
-                <Space className={styles.navChild}>Collections</Space>
-              </li>
+              <Link href="/collections">
+                <li>
+                  <Space className={styles.navChild}>Collections</Space>
+                </li>
+              </Link>
               <li>
                 <Space className={styles.navChild}>Stats</Space>
               </li>

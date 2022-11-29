@@ -1,0 +1,61 @@
+@import "/src/styles/colors.scss";
+
+.collections {
+  &Title {
+    color: #fff;
+    text-align: center;
+    margin-top: 0.75em;
+    font-weight: 300;
+    letter-spacing: 2px;
+    font-size: 2.5rem;
+  }
+
+  &Grid {
+    padding: 1em 10em 0;
+  }
+
+  &Card {
+    height: 350px;
+    width: 250px;
+    border-radius: 10px;
+    box-shadow: 0 0 50px;
+    cursor: pointer;
+
+    img {
+      height: 80%;
+      width: 100%;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    &TextContainer {
+      height: 25%;
+      background-color: lighten($primary-color, 10%);
+      border-bottom-left-radius: 10px;
+      border-bottom-right-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    &Title {
+      color: #fff;
+      text-align: center;
+      margin-top: 0.5em;
+      margin-bottom: 0.5em;
+
+      font-size: 1rem;
+      font-weight: 300;
+    }
+
+    &Owner {
+      color: #fff;
+      font-weight: 300;
+
+      &Name {
+        color: $secondary-color;
+      }
+    }
+  }
+}
