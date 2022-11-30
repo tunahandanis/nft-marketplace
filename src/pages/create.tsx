@@ -1,5 +1,6 @@
 import { useState } from "react";
 import UploadNFT from "components/UploadNFT";
+import GenerateNFT from "components/GenerateNFT";
 import styles from "../styles/path-styles/Create.module.scss";
 
 const Create = () => {
@@ -25,7 +26,7 @@ const Create = () => {
           Generate
         </button>
       </div>
-      {selected === "Upload" ? <UploadNFT /> : null}
+      {selected === "Upload" ? <UploadNFT /> : <GenerateNFT />}
     </div>
   );
 };

@@ -53,3 +53,11 @@ ANTD SUBCLASSES
   background-color: $secondary-color !important;
   transition: all 0.5s ease;
 }
+
+.ant-btn {
+  background-color: $secondary-color !important;
+  font-size: 1.1rem !important;
+  display: flex !important;
+  align-items: center !important;
+  border-radius: 5px !important;
+}
