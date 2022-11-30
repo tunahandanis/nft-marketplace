@@ -4,7 +4,7 @@ import { createClient } from '@supabase/supabase-js'
 type GeneratedImage = {
   imageURL: string;
 };
-//    YAKUMWAMBA@NFT$
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<GeneratedImage>
