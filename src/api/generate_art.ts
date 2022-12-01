@@ -1,6 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
-import { createClient } from '@supabase/supabase-js'
+//import { createClient } from '@supabase/supabase-js'
 type GeneratedImage = {
   imageURL: string;
 };
@@ -10,7 +10,7 @@ export default async function handler(
   res: NextApiResponse<GeneratedImage>
 ) {
 
-    const supabase = createClient('https://lqmvvslhcfindyifblyk.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxxbXZ2c2xoY2ZpbmR5aWZibHlrIiwicm9sZSI6ImFub24iLCJpYXQiOjE2Njk0MjY3ODUsImV4cCI6MTk4NTAwMjc4NX0.ElePLMRZGn4pkHac0ZQj7AfHnGXWGBLaQbs_uyJ9pW0')
+    //const supabase = createClient('https://lqmvvslhcfindyifblyk.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxxbXZ2c2xoY2ZpbmR5aWZibHlrIiwicm9sZSI6ImFub24iLCJpYXQiOjE2Njk0MjY3ODUsImV4cCI6MTk4NTAwMjc4NX0.ElePLMRZGn4pkHac0ZQj7AfHnGXWGBLaQbs_uyJ9pW0')
 
     //curl https://api.openai.com/v1/images/generations \
 //   -H 'Content-Type: application/json' \
@@ -24,24 +24,26 @@ export default async function handler(
     if (req.method === 'POST') {
         // Process a POST request
         console.log(req.body);
-        const { data, error } = await supabase.storage.createBucket('avatars')
+        //const { data, error } = await supabase.storage.createBucket('avatars')
 
 
-            const imageResp = await fetch('https://api.openai.com/v1/images/generations', {
-
+              const imageResp = await fetch('https://api.openai.com/v1/images/generations', {
+              
                 method: 'POST',
                 body: JSON.stringify({
-                    prompt: req.body.promptText,
+                    prompt: req.body,
                     n: 1,
                     size: '1024x1024'
                 }),
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': 'Bearer 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',
+                    // use env variable for this
+
+                    'Authorization': 'Bearer ' + process.env.AI_API_KEY,
                 }
 
-
-
+            
+        
         })
 
         const image = await imageResp.json();
