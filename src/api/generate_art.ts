@@ -50,19 +50,19 @@ export default async function handler(
 
 
 
-        console.log(image.data[0].url);
-        let blob = await fetch(image.data[0].url)
-        let blobData = await blob.blob()
-        let uuid = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-        const resp = await supabase.storage
+//         console.log(image.data[0].url);
+//         let blob = await fetch(image.data[0].url)
+//         let blobData = await blob.blob()
+//         let uuid = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+//         const resp = await supabase.storage
 
-        .from('generative-art')
-        .upload(`public/${uuid}.png`,    blobData)
+//         .from('generative-art')
+//         .upload(`public/${uuid}.png`,    blobData)
 
         //create a signed url for the image
 
 
-        console.log("https://lqmvvslhcfindyifblyk.supabase.co/storage/v1/object/", resp.data?.path);
+        //console.log("https://lqmvvslhcfindyifblyk.supabase.co/storage/v1/object/", resp.data?.path);
         res.status(200).json({ imageURL: image.data[0].url });
 
         //https://lqmvvslhcfindyifblyk.supabase.co/storage/v1/object/public/generative-art/public/y1izesg4z2v6udmpwu4h.png
