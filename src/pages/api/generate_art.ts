@@ -1,6 +1,7 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+
+// @ts-nocheck
 import type { NextApiRequest, NextApiResponse } from "next";
-import { createClient } from '@supabase/supabase-js'
+//import { createClient } from '@supabase/supabase-js'
 type GeneratedImage = {
   imageURL: string;
 };
@@ -9,9 +10,8 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<GeneratedImage>
 ) {
-    // use env variables to hide your keys 
-    // @ts-ignore
-    const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY)
+    
+    //const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY)
    
 
     if (req.method === 'POST') {
