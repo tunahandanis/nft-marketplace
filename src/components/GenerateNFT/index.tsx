@@ -1,11 +1,9 @@
+import { LoadingOutlined } from '@ant-design/icons';
 import { useState } from "react";
 import { Input, Button, Spin  } from "antd";
 import styles from "components/GenerateNFT/GenerateNFT.module.scss";
-import { LoadingOutlined } from '@ant-design/icons';
+
 const { TextArea } = Input;
-
-
-
 
 const GenerateNFT = () => {
   const [imageUrl, setImageUrl] = useState<string>();

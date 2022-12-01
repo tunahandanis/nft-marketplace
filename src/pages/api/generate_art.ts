@@ -4,7 +4,7 @@ import { createClient } from '@supabase/supabase-js'
 type GeneratedImage = {
   imageURL: string;
 };
-//    YAKUMWAMBA@NFT$
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<GeneratedImage>
@@ -13,19 +13,11 @@ export default async function handler(
     // @ts-ignore
     const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY)
    
-    //curl https://api.openai.com/v1/images/generations \
-//   -H 'Content-Type: application/json' \
-//   -H "Authorization: Bearer $OPENAI_API_KEY" \
-//   -d '{
-//     "prompt": "a white siamese cat",
-//     "n": 1,
-//     "size": "1024x1024"
-//   }'
 
     if (req.method === 'POST') {
         // Process a POST request
         console.log(req.body);
-        const { data, error } = await supabase.storage.createBucket('avatars')
+       // const { data, error } = await supabase.storage.createBucket('avatars')
 
 
             const imageResp = await fetch('https://api.openai.com/v1/images/generations', {
