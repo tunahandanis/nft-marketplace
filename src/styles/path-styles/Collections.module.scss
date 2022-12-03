@@ -1,8 +1,12 @@
 @import "/src/styles/colors.scss";
 
 .collections {
-  a {
+  &Link {
     color: #000;
+
+    &:hover {
+      color: #000;
+    }
   }
 
   &Title {
@@ -15,7 +19,7 @@
   }
 
   &Grid {
-    padding: 1em 10em 0;
+    padding: 1em 10em 5em;
   }
 
   &Card {
@@ -29,7 +33,7 @@
       height: 80%;
       width: 100%;
       object-fit: cover;
-      border-radius: 10px;
+      border-radius: 10px 10px 0 0;
     }
 
     &TextContainer {
@@ -51,6 +55,115 @@
 
       font-size: 1rem;
       font-weight: 300;
+    }
+
+    &Owner {
+      color: #fff;
+      font-weight: 300;
+
+      &Name {
+        color: $secondary-color;
+      }
+    }
+  }
+}
+
+/* SINGLE COLLECTION */
+
+.collection {
+  &Link {
+    color: #000;
+
+    &:hover {
+      color: #000;
+    }
+  }
+
+  &Title {
+    color: #fff;
+    text-align: center;
+    margin-top: 0.75em;
+    font-weight: 300;
+    letter-spacing: 2px;
+    font-size: 2.5rem;
+  }
+
+  &Grid {
+    padding: 1em 10em 5em;
+  }
+
+  &Card {
+    height: 350px;
+    width: 250px;
+    border-radius: 10px;
+    box-shadow: 0 0 50px;
+    cursor: pointer;
+
+    img {
+      height: 80%;
+      width: 100%;
+      object-fit: cover;
+      border-radius: 10px 10px 0 0;
+    }
+
+    &ButtonContainer {
+      display: flex;
+      justify-content: center;
+    }
+
+    &Description {
+      color: hsl(0, 0%, 80%);
+      font-size: 0.9rem;
+      font-weight: 300;
+    }
+
+    &Info,
+    &InfoBottom {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    &InfoBottom {
+      margin-top: -0.75em;
+    }
+
+    &PriceValue {
+      color: #fff;
+      font-weight: 300;
+      font-size: 1rem;
+      display: flex;
+
+      img {
+        height: 25px;
+        margin-right: 0.2em;
+      }
+
+      span {
+        color: $secondary-color;
+      }
+    }
+
+    &TextContainer {
+      height: 30%;
+      background-color: lighten($primary-color, 10%);
+      border-bottom-left-radius: 10px;
+      border-bottom-right-radius: 10px;
+      padding: 0 1em;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    &Price {
+      color: hsl(0, 0%, 90%);
+      font-size: 1rem;
+      font-weight: 400;
+    }
+
+    &Title {
+      color: hsl(0, 0%, 90%);
+      font-size: 1.05rem;
+      font-weight: 400;
     }
 
     &Owner {
