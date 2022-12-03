@@ -2,6 +2,8 @@ import { useRouter } from "next/router"
 import { Row, Col } from "antd"
 import Link from "next/link"
 
+import CollectionCard from "components/CollectionCard"
+
 import styles from "../../styles/path-styles/Collections.module.scss"
 
 const nftInfos = [
@@ -71,28 +73,8 @@ const Collection = () => {
         <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
           {nftInfos.map((nft) => (
             <Col span={6} key={nft.id}>
-              <Link href="/" className={styles.collectionLink}>
-                <article className={styles.collectionCard}>
-                  <img src={nft.imageUrl} alt="nft image" />
-                  <div className={styles.collectionCardTextContainer}>
-                    <div className={styles.collectionCardInfo}>
-                      <p className={styles.collectionCardTitle}>{nft.name}</p>
-                      <p className={styles.collectionCardPrice}>Price</p>
-                    </div>
-                    <div className={styles.collectionCardInfoBottom}>
-                      <p className={styles.collectionCardDescription}>
-                        {nft.description}
-                      </p>
-                      <div className={styles.collectionCardPriceValue}>
-                        <img
-                          src="https://changenow.io/images/cached/xrp.png"
-                          alt="xrp logo"
-                        />{" "}
-                        <span>{nft.price}</span>
-                      </div>
-                    </div>
-                  </div>
-                </article>
+              <Link href={`/nft/${nft.id}`} className={styles.collectionLink}>
+                <CollectionCard nft={nft} />
               </Link>
             </Col>
           ))}

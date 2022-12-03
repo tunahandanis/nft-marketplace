@@ -1,0 +1,84 @@
+@import "../../styles/colors.scss";
+
+.nft {
+  width: 800px;
+  height: 400px;
+  background-color: lighten($primary-color, 10%);
+  border-radius: 20px;
+  margin: 8em auto;
+  display: flex;
+
+  &BuyButton {
+    color: $secondary-color !important;
+    padding: 0.8em !important;
+    font-size: 1.2rem !important;
+    cursor: pointer;
+    border: 2px solid $secondary-color;
+    background-color: transparent !important;
+    transition: all 0.3s ease;
+    border-radius: 5px;
+    margin: 1.25em auto;
+    &:hover {
+      background-color: $secondary-color !important;
+      color: #fff !important;
+    }
+  }
+
+  &Image {
+    height: 100%;
+    width: 45%;
+    object-fit: cover;
+    border-radius: 20px 0 0 20px;
+  }
+
+  &Info {
+    width: 55%;
+    padding: 0 1.5em;
+  }
+
+  &Name {
+    color: hsl(0, 0%, 90%);
+    font-size: 2.3rem;
+    text-align: center;
+    margin-top: 0.5em;
+  }
+
+  &Description,
+  &Address,
+  &Price,
+  &Owner {
+    color: hsl(0, 0%, 85%);
+    font-size: 1.1rem;
+    margin-top: 1.5em;
+  }
+
+  &Description {
+    margin-top: 2em;
+  }
+
+  &Address,
+  &Owner {
+    span {
+      color: $secondary-color;
+    }
+  }
+
+  &Price {
+    display: flex;
+    align-items: center;
+    img {
+      height: 25px;
+      margin-left: 0.6em;
+      margin-right: 0.2em;
+    }
+
+    span {
+      color: hsl(0, 0%, 85%);
+      font-size: 1.1rem;
+    }
+
+    &Value {
+      color: $secondary-color !important;
+    }
+  }
+}
