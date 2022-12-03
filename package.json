@@ -9,18 +9,20 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@supabase/supabase-js": "2.1.1",
     "@types/node": "18.11.9",
     "@types/react": "18.0.25",
     "@types/react-dom": "18.0.9",
     "antd": "^4.24.0",
     "next": "13.0.4",
     "react": "18.2.0",
+    "react-copy-to-clipboard": "^5.1.0",
     "react-dom": "18.2.0",
     "typescript": "4.9.3",
-    "xrpl": "^2.6.0",
-    "@supabase/supabase-js": "2.1.1"
+    "xrpl": "^2.6.0"
   },
   "devDependencies": {
+    "@types/react-copy-to-clipboard": "^5.0.4",
     "@typescript-eslint/eslint-plugin": "^5.44.0",
     "@typescript-eslint/parser": "^5.44.0",
     "eslint": "^8.28.0",

@@ -1,17 +1,29 @@
-import Link from "next/link";
-import { PageHeader, Dropdown, Menu, Space } from "antd";
-import { UserOutlined } from "@ant-design/icons";
-import { connectWallet, useAccountContext } from "contexts/accountContext";
-import styles from "./Header.module.scss";
+import { useState } from "react"
+import Link from "next/link"
+import { UserOutlined } from "@ant-design/icons"
+import { Button, Divider, Modal, PageHeader, Dropdown, Menu, Space } from "antd"
+import TextArea from "antd/lib/input/TextArea"
+import { connectWallet, useAccountContext } from "contexts/accountContext"
+import styles from "./Header.module.scss"
 
 const Header = () => {
-  const [accountState, accountDispatch] = useAccountContext();
+  const [accountState, accountDispatch] = useAccountContext()
+  const [isModalVisible, setIsModalVisible] = useState(false)
+  const [seed, setSeed] = useState<string>()
 
   const generateWallet = () => {
-    connectWallet(accountDispatch);
-  };
+    connectWallet(accountDispatch).then(() => hideModal())
+  }
 
-  console.log(accountState);
+  const importWallet = () => {
+    if (seed) {
+      connectWallet(accountDispatch, seed).then(() => hideModal())
+    }
+  }
+
+  const showModal = () => setIsModalVisible(true)
+
+  const hideModal = () => setIsModalVisible(false)
 
   return (
     <div className={styles.header}>
@@ -52,7 +64,7 @@ const Header = () => {
                 </Dropdown>
               </li>
               <li>
-                {accountState.account?.classicAddress ? (
+                {accountState.account?.address ? (
                   <Dropdown
                     overlay={
                       <Menu>
@@ -69,21 +81,56 @@ const Header = () => {
                     <UserOutlined className={styles.userLogo} />
                   </Dropdown>
                 ) : (
-                  <button
-                    onClick={generateWallet}
+                  <Button
+                    onClick={showModal}
                     className={styles.connectWallet}
+                    loading={accountState.isLoading}
                   >
                     Connect Wallet
-                  </button>
+                  </Button>
                 )}
               </li>
-              <li></li>
             </ul>
+            <Modal
+              title="Generate a new wallet or recover from seed"
+              visible={isModalVisible}
+              onOk={hideModal}
+              onCancel={hideModal}
+              footer={null}
+            >
+              <TextArea
+                rows={4}
+                placeholder="Wallet seed/secret"
+                value={seed}
+                onChange={(e) => setSeed(e.target.value)}
+              />
+              <div className={styles.modalButtonContainer}>
+                <Button
+                  loading={accountState.isLoading}
+                  type="primary"
+                  onClick={importWallet}
+                  className={styles.importWalletButton}
+                >
+                  Import Wallet
+                </Button>
+              </div>
+              <Divider plain>or</Divider>
+              <div className={styles.modalButtonContainer}>
+                <Button
+                  loading={accountState.isLoading}
+                  type="primary"
+                  onClick={generateWallet}
+                  className={styles.generateWalletButton}
+                >
+                  Generate New Wallet
+                </Button>
+              </div>
+            </Modal>
           </>
         }
       />
     </div>
-  );
-};
+  )
+}
 
-export default Header;
+export default Header

@@ -61,3 +61,16 @@ ANTD SUBCLASSES
   align-items: center !important;
   border-radius: 5px !important;
 }
+
+.ant-modal-title {
+  font-weight: 400 !important;
+}
+
+.ant-notification-notice-description {
+  margin-bottom: 0.5em;
+}
+
+.ant-notification-notice-btn {
+  float: none !important;
+  margin-left: 48px !important;
+}

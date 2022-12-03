@@ -115,6 +115,7 @@
       color: hsl(0, 0%, 80%);
       font-size: 0.9rem;
       font-weight: 300;
+      margin-bottom: 0;
     }
 
     &Info,
@@ -132,9 +133,10 @@
       font-weight: 300;
       font-size: 1rem;
       display: flex;
+      align-items: center;
 
       img {
-        height: 25px;
+        height: 20px;
         margin-right: 0.2em;
       }
 
