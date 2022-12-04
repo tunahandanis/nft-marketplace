@@ -1,9 +1,9 @@
-import Link from "next/link";
-import { Typography } from "antd";
-import styles from "./Hero.module.scss";
+import Link from "next/link"
+import { Typography } from "antd"
+import styles from "./Hero.module.scss"
 
 const Hero = () => {
-  const { Title } = Typography;
+  const { Title } = Typography
   return (
     <div className={styles.hero}>
       <div className={styles.heroText}>
@@ -33,7 +33,7 @@ const Hero = () => {
         className={styles.heroImage}
       />
     </div>
-  );
-};
+  )
+}
 
-export default Hero;
+export default Hero

@@ -4,10 +4,17 @@ import styles from "components/GenerateNFT/GenerateNFT.module.scss"
 
 const { TextArea } = Input
 
-const GenerateNFT = () => {
+type GenerateNFTType = {
+  // eslint-disable-next-line no-unused-vars
+  mintNft: (imageUrl: string, name: string, description: string) => void
+}
+
+const GenerateNFT: React.FC<GenerateNFTType> = ({ mintNft }) => {
   const [imageUrl, setImageUrl] = useState<string>()
   const [imageInput, setImageInput] = useState<string>()
   const [isGenerateLoading, setIsGenerateLoading] = useState<boolean>()
+  const [nameInput, setNameInput] = useState<string>()
+  const [descriptionInput, setDescriptionInput] = useState<string>()
   /* const [isMintLoading, setIsMintLoading] = useState<boolean>(); */
 
   const handleGenerate = async (promptText: string) => {
@@ -81,13 +88,24 @@ const GenerateNFT = () => {
       {imageUrl && (
         <>
           <div className={styles.generateInputContainer}>
-            <Input placeholder="NFT Name" />
-            <Input placeholder="NFT Description" />
+            <Input
+              placeholder="NFT Name"
+              defaultValue={nameInput}
+              onChange={(e) => setNameInput(e.target.value)}
+            />
+            <Input
+              placeholder="NFT Description"
+              defaultValue={descriptionInput}
+              onChange={(e) => setDescriptionInput(e.target.value)}
+            />
           </div>
           <Button
             type="primary"
             size="large"
             className={styles.generateMintNftButton}
+            onClick={() =>
+              mintNft(imageUrl, nameInput as string, descriptionInput as string)
+            }
           >
             Mint NFT
           </Button>

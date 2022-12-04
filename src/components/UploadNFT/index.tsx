@@ -1,22 +1,29 @@
-import { useState } from "react";
-import { UploadOutlined } from "@ant-design/icons";
-import { Input } from "antd";
-import styles from "components/UploadNFT/UploadNFT.module.scss";
+import { useState } from "react"
+import { UploadOutlined } from "@ant-design/icons"
+import { Input } from "antd"
+import styles from "components/UploadNFT/UploadNFT.module.scss"
 
-const UploadNFT = () => {
-  const [imageUrl, setImageUrl] = useState<string>();
+type UploadNFTType = {
+  // eslint-disable-next-line no-unused-vars
+  mintNft: (imageUrl: string, name: string, description: string) => void
+}
+
+const UploadNFT: React.FC<UploadNFTType> = ({ mintNft }) => {
+  const [imageUrl, setImageUrl] = useState<string>()
+  const [nameInput, setNameInput] = useState<string>()
+  const [descriptionInput, setDescriptionInput] = useState<string>()
 
   const uploadImage = (image: Blob) => {
-    const reader = new FileReader();
+    const reader = new FileReader()
 
     reader.addEventListener("load", () => {
-      const uploadedImage = reader.result;
+      const uploadedImage = reader.result
       if (typeof uploadedImage === "string") {
-        setImageUrl(uploadedImage);
+        setImageUrl(uploadedImage)
       }
-    });
-    reader.readAsDataURL(image);
-  };
+    })
+    reader.readAsDataURL(image)
+  }
 
   return (
     <div className={styles.uploadCard}>
@@ -36,14 +43,29 @@ const UploadNFT = () => {
       {imageUrl && (
         <>
           <div className={styles.uploadInputContainer}>
-            <Input placeholder="NFT Name" />
-            <Input placeholder="NFT Description" />
+            <Input
+              placeholder="NFT Name"
+              defaultValue={nameInput}
+              onChange={(e) => setNameInput(e.target.value)}
+            />
+            <Input
+              placeholder="NFT Description"
+              defaultValue={descriptionInput}
+              onChange={(e) => setDescriptionInput(e.target.value)}
+            />
           </div>
-          <button className={styles.uploadMintNftButton}>Mint NFT</button>
+          <button
+            className={styles.uploadMintNftButton}
+            onClick={() =>
+              mintNft(imageUrl, nameInput as string, descriptionInput as string)
+            }
+          >
+            Mint NFT
+          </button>
         </>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default UploadNFT;
+export default UploadNFT
