@@ -1,0 +1,14 @@
+@import "/src/styles/colors.scss";
+
+.nfts {
+  &Title {
+    text-align: center;
+    font-size: 2.25rem;
+    color: #fff;
+    margin-top: 0.5em;
+  }
+
+  &Grid {
+    padding: 1em 10em 4em;
+  }
+}

@@ -69,7 +69,11 @@ const Header = () => {
                     overlay={
                       <Menu>
                         <Menu.Item>Profile</Menu.Item>
-                        <Menu.Item>My Collections</Menu.Item>
+                        <Link
+                          href={`/user-nfts/${accountState.account.address}`}
+                        >
+                          <Menu.Item>My NFTs</Menu.Item>
+                        </Link>
                         <Link href="/create">
                           <Menu.Item>Create</Menu.Item>
                         </Link>
