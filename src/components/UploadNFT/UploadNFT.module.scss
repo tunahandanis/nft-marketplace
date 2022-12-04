@@ -61,7 +61,7 @@
 }
 .uploadMintNftButton {
   color: $secondary-color !important;
-  padding: 0.3em 1.1em !important;
+  padding: 1.1em !important;
   font-size: 1.1rem !important;
   cursor: pointer;
   border: 2px solid $secondary-color;
@@ -71,5 +71,14 @@
   &:hover {
     background-color: $secondary-color !important;
     color: #fff !important;
+  }
+
+  &Disabled {
+    border: 2px solid lighten($primary-color, 50%) !important;
+    color: lighten($primary-color, 50%) !important;
+    &:hover {
+      background-color: transparent !important;
+      color: lighten($primary-color, 50%) !important;
+    }
   }
 }

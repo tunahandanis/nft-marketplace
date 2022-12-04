@@ -7,9 +7,10 @@ const { TextArea } = Input
 type GenerateNFTType = {
   // eslint-disable-next-line no-unused-vars
   mintNft: (imageUrl: string, name: string, description: string) => void
+  walletAddress?: string
 }
 
-const GenerateNFT: React.FC<GenerateNFTType> = ({ mintNft }) => {
+const GenerateNFT: React.FC<GenerateNFTType> = ({ mintNft, walletAddress }) => {
   const [imageUrl, setImageUrl] = useState<string>()
   const [imageInput, setImageInput] = useState<string>()
   const [isGenerateLoading, setIsGenerateLoading] = useState<boolean>()
@@ -102,10 +103,13 @@ const GenerateNFT: React.FC<GenerateNFTType> = ({ mintNft }) => {
           <Button
             type="primary"
             size="large"
-            className={styles.generateMintNftButton}
+            className={`${styles.generateMintNftButton} ${
+              !walletAddress && styles.generateMintNftButtonDisabled
+            }`}
             onClick={() =>
               mintNft(imageUrl, nameInput as string, descriptionInput as string)
             }
+            disabled={!walletAddress}
           >
             Mint NFT
           </Button>

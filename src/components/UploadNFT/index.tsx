@@ -1,14 +1,15 @@
 import { useState } from "react"
 import { UploadOutlined } from "@ant-design/icons"
-import { Input } from "antd"
+import { Input, Button } from "antd"
 import styles from "components/UploadNFT/UploadNFT.module.scss"
 
 type UploadNFTType = {
   // eslint-disable-next-line no-unused-vars
   mintNft: (imageUrl: string, name: string, description: string) => void
+  walletAddress?: string
 }
 
-const UploadNFT: React.FC<UploadNFTType> = ({ mintNft }) => {
+const UploadNFT: React.FC<UploadNFTType> = ({ mintNft, walletAddress }) => {
   const [imageUrl, setImageUrl] = useState<string>()
   const [nameInput, setNameInput] = useState<string>()
   const [descriptionInput, setDescriptionInput] = useState<string>()
@@ -54,14 +55,17 @@ const UploadNFT: React.FC<UploadNFTType> = ({ mintNft }) => {
               onChange={(e) => setDescriptionInput(e.target.value)}
             />
           </div>
-          <button
-            className={styles.uploadMintNftButton}
+          <Button
+            className={`${styles.uploadMintNftButton} ${
+              !walletAddress && styles.uploadMintNftButtonDisabled
+            }`}
             onClick={() =>
               mintNft(imageUrl, nameInput as string, descriptionInput as string)
             }
+            disabled={!walletAddress}
           >
             Mint NFT
-          </button>
+          </Button>
         </>
       )}
     </div>

@@ -1,16 +1,21 @@
 import { useState } from "react"
 import UploadNFT from "components/UploadNFT"
 import GenerateNFT from "components/GenerateNFT"
+import { useAccountContext } from "contexts/accountContext"
 import styles from "../styles/path-styles/Create.module.scss"
 
 const Create = () => {
   const [selected, setSelected] = useState<string>("Upload")
+  const [accountState] = useAccountContext()
 
   const mintNft = (imageUrl: string, name: string, description: string) => {
     /* Minting can be done here */
     console.log(imageUrl)
     console.log(name)
     console.log(description)
+
+    // Wallet address can be accessed like this
+    console.log(accountState.account?.address)
   }
 
   return (
@@ -34,9 +39,15 @@ const Create = () => {
         </button>
       </div>
       {selected === "Upload" ? (
-        <UploadNFT mintNft={mintNft} />
+        <UploadNFT
+          mintNft={mintNft}
+          walletAddress={accountState.account?.address}
+        />
       ) : (
-        <GenerateNFT mintNft={mintNft} />
+        <GenerateNFT
+          mintNft={mintNft}
+          walletAddress={accountState.account?.address}
+        />
       )}
     </div>
   )
