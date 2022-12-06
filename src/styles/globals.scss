@@ -81,8 +81,9 @@ ANTD SUBCLASSES
   display: flex !important;
   align-items: center;
   justify-content: center;
-  width: auto;
-  height: auto;
+  width: auto !important;
+  height: auto !important;
+  margin-right: 8px !important;
 
   img {
     height: 50px !important;
