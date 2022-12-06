@@ -10,6 +10,10 @@ const Hero = () => {
         <Title className={styles.heroTitle}>
           Generate, collect and sell extraordinary NFTs
         </Title>
+        <p className={styles.heroPara}>
+          AiArtNFT is the first-of-a-kind Web 3 app where you can generate NFT
+          art with AI and sell them immediately
+        </p>
         <div className={styles.heroButtonContainer}>
           <Link href="/collections">
             <button
@@ -28,7 +32,7 @@ const Hero = () => {
         </div>
       </div>
       <img
-        src="https://wallpaperaccess.com/full/6152901.jpg"
+        src="/assets/hero-image.png"
         alt="hero image"
         className={styles.heroImage}
       />

@@ -75,3 +75,17 @@ ANTD SUBCLASSES
   float: none !important;
   margin-left: 48px !important;
 }
+
+.ant-avatar {
+  overflow: visible !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  height: auto;
+
+  img {
+    height: 50px !important;
+    width: 50px !important;
+  }
+}

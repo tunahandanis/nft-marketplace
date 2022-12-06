@@ -30,11 +30,11 @@ const Header = () => {
       <PageHeader
         ghost={false}
         avatar={{
-          src: "https://storage.googleapis.com/opensea-static/Logomark/Logomark-Blue.png",
+          src: "/assets/logo.png",
         }}
         title={
           <Link href="/" className={styles.heading}>
-            NFT Marketplace
+            AiArtNFT
           </Link>
         }
         subTitle="Generate artwork through AI, secure it as NFT"

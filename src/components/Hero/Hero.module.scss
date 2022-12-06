@@ -4,23 +4,33 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-top: 2em;
+  padding-top: 4em;
 
   &Text {
     width: 30vw;
-    padding-bottom: 5em;
+    padding-bottom: 7em;
   }
 
   &Image {
-    height: 80vh;
+    height: 75vh;
     margin-left: 5em;
     border-radius: 10px;
     box-shadow: 0 0 50px;
+    object-fit: cover;
+    width: 550px;
   }
 
   &Title {
     color: #fff !important;
     font-weight: 400 !important;
+  }
+
+  &Para {
+    color: hsl(0, 0%, 65%);
+    font-weight: 400;
+    font-size: 0.95rem;
+    width: 90%;
+    margin: 1.5em 0;
   }
 
   &Button {
