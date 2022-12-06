@@ -4,7 +4,7 @@ import styles from "components/GenerateNFT/GenerateNFT.module.scss"
 
 const { TextArea } = Input
 
-const appendButtonTypes = [
+const appendIllustrationTypes = [
   {
     btn: "The Simpsons",
     append: ", in the style of The Simpsons",
@@ -18,10 +18,7 @@ const appendButtonTypes = [
     btn: "Disney",
     append: ", in the style of 1990s Disney cel shading",
   },
-  {
-    btn: "The Far Side",
-    append: ", in the style of The Far Side",
-  },
+
   {
     btn: "Minecraft",
     append: ", isometric 3D",
@@ -50,6 +47,9 @@ const appendButtonTypes = [
     btn: "Medieval",
     append: ", etching drawing",
   },
+]
+
+const appendPhotographicTypes = [
   {
     btn: "Medium-shot",
     append: ", medium-shot, mid-shot",
@@ -70,6 +70,9 @@ const appendButtonTypes = [
     btn: "Ambient Light",
     append: ", high-key lighting, ambient",
   },
+]
+
+const appendMovieTypes = [
   {
     btn: "Return of the Jedi",
     append: ", from Episode VI - Return of the Jedi (1983)",
@@ -100,7 +103,11 @@ const GenerateNFT: React.FC<GenerateNFTType> = ({ mintNft, walletAddress }) => {
   const [isGenerateLoading, setIsGenerateLoading] = useState<boolean>()
   const [nameInput, setNameInput] = useState<string>()
   const [descriptionInput, setDescriptionInput] = useState<string>()
-  const [appendText, setAppendText] = useState("")
+
+  const [appendIllustrationText, setAppendIllustrationText] = useState("")
+  const [appendPhotographicText, setAppendPhotographicText] = useState("")
+  const [appendMovieText, setAppendMovieText] = useState("")
+
   /* const [isMintLoading, setIsMintLoading] = useState<boolean>(); */
 
   const handleGenerate = async (promptText?: string) => {
@@ -110,7 +117,11 @@ const GenerateNFT: React.FC<GenerateNFTType> = ({ mintNft, walletAddress }) => {
 
     setImageInput(promptText)
 
-    const toBeGenerated = imageInput + appendText
+    const toBeGenerated =
+      imageInput +
+      appendIllustrationText +
+      appendPhotographicText +
+      appendMovieText
 
     console.log(toBeGenerated)
 
@@ -212,25 +223,77 @@ const GenerateNFT: React.FC<GenerateNFTType> = ({ mintNft, walletAddress }) => {
         )}
       </div>
       {!imageUrl && (
-        <div className={styles.appendButtonContainer}>
-          {appendButtonTypes.map((type) => (
-            <button
-              onClick={() => {
-                if (appendText === type.append) {
-                  setAppendText("")
-                } else {
-                  setAppendText(type.append)
-                }
-              }}
-              key={type.append}
-              className={`${styles.appendButton} ${
-                appendText === type.append && styles.appendButtonSelected
-              }`}
-            >
-              {type.btn}
-            </button>
-          ))}
-        </div>
+        <>
+          <div className={styles.appendContainer}>
+            <h3>Illustration Styles</h3>
+            <div className={styles.appendButtonContainer}>
+              {appendIllustrationTypes.map((type) => (
+                <button
+                  onClick={() => {
+                    if (appendIllustrationText === type.append) {
+                      setAppendIllustrationText("")
+                    } else {
+                      setAppendIllustrationText(type.append)
+                    }
+                  }}
+                  key={type.append}
+                  className={`${styles.appendButton} ${
+                    appendIllustrationText === type.append &&
+                    styles.appendButtonSelected
+                  }`}
+                >
+                  {type.btn}
+                </button>
+              ))}
+            </div>
+          </div>
+          <div className={styles.appendContainer}>
+            <h3>Photographic Styles</h3>
+            <div className={styles.appendButtonContainer}>
+              {appendPhotographicTypes.map((type) => (
+                <button
+                  onClick={() => {
+                    if (appendPhotographicText === type.append) {
+                      setAppendPhotographicText("")
+                    } else {
+                      setAppendPhotographicText(type.append)
+                    }
+                  }}
+                  key={type.append}
+                  className={`${styles.appendButton} ${
+                    appendPhotographicText === type.append &&
+                    styles.appendButtonSelected
+                  }`}
+                >
+                  {type.btn}
+                </button>
+              ))}
+            </div>
+          </div>
+          <div className={styles.appendContainer}>
+            <h3>Illustration Styles</h3>
+            <div className={styles.appendButtonContainer}>
+              {appendMovieTypes.map((type) => (
+                <button
+                  onClick={() => {
+                    if (appendMovieText === type.append) {
+                      setAppendMovieText("")
+                    } else {
+                      setAppendMovieText(type.append)
+                    }
+                  }}
+                  key={type.append}
+                  className={`${styles.appendButton} ${
+                    appendMovieText === type.append &&
+                    styles.appendButtonSelected
+                  }`}
+                >
+                  {type.btn}
+                </button>
+              ))}
+            </div>
+          </div>
+        </>
       )}
     </>
   )
