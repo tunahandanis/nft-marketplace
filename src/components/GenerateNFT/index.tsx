@@ -211,25 +211,27 @@ const GenerateNFT: React.FC<GenerateNFTType> = ({ mintNft, walletAddress }) => {
           </>
         )}
       </div>
-      <div className={styles.appendButtonContainer}>
-        {appendButtonTypes.map((type) => (
-          <button
-            onClick={() => {
-              if (appendText === type.append) {
-                setAppendText("")
-              } else {
-                setAppendText(type.append)
-              }
-            }}
-            key={type.append}
-            className={`${styles.appendButton} ${
-              appendText === type.append && styles.appendButtonSelected
-            }`}
-          >
-            {type.btn}
-          </button>
-        ))}
-      </div>
+      {!imageUrl && (
+        <div className={styles.appendButtonContainer}>
+          {appendButtonTypes.map((type) => (
+            <button
+              onClick={() => {
+                if (appendText === type.append) {
+                  setAppendText("")
+                } else {
+                  setAppendText(type.append)
+                }
+              }}
+              key={type.append}
+              className={`${styles.appendButton} ${
+                appendText === type.append && styles.appendButtonSelected
+              }`}
+            >
+              {type.btn}
+            </button>
+          ))}
+        </div>
+      )}
     </>
   )
 }
