@@ -68,7 +68,9 @@ const Header = () => {
                   <Dropdown
                     overlay={
                       <Menu>
-                        <Menu.Item>Profile</Menu.Item>
+                        <Link href={`/user/${accountState.account.address}`}>
+                          <Menu.Item>Profile</Menu.Item>
+                        </Link>
                         <Link
                           href={`/user-nfts/${accountState.account.address}`}
                         >

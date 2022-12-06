@@ -5,6 +5,8 @@ export type AccountState = {
   account: {
     address: string
     secret?: string
+    publicKey?: string
+    privateKey?: string
   } | null
 }
 
@@ -25,6 +27,8 @@ export type AccountAction =
       payload: {
         address: string
         secret?: string
+        publicKey?: string
+        privateKey?: string
       } | null
     }
   | { type: AccountActionTypes.SET_IS_ACCOUNT_LOADING; payload: boolean }
