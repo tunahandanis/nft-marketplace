@@ -271,7 +271,7 @@ const GenerateNFT: React.FC<GenerateNFTType> = ({ mintNft, walletAddress }) => {
             </div>
           </div>
           <div className={styles.appendContainer}>
-            <h3>Illustration Styles</h3>
+            <h3>Movie Styles</h3>
             <div className={styles.appendButtonContainer}>
               {appendMovieTypes.map((type) => (
                 <button
