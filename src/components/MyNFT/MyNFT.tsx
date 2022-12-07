@@ -4,7 +4,7 @@ import { useState } from "react"
 import styles from "./MyNFT.module.scss"
 
 type MyNFTType = {
-  id: number
+  nft: object
 }
 
 // eslint-disable-next-line no-unused-vars
