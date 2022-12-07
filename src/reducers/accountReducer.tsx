@@ -8,8 +8,8 @@ export type AccountState = {
     secret?: string
     publicKey?: string
     privateKey?: string
+    nfts: object[]
   } | null
-  nfts: object[]
 }
 
 const initialState: AccountState = {
@@ -17,7 +17,6 @@ const initialState: AccountState = {
   wallet: null,
   client: {},
   account: null,
-  nfts: [{}],
 }
 
 export enum AccountActionTypes {

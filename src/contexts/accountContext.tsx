@@ -105,7 +105,7 @@ async function connectWallet(
         console.log(
           "\n\n----------------Get XRPL NFT Seller's Wallet Account Info----------------"
         )
-        // console.log(JSON.stringify(response, null, 2))
+        console.log(JSON.stringify(response, null, 2))
 
         const payload = {
           address: response.result.account_data.Account,
@@ -133,8 +133,6 @@ async function connectWallet(
           type: AccountActionTypes.SET_IS_ACCOUNT_LOADING,
           payload: false,
         })
-
-        console.log(response)
 
         break
       } catch (e) {
