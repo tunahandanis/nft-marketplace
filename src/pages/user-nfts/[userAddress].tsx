@@ -2,6 +2,7 @@ import { Row } from "antd"
 import { useEffect, useState } from "react"
 import { useAccountContext } from "contexts/accountContext"
 import MyNFT from "components/MyNFT/MyNFT"
+import { useRouter } from "next/router"
 
 import styles from "./MyNFTs.module.scss"
 
@@ -13,6 +14,11 @@ const UserNFTs = () => {
   const [collections, setCollections] = useState([]) // initial state must not be undefined, it should stay as at least an empty array
   // get account from context and retrieve account nfts
   const [accountState, accountDispatch] = useAccountContext()
+
+  const router = useRouter()
+
+  // You can use the userWalletAddress to pull from database
+  const userWalletAddress = router.query.userAddress
 
   const addCollection = (name: string) => {
     if (collections) {
