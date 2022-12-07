@@ -136,3 +136,18 @@ ANTD SUBCLASSES
     }
   }
 }
+
+.ant-modal-footer {
+  display: flex;
+  justify-content: center;
+
+  button {
+    color: #fff !important;
+    font-size: 1rem !important;
+  }
+}
+
+.ant-col-6 {
+  padding: 0 !important;
+  margin: 2em 0 !important;
+}

@@ -122,7 +122,7 @@ const UploadNFT: React.FC<UploadNFTType> = ({ mintNft, walletAddress }) => {
       btn,
       placement: "bottomRight",
 
-      duration: 0,
+      duration: 5,
       icon: <CheckOutlined style={{ color: "#108ee9" }} />,
     })
     setIsUploading(false)

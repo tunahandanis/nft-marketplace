@@ -12,5 +12,10 @@
     padding: 1em 10em 4em;
   }
 
-  
+  &CollectionName {
+    color: $secondary-color;
+    font-size: 1.8rem;
+    margin-left: 2em;
+    font-weight: 300;
+  }
 }
