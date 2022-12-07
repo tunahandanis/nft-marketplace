@@ -14,7 +14,6 @@ import {
   AccountState,
   initialState,
   reducer,
-
 } from "../reducers/accountReducer"
 
 const xrpl = require("xrpl")
@@ -25,10 +24,8 @@ export type Props = {
   children: React.ReactNode
 }
 
-
 //@ts-ignore
 const AccountContext = createContext<AccountContextType>(null)
-
 
 const AccountContextProvider = (props: Props): JSX.Element => {
   const [accountState, accountDispatch] = useReducer(reducer, initialState)
@@ -46,9 +43,8 @@ async function connectWallet(
 ) {
   dispatch({ type: AccountActionTypes.SET_IS_ACCOUNT_LOADING, payload: true })
 
-
-    let client
-    let wallet
+  let client
+  let wallet
   try {
     client = new xrpl.Client("wss://s.altnet.rippletest.net:51233")
     await client.connect((value: any) => {
@@ -64,8 +60,6 @@ async function connectWallet(
         icon: <SmileOutlined style={{ color: "#108ee9" }} />,
       })
     } else {
-      
-     
       wallet = (await client.fundWallet()).wallet
       console.log(wallet)
 
@@ -99,7 +93,6 @@ async function connectWallet(
     dispatch({ type: AccountActionTypes.SET_WALLET, payload: wallet })
     dispatch({ type: AccountActionTypes.SET_CLIENT, payload: client })
 
-
     let response
     // eslint-disable-next-line no-constant-condition
     while (true) {
@@ -112,7 +105,7 @@ async function connectWallet(
         console.log(
           "\n\n----------------Get XRPL NFT Seller's Wallet Account Info----------------"
         )
-        console.log(JSON.stringify(response, null, 2))
+        // console.log(JSON.stringify(response, null, 2))
 
         const payload = {
           address: response.result.account_data.Account,
@@ -121,17 +114,27 @@ async function connectWallet(
           secret: seed || secret,
         }
 
-        dispatch({ type: AccountActionTypes.SET_ACCOUNT, payload })
-        dispatch({
-          type: AccountActionTypes.SET_IS_ACCOUNT_LOADING,
-          payload: false,
-        })
-  
         response = await client.request({
           command: "account_nfts",
           account: address,
           ledger_index: "validated",
         })
+
+        const payloadWithNfts = {
+          ...payload,
+          nfts: response.result.account_nfts,
+        }
+
+        dispatch({
+          type: AccountActionTypes.SET_ACCOUNT,
+          payload: payloadWithNfts,
+        })
+        dispatch({
+          type: AccountActionTypes.SET_IS_ACCOUNT_LOADING,
+          payload: false,
+        })
+
+        console.log(response)
 
         break
       } catch (e) {
@@ -148,4 +151,4 @@ async function connectWallet(
 
 const useAccountContext = () => useContext(AccountContext)
 
-export { AccountContextProvider, connectWallet, useAccountContext,  }
+export { AccountContextProvider, connectWallet, useAccountContext }

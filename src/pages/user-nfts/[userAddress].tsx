@@ -1,5 +1,6 @@
 import { Col, Button, Input } from "antd"
-import { useContext, useState } from "react"
+import { useState } from "react"
+import { useAccountContext } from "contexts/accountContext"
 
 import styles from "./MyNFTs.module.scss"
 
@@ -11,67 +12,22 @@ type MyNFTType = {
 const MyNFT: React.FC<MyNFTType> = ({ id }) => {
   const [isCreatingOffer, setIsCreatingOffer] = useState(false)
   const [offer, setOffer] = useState("")
-  // get account from context and retrieve account nfts 
-
-  
+  // get account from context and retrieve account nfts
+  const [accountState, accountDispatch] = useAccountContext()
+  console.log(accountState)
 
   return (
-    <Col span={6} >
-      <article className={styles.nftsCard}>
-        <img
-          src="https://w0.peakpx.com/wallpaper/284/26/HD-wallpaper-portrait-display-vertical-artwork-digital-art-space-stars-milky-way-planet-blue.jpg"
-          alt="nft collection image"
-        />
-        <div
-          className={`${styles.nftsCardTextContainer} ${
-            isCreatingOffer && styles.nftsCardSecondTextContainer
-          }`}
-        >
-          <p className={styles.nftsCardTitle}>NFT Name Here</p>
-        
-          <p className={styles.nftsCardTitle}> {id}</p>
-          {isCreatingOffer ? (
-            <>
-              <div className={styles.nftsInputContainer}>
-                <Input
-                  placeholder="In XRP"
-                  onChange={(e) => setOffer(e.target.value)}
-                  defaultValue={offer}
-                  className={styles.nftsOfferInput}
-                />
-              </div>
-              <div className={styles.nftsSecondButtonContainer}>
-                <Button
-                  className={styles.nftsCancelButton}
-                  onClick={() => {
-                    setOffer("")
-                    setIsCreatingOffer(false)
-                  }}
-                >
-                  Cancel
-                </Button>
-
-                <Button className={styles.nftsSellButton}>Create</Button>
-              </div>
-            </>
-          ) : (
-            <div className={styles.nftsButtonContainer}>
-              <Button
-                type="primary"
-                className={styles.nftsSellButton}
-                onClick={() => setIsCreatingOffer(true)}
-              >
-                Create Sell Offer
-              </Button>
-
-              <Button danger className={styles.nftsBurnButton}>
-                Burn
-              </Button>
-            </div>
-          )}
-        </div>
-      </article>
-    </Col>
+    <div className={styles.nfts}>
+      <h2 className={styles.nftsTitle}>My NFTs</h2>
+      <section className={styles.nftsGrid}>
+        {/*  <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
+          {testIds.map((id) => (
+            // We're going to give the whole NFT instead of id later on
+            <MyNFT id={id} key={id} />
+          ))}
+        </Row> */}
+      </section>
+    </div>
   )
 }
 

@@ -1,5 +1,4 @@
-
-// @ts-nocheck 
+// @ts-nocheck
 export type AccountState = {
   client: any
   isLoading: boolean
@@ -18,7 +17,7 @@ const initialState: AccountState = {
   wallet: null,
   client: {},
   account: null,
-  nfts: [{}]
+  nfts: [{}],
 }
 
 export enum AccountActionTypes {
@@ -26,7 +25,7 @@ export enum AccountActionTypes {
   SET_IS_ACCOUNT_LOADING = "SET_IS_ACCOUNT_LOADING",
   SET_ACCOUNT_NFTS = "SET_ACCOUNT_NFTS",
   SET_WALLET = "SET_WALLET",
-  SET_CLIENT = "SET_CLIENT"
+  SET_CLIENT = "SET_CLIENT",
 }
 
 export type AccountAction =
@@ -36,6 +35,9 @@ export type AccountAction =
       payload: {
         address: string
         secret?: string
+        balance?: number
+        classicAddress?: string
+        nfts?: object[]
       } | null
     }
   | { type: AccountActionTypes.SET_IS_ACCOUNT_LOADING; payload: boolean }
@@ -58,18 +60,18 @@ const reducer = (state: AccountState, action: AccountAction): AccountState => {
     case AccountActionTypes.SET_ACCOUNT_NFTS:
       return {
         ...state,
-        nfts: action.payload
+        nfts: action.payload,
       }
-      case AccountActionTypes.SET_WALLET:
-        return {
-          ...state,
-          wallet: action.payload
-        }
-        case AccountActionTypes.SET_CLIENT:
-          return {
-            ...state,
-            client: action.payload
-          }
+    case AccountActionTypes.SET_WALLET:
+      return {
+        ...state,
+        wallet: action.payload,
+      }
+    case AccountActionTypes.SET_CLIENT:
+      return {
+        ...state,
+        client: action.payload,
+      }
     default:
       return state
   }
