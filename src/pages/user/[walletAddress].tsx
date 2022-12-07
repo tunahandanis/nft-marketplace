@@ -1,6 +1,7 @@
 import { useRouter } from "next/router"
-import { message } from "antd"
+import { message, Result, Button } from "antd"
 import { CopyToClipboard } from "react-copy-to-clipboard"
+import Link from "next/link"
 import { useAccountContext } from "contexts/accountContext"
 import styles from "./Profile.module.scss"
 
@@ -14,7 +15,22 @@ const Profile = () => {
   console.log(account)
 
   // This checks if the user is authorized
-  if (router.query.walletAddress !== accountState.account?.address) return null
+
+  const NotAuthorized = (
+    <Result
+      status="403"
+      title="403"
+      subTitle="Sorry, you are not authorized to access this page."
+      extra={
+        <Button type="primary">
+          <Link href="/">Back Home</Link>
+        </Button>
+      }
+    />
+  )
+
+  if (router.query.walletAddress !== accountState.account?.address)
+    return NotAuthorized
 
   return (
     <div className={styles.profile}>

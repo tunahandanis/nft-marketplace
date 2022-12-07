@@ -46,9 +46,11 @@ const Header = () => {
                   <Space className={styles.navChild}>Collections</Space>
                 </li>
               </Link>
-              <li>
-                <Space className={styles.navChild}>Stats</Space>
-              </li>
+              <Link href="/create">
+                <li>
+                  <Space className={styles.navChild}>Create</Space>
+                </li>
+              </Link>
               <li>
                 <Dropdown
                   overlay={
@@ -75,9 +77,6 @@ const Header = () => {
                           href={`/user-nfts/${accountState.account.address}`}
                         >
                           <Menu.Item>My NFTs</Menu.Item>
-                        </Link>
-                        <Link href="/create">
-                          <Menu.Item>Create</Menu.Item>
                         </Link>
                       </Menu>
                     }
