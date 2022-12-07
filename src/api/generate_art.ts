@@ -29,7 +29,7 @@ export default async function handler(
                     'Content-Type': 'application/json',
                     // use env variable for this
 
-                    'Authorization': 'Bearer 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'  // process.env.AI_API_KEY,
+                    'Authorization': 'Bearer  ' +  process.env.AI_API_KEY',
                 }
         
         })
