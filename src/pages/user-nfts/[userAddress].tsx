@@ -6,7 +6,7 @@ import MyNFT from "components/MyNFT/MyNFT"
 import styles from "./MyNFTs.module.scss"
 
 // eslint-disable-next-line no-unused-vars
-const UserNFTs: React.FC<MyNFTType> = () => {
+const UserNFTs = () => {
   const [isCreatingOffer, setIsCreatingOffer] = useState(false)
   const [offer, setOffer] = useState("")
   const [nfts, setNfts] = useState<any>()

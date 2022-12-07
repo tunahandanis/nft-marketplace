@@ -103,23 +103,18 @@ const UploadNFT: React.FC<UploadNFTType> = ({ mintNft, walletAddress }) => {
     // })
     console.table(tx)
     const btn = (
-      <CopyToClipboard
-        text={"https://blockexplorer.one/xrp/testnet/tx/" + tx.result.hash}
-        onCopy={() => {
-          message.open({
-            type: "info",
-            content: "Transaction Hash Copied!",
-          })
-        }}
+      <a
+        href={"https://blockexplorer.one/xrp/testnet/tx/" + tx.result.hash}
+        target="_blank"
       >
         <span style={{ color: "#40a9ff", cursor: "pointer" }}>
-          {tx.result.hash}
+          {tx.result.hash.slice(0, 30) + "..."}
         </span>
-      </CopyToClipboard>
+      </a>
     )
     notification.open({
-      message: `You NFT has been Minted`,
-      description: "Click to view on explorer ",
+      message: `Your NFT has been minted`,
+      description: "Click to view on explorer:",
       btn,
       placement: "bottomRight",
 
@@ -127,7 +122,7 @@ const UploadNFT: React.FC<UploadNFTType> = ({ mintNft, walletAddress }) => {
       icon: <CheckOutlined style={{ color: "#108ee9" }} />,
     })
     setIsUploading(false)
-    updateNFTs(accountDispatch, accountState.account?.address)
+    updateNFTs(accountDispatch, accountState.account!.address)
 
     // show a notfication
   }
