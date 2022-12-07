@@ -9,6 +9,8 @@ export type AccountState = {
     publicKey?: string
     privateKey?: string
     nfts: object[]
+    balance?: number
+    classicAddress?: string
   } | null
 }
 
@@ -26,6 +28,7 @@ export enum AccountActionTypes {
   SET_WALLET = "SET_WALLET",
   SET_CLIENT = "SET_CLIENT",
   UPDATE_NFTS = "UPDATE_NFTS",
+  UPDATE_BALANCE = "UPDATE_BALANCE",
 }
 
 export type AccountAction =
@@ -38,6 +41,8 @@ export type AccountAction =
         balance?: number
         classicAddress?: string
         nfts?: object[]
+        publicKey?: string
+        privateKey?: string
       } | null
     }
   | { type: AccountActionTypes.SET_IS_ACCOUNT_LOADING; payload: boolean }
@@ -45,6 +50,7 @@ export type AccountAction =
   | { type: AccountActionTypes.SET_WALLET; payload: {} }
   | { type: AccountActionTypes.SET_CLIENT; payload: {} }
   | { type: AccountActionTypes.UPDATE_NFTS; payload: { newNfts: object[] } }
+  | { type: AccountActionTypes.UPDATE_BALANCE; payload: { newBalance: number } }
 
 const reducer = (state: AccountState, action: AccountAction): AccountState => {
   switch (action.type) {
@@ -79,6 +85,14 @@ const reducer = (state: AccountState, action: AccountAction): AccountState => {
         account: {
           ...state.account,
           nfts: action.payload.newNfts,
+        },
+      }
+    case AccountActionTypes.UPDATE_BALANCE:
+      return {
+        ...state,
+        account: {
+          ...state.account,
+          balance: action.payload.newBalance,
         },
       }
     default:

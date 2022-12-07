@@ -11,6 +11,8 @@ const Profile = () => {
 
   const { account } = accountState
 
+  console.log(account)
+
   // This checks if the user is authorized
   if (router.query.walletAddress !== accountState.account?.address) return null
 
@@ -35,11 +37,43 @@ const Profile = () => {
           </CopyToClipboard>
         </div>
         <div className={styles.profileInfoField}>
-          Balance: <span>XRP</span>
+          Balance: <span>{account?.balance} XRP</span>
         </div>
 
-        <div className={styles.profileInfoField}>Public Key: </div>
-        <div className={styles.profileInfoField}>Private Key: </div>
+        <div className={styles.profileInfoField}>
+          Public Key:{" "}
+          <CopyToClipboard
+            //@ts-ignore
+            text={account?.publicKey}
+            onCopy={() => {
+              message.open({
+                type: "info",
+                content: "Copied to clipboard",
+              })
+            }}
+          >
+            <span style={{ color: "#40a9ff", cursor: "pointer" }}>
+              {account?.publicKey?.slice(0, 30) + "..."}
+            </span>
+          </CopyToClipboard>
+        </div>
+        <div className={styles.profileInfoField}>
+          Private Key:{" "}
+          <CopyToClipboard
+            //@ts-ignore
+            text={account?.privateKey}
+            onCopy={() => {
+              message.open({
+                type: "info",
+                content: "Copied to clipboard",
+              })
+            }}
+          >
+            <span style={{ color: "#40a9ff", cursor: "pointer" }}>
+              {account?.privateKey?.slice(0, 30) + "..."}
+            </span>
+          </CopyToClipboard>
+        </div>
         <div className={styles.profileInfoField}>
           Seed:{" "}
           <CopyToClipboard

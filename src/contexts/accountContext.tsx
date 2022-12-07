@@ -39,7 +39,7 @@ const AccountContextProvider = (props: Props): JSX.Element => {
 
 async function connectWallet(
   dispatch: React.Dispatch<AccountAction>,
-  seed?: string
+  importedSeed?: string
 ) {
   dispatch({ type: AccountActionTypes.SET_IS_ACCOUNT_LOADING, payload: true })
 
@@ -50,8 +50,8 @@ async function connectWallet(
     await client.connect((value: any) => {
       console.log("Connected!", value)
     })
-    if (seed) {
-      wallet = xrpl.Wallet.fromSeed(seed)
+    if (importedSeed) {
+      wallet = xrpl.Wallet.fromSeed(importedSeed)
       console.log(wallet)
 
       notification.open({
@@ -89,7 +89,8 @@ async function connectWallet(
       })
     }
 
-    const { address, classicAddress, secret } = wallet
+    const { address, classicAddress, seed, privateKey, publicKey } = wallet
+
     dispatch({ type: AccountActionTypes.SET_WALLET, payload: wallet })
     dispatch({ type: AccountActionTypes.SET_CLIENT, payload: client })
 
@@ -111,7 +112,9 @@ async function connectWallet(
           address: response.result.account_data.Account,
           balance: Number(response.result.account_data.Balance) / 1000000,
           classicAddress: classicAddress,
-          secret: seed || secret,
+          secret: seed,
+          privateKey: privateKey,
+          publicKey: publicKey,
         }
 
         response = await client.request({
@@ -171,6 +174,36 @@ const updateNFTs = async (
   await client.disconnect()
 }
 
+const updateBalance = async (
+  dispatch: React.Dispatch<AccountAction>,
+  address: string
+) => {
+  let client
+  client = new xrpl.Client("wss://s.altnet.rippletest.net:51233")
+  await client.connect()
+
+  const response = await client.request({
+    command: "account_info",
+    account: address,
+    ledger_index: "validated",
+  })
+
+  dispatch({
+    type: AccountActionTypes.UPDATE_BALANCE,
+    payload: {
+      newBalance: Number(response.result.account_data.Balance) / 1000000,
+    },
+  })
+
+  await client.disconnect()
+}
+
 const useAccountContext = () => useContext(AccountContext)
 
-export { AccountContextProvider, connectWallet, useAccountContext, updateNFTs }
+export {
+  AccountContextProvider,
+  connectWallet,
+  useAccountContext,
+  updateNFTs,
+  updateBalance,
+}

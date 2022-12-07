@@ -3,7 +3,11 @@ import { UploadOutlined, CheckOutlined } from "@ant-design/icons"
 import { Input, Button } from "antd"
 import styles from "components/UploadNFT/UploadNFT.module.scss"
 
-import { useAccountContext, updateNFTs } from "contexts/accountContext"
+import {
+  useAccountContext,
+  updateNFTs,
+  updateBalance,
+} from "contexts/accountContext"
 import { AccountActionTypes } from "reducers/accountReducer"
 import { uploadFileToIPFS } from "pinata"
 import { notification, message } from "antd"
@@ -123,6 +127,7 @@ const UploadNFT: React.FC<UploadNFTType> = ({ mintNft, walletAddress }) => {
     })
     setIsUploading(false)
     updateNFTs(accountDispatch, accountState.account!.address)
+    updateBalance(accountDispatch, accountState.account!.address)
 
     // show a notfication
   }
