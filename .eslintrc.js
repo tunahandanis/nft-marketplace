@@ -74,7 +74,8 @@ module.exports = {
     "@typescript-eslint/no-shadow": ["off"],
     "@typescript-eslint/semi": "off",
     "@typescript-eslint/comma-dangle": "off",
-
+    "react/no-unescaped-entities": "off",
+    "@next/next/no-page-custom-font": "off"
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/no-explicit-any": ["error", { ignoreRestArgs: true }],
     "@typescript-eslint/naming-convention": "off",
