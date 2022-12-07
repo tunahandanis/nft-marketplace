@@ -1,5 +1,7 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+
+// @ts-nocheck
 import type { NextApiRequest, NextApiResponse } from "next";
+import { uploadFileToIPFS, uploadFromBuffer } from "pinata";
 //import { createClient } from '@supabase/supabase-js'
 type GeneratedImage = {
   imageURL: string;
@@ -8,26 +10,14 @@ type GeneratedImage = {
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<GeneratedImage>
-) {
-
-    //const supabase = createClient('https://lqmvvslhcfindyifblyk.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxxbXZ2c2xoY2ZpbmR5aWZibHlrIiwicm9sZSI6ImFub24iLCJpYXQiOjE2Njk0MjY3ODUsImV4cCI6MTk4NTAwMjc4NX0.ElePLMRZGn4pkHac0ZQj7AfHnGXWGBLaQbs_uyJ9pW0')
-
-    //curl https://api.openai.com/v1/images/generations \
-//   -H 'Content-Type: application/json' \
-//   -H "Authorization: Bearer $OPENAI_API_KEY" \
-//   -d '{
-//     "prompt": "a white siamese cat",
-//     "n": 1,
-//     "size": "1024x1024"
-//   }'
-
+) { 
+    //const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY)
+   
     if (req.method === 'POST') {
         // Process a POST request
         console.log(req.body);
-        //const { data, error } = await supabase.storage.createBucket('avatars')
-
-
-              const imageResp = await fetch('https://api.openai.com/v1/images/generations', {
+       // const { data, error } = await supabase.storage.createBucket('avatars')
+            const imageResp = await fetch('https://api.openai.com/v1/images/generations', {
               
                 method: 'POST',
                 body: JSON.stringify({
@@ -39,36 +29,52 @@ export default async function handler(
                     'Content-Type': 'application/json',
                     // use env variable for this
 
-                    'Authorization': 'Bearer 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',
+                    'Authorization': 'Bearer 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'  // process.env.AI_API_KEY,
                 }
-
-            
         
         })
 
         const image = await imageResp.json();
+        
 
+        
+        console.log(image);
 
+        const imageData = await fetch(image.data[0].url, (imageResponse) => {
+            let data = '';
+            console.log("Started downloading image");
+            imageResponse.on('data', (chunk) => {
+              data += chunk;
+              console.log(data);
+            });
 
-//         console.log(image.data[0].url);
-//         let blob = await fetch(image.data[0].url)
-//         let blobData = await blob.blob()
-//         let uuid = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-//         const resp = await supabase.storage
+            imageResponse.on('end', () => { 
+              console.log("response was ====>" + data);
+            }
+            );
+            console.log(data)
+          });
 
-//         .from('generative-art')
-//         .upload(`public/${uuid}.png`,    blobData)
+          const buffer =  await (await imageData.blob()).arrayBuffer();
+          ;
+         // console.log( Buffer.from(await imageData.blob()));
+          const resp = Buffer.from(buffer)
+          const pinataResponse = await uploadFromBuffer(resp);
+          console.log("This image was retrieved" +  pinataResponse);
 
-        //create a signed url for the image
+        //   await fetch('https://gateway.pinata.cloud/ipfs/' + pinataResponse.IpfsHash, (imageResponse) => {
 
-
-        //console.log("https://lqmvvslhcfindyifblyk.supabase.co/storage/v1/object/", resp.data?.path);
+        //   console.log("This image was retrieved" +  imageResponse);
+        // });
+          
         res.status(200).json({ imageURL: image.data[0].url });
 
-        //https://lqmvvslhcfindyifblyk.supabase.co/storage/v1/object/public/generative-art/public/y1izesg4z2v6udmpwu4h.png
+        
       } else {
+
+
         // Handle any other HTTP method
         res.status(200).json({ imageURL: "Get request detected" });
       }
-
+  
 }

@@ -14,6 +14,7 @@ import {
   AccountState,
   initialState,
   reducer,
+
 } from "../reducers/accountReducer"
 
 const xrpl = require("xrpl")
@@ -24,8 +25,10 @@ export type Props = {
   children: React.ReactNode
 }
 
+
 //@ts-ignore
 const AccountContext = createContext<AccountContextType>(null)
+
 
 const AccountContextProvider = (props: Props): JSX.Element => {
   const [accountState, accountDispatch] = useReducer(reducer, initialState)
@@ -43,9 +46,14 @@ async function connectWallet(
 ) {
   dispatch({ type: AccountActionTypes.SET_IS_ACCOUNT_LOADING, payload: true })
 
-  try {
-    let wallet
 
+    let client
+    let wallet
+  try {
+    client = new xrpl.Client("wss://s.altnet.rippletest.net:51233")
+    await client.connect((value: any) => {
+      console.log("Connected!", value)
+    })
     if (seed) {
       wallet = xrpl.Wallet.fromSeed(seed)
       console.log(wallet)
@@ -56,16 +64,14 @@ async function connectWallet(
         icon: <SmileOutlined style={{ color: "#108ee9" }} />,
       })
     } else {
-      const accounts = await postData(
-        "https://faucet-nft.ripple.com/accounts",
-        "NFT-Devnet"
-      )
-      wallet = accounts.account
+      
+     
+      wallet = (await client.fundWallet()).wallet
       console.log(wallet)
 
       const btn = (
         <CopyToClipboard
-          text={wallet.secret}
+          text={wallet.seed}
           onCopy={() => {
             message.open({
               type: "info",
@@ -74,7 +80,7 @@ async function connectWallet(
           }}
         >
           <span style={{ color: "#40a9ff", cursor: "pointer" }}>
-            {wallet.secret}
+            {wallet.seed}
           </span>
         </CopyToClipboard>
       )
@@ -90,16 +96,15 @@ async function connectWallet(
     }
 
     const { address, classicAddress, secret } = wallet
+    dispatch({ type: AccountActionTypes.SET_WALLET, payload: wallet })
+    dispatch({ type: AccountActionTypes.SET_CLIENT, payload: client })
 
-    const api = new xrpl.Client("wss://xls20-sandbox.rippletest.net:51233")
-
-    await api.connect()
 
     let response
     // eslint-disable-next-line no-constant-condition
     while (true) {
       try {
-        response = await api.request({
+        response = await client.request({
           command: "account_info",
           account: address,
           ledger_index: "validated",
@@ -121,6 +126,12 @@ async function connectWallet(
           type: AccountActionTypes.SET_IS_ACCOUNT_LOADING,
           payload: false,
         })
+  
+        response = await client.request({
+          command: "account_nfts",
+          account: address,
+          ledger_index: "validated",
+        })
 
         break
       } catch (e) {
@@ -129,7 +140,7 @@ async function connectWallet(
       }
     }
 
-    api.disconnect()
+    client.disconnect()
   } catch (error) {
     console.log(error)
   }
@@ -137,4 +148,4 @@ async function connectWallet(
 
 const useAccountContext = () => useContext(AccountContext)
 
-export { AccountContextProvider, connectWallet, useAccountContext }
+export { AccountContextProvider, connectWallet, useAccountContext,  }
