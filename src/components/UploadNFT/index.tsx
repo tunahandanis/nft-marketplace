@@ -80,7 +80,7 @@ setIsUploading(true)
   const mintTransactionBlob = {
     "TransactionType": "NFTokenMint",
     "Account": accountState.wallet?.classicAddress,
-    "URI": xrpl.convertStringToHex(`https://gateway.pinata.cloud/ipfs/${pinataResponse?.pinataURL}`),
+    "URI": xrpl.convertStringToHex(`https://gateway.pinata.cloud/ipfs/}`),
     "Flags": 8,
     "TransferFee": 0,
     "NFTokenTaxon": 0 //Required, but if you have no use for it, set to zero.
