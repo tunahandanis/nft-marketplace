@@ -147,6 +147,30 @@ async function connectWallet(
   }
 }
 
+const updateNFTs = async (
+  dispatch: React.Dispatch<AccountAction>,
+  address: string
+) => {
+  let client
+  client = new xrpl.Client("wss://s.altnet.rippletest.net:51233")
+  await client.connect()
+
+  const response = await client.request({
+    command: "account_nfts",
+    account: address,
+    ledger_index: "validated",
+  })
+
+  dispatch({
+    type: AccountActionTypes.UPDATE_NFTS,
+    payload: {
+      newNfts: response.result.account_nfts,
+    },
+  })
+
+  await client.disconnect()
+}
+
 const useAccountContext = () => useContext(AccountContext)
 
-export { AccountContextProvider, connectWallet, useAccountContext }
+export { AccountContextProvider, connectWallet, useAccountContext, updateNFTs }

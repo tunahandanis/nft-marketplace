@@ -25,6 +25,7 @@ export enum AccountActionTypes {
   SET_ACCOUNT_NFTS = "SET_ACCOUNT_NFTS",
   SET_WALLET = "SET_WALLET",
   SET_CLIENT = "SET_CLIENT",
+  UPDATE_NFTS = "UPDATE_NFTS",
 }
 
 export type AccountAction =
@@ -43,6 +44,7 @@ export type AccountAction =
   | { type: AccountActionTypes.SET_ACCOUNT_NFTS; payload: object[] }
   | { type: AccountActionTypes.SET_WALLET; payload: {} }
   | { type: AccountActionTypes.SET_CLIENT; payload: {} }
+  | { type: AccountActionTypes.UPDATE_NFTS; payload: { newNfts: object[] } }
 
 const reducer = (state: AccountState, action: AccountAction): AccountState => {
   switch (action.type) {
@@ -70,6 +72,14 @@ const reducer = (state: AccountState, action: AccountAction): AccountState => {
       return {
         ...state,
         client: action.payload,
+      }
+    case AccountActionTypes.UPDATE_NFTS:
+      return {
+        ...state,
+        account: {
+          ...state.account,
+          nfts: action.payload.newNfts,
+        },
       }
     default:
       return state
