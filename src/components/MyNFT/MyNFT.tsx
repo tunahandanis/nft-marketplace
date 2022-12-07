@@ -13,7 +13,7 @@ const MyNFT: React.FC<MyNFTType> = ({ id }) => {
   const [offer, setOffer] = useState("")
 
   return (
-    <Col span={6}>
+    <Col span={6} key={id}>
       <article className={styles.nftsCard}>
         <img
           src="https://w0.peakpx.com/wallpaper/284/26/HD-wallpaper-portrait-display-vertical-artwork-digital-art-space-stars-milky-way-planet-blue.jpg"

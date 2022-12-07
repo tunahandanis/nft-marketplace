@@ -1,6 +1,7 @@
 
 // @ts-nocheck
 import type { NextApiRequest, NextApiResponse } from "next";
+import { uploadFileToIPFS, uploadFromBuffer } from "pinata";
 //import { createClient } from '@supabase/supabase-js'
 type GeneratedImage = {
   imageURL: string;
@@ -9,17 +10,13 @@ type GeneratedImage = {
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<GeneratedImage>
-) {
-    
+) { 
     //const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY)
    
-
     if (req.method === 'POST') {
         // Process a POST request
         console.log(req.body);
        // const { data, error } = await supabase.storage.createBucket('avatars')
-
-
             const imageResp = await fetch('https://api.openai.com/v1/images/generations', {
               
                 method: 'POST',
@@ -32,10 +29,8 @@ export default async function handler(
                     'Content-Type': 'application/json',
                     // use env variable for this
 
-                    'Authorization': 'Bearer ' + process.env.AI_API_KEY,
+                    'Authorization': 'Bearer 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'  // process.env.AI_API_KEY,
                 }
-
-            
         
         })
 
@@ -44,22 +39,40 @@ export default async function handler(
 
         
         console.log(image);
-        // let blob = await fetch(image.data[0].url)
-        // let blobData = await blob.blob()
-        // let uuid = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-        // const resp = await supabase.storage
-    
-        // .from('generative-art')
-        // .upload(`public/${uuid}.png`,    blobData)
 
-        // //create a signed url for the image 
-        
+        const imageData = await fetch(image.data[0].url, (imageResponse) => {
+            let data = '';
+            console.log("Started downloading image");
+            imageResponse.on('data', (chunk) => {
+              data += chunk;
+              console.log(data);
+            });
 
-       // console.log("https://lqmvvslhcfindyifblyk.supabase.co/storage/v1/object/",resp.data?.path);
+            imageResponse.on('end', () => { 
+              console.log("response was ====>" + data);
+            }
+            );
+            console.log(data)
+          });
+
+          const buffer =  await (await imageData.blob()).arrayBuffer();
+          ;
+         // console.log( Buffer.from(await imageData.blob()));
+          const resp = Buffer.from(buffer)
+          const pinataResponse = await uploadFromBuffer(resp);
+          console.log("This image was retrieved" +  pinataResponse);
+
+        //   await fetch('https://gateway.pinata.cloud/ipfs/' + pinataResponse.IpfsHash, (imageResponse) => {
+
+        //   console.log("This image was retrieved" +  imageResponse);
+        // });
+          
         res.status(200).json({ imageURL: image.data[0].url });
 
-        //https://lqmvvslhcfindyifblyk.supabase.co/storage/v1/object/public/generative-art/public/y1izesg4z2v6udmpwu4h.png
+        
       } else {
+
+
         // Handle any other HTTP method
         res.status(200).json({ imageURL: "Get request detected" });
       }

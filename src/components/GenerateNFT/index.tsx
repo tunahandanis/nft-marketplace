@@ -1,7 +1,8 @@
 import { useState } from "react"
 import { Input, Button } from "antd"
 import styles from "components/GenerateNFT/GenerateNFT.module.scss"
-
+import { uploadFileToIPFS } from "pinata"
+import http from 'http';
 const { TextArea } = Input
 
 const appendIllustrationTypes = [
@@ -107,7 +108,7 @@ const GenerateNFT: React.FC<GenerateNFTType> = ({ mintNft, walletAddress }) => {
   const [appendIllustrationText, setAppendIllustrationText] = useState("")
   const [appendPhotographicText, setAppendPhotographicText] = useState("")
   const [appendMovieText, setAppendMovieText] = useState("")
-
+  const [isUploading, setIsUploading] = useState<boolean>()
   /* const [isMintLoading, setIsMintLoading] = useState<boolean>(); */
 
   const handleGenerate = async (promptText?: string) => {
@@ -164,6 +165,46 @@ const GenerateNFT: React.FC<GenerateNFTType> = ({ mintNft, walletAddress }) => {
     }
   }
 
+  const mintGeneratedImage = async  (generatedImageURL: string) => {
+    // const responseBlob = await fetch(imageUrl)
+     // use fetch to avoid CORS issues with IPFS images 
+     // no-cors-fetch is not working
+     const responseBlob = await fetch(generatedImageURL)
+     //const responseBlob = await fetch(imageUrl)
+ 
+     //const blob = await responseBlob
+     console.log(await responseBlob.json())
+     //setImageBlob(blob)
+ 
+     // await handleUpload(imageBlob);
+     // console.log("cid", cid);
+     // console.log("MINTING THIS NFT" + generatedImageURL, nameInput, descriptionInput)
+   }
+  const handleGetGeneratedImage = async (url: string) => { 
+    console.log("Image has been loaded ...")
+      const response = await http.get(url)
+      // get object url from blob
+      let data
+      response.on('data', (chunk) => {
+        console.log(`BODY: ${chunk}`);
+        data = +chunk
+      });
+      
+      response.on( 'end', async (data) => { 
+        console.log("end of the stream")
+        console.log(data)
+        const file = new File([data], "generated.png", { type: "image/png" })
+        console.log(file)
+        await uploadFileToIPFS(file, "generated.png", "this a cool description")
+        setIsGenerateLoading(false)
+      })
+
+      //create a file from blob
+    // const file = new File([objectUrl], "generated.png", { type: "image/png" })
+      // convert chunk to File
+ 
+
+  }
   return (
     <>
       <div className={styles.generateCard}>
@@ -208,14 +249,9 @@ const GenerateNFT: React.FC<GenerateNFTType> = ({ mintNft, walletAddress }) => {
               className={`${styles.generateMintNftButton} ${
                 !walletAddress && styles.generateMintNftButtonDisabled
               }`}
-              onClick={() =>
-                mintNft(
-                  imageUrl,
-                  nameInput as string,
-                  descriptionInput as string
-                )
-              }
+              onClick={ () => mintGeneratedImage(imageUrl)}
               disabled={!walletAddress}
+              loading={isUploading}
             >
               Mint NFT
             </Button>
