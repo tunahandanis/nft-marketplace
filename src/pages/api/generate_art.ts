@@ -2,6 +2,9 @@
 import type { NextApiRequest, NextApiResponse } from "next"
 import { /* uploadFileToIPFS, */ uploadFromBuffer } from "pinata"
 //import { createClient } from '@supabase/supabase-js'
+import type { NextApiRequest, NextApiResponse } from "next";
+import { uploadFileToIPFS, uploadFromBuffer } from "pinata";
+import { createClient } from '@supabase/supabase-js'
 type GeneratedImage = {
   imageURL: string
 }

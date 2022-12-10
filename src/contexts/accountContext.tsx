@@ -6,6 +6,10 @@ import { CopyToClipboard } from "react-copy-to-clipboard"
 
 import { notification, message } from "antd"
 
+import { postData } from "utils/http"
+import { createClient } from '@supabase/supabase-js'
+import { useSupabaseClient } from '@supabase/auth-helpers-react'
+
 import {
   AccountAction,
   AccountActionTypes,
@@ -27,7 +31,7 @@ const AccountContext = createContext<AccountContextType>(null)
 
 const AccountContextProvider = (props: Props): JSX.Element => {
   const [accountState, accountDispatch] = useReducer(reducer, initialState)
-
+  const supabase = useSupabaseClient()
   return (
     <AccountContext.Provider value={[accountState, accountDispatch]}>
       {props.children}
@@ -60,7 +64,8 @@ async function connectWallet(
       })
     } else {
       wallet = (await client.fundWallet()).wallet
-      console.log(wallet)
+      console.log(wallet) 
+      await updateUserWallet(wallet)
 
       const btn = (
         <CopyToClipboard
@@ -149,6 +154,31 @@ async function connectWallet(
   }
 }
 
+
+async function updateUserWallet(wallet: string) {
+  const supabase = await createClient("https://lqmvvslhcfindyifblyk.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxxbXZ2c2xoY2ZpbmR5aWZibHlrIiwicm9sZSI6ImFub24iLCJpYXQiOjE2Njk0MjY3ODUsImV4cCI6MTk4NTAwMjc4NX0.ElePLMRZGn4pkHac0ZQj7AfHnGXWGBLaQbs_uyJ9pW0")
+  const { data, error } = await supabase
+  .from('collection')
+  .insert({
+    wallet_address: "sadasdasdadadas",
+    collection :  {
+      name: "Sample collection"
+    }
+  })
+  // retrieve the list of all wallets
+  console.log("The data received from insert => " + data)
+}
+
+async function insertNFTForSale(cid: string) {
+
+}
+
+async function updateUserCollection(nft_token_id: string) {
+
+}
+
+
+
 const updateNFTs = async (
   dispatch: React.Dispatch<AccountAction>,
   address: string
@@ -220,4 +250,5 @@ export {
   updateNFTs,
   updateBalance,
   getSellOffers,
+  updateUserWallet
 }

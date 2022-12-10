@@ -11,8 +11,9 @@ import {
 } from "contexts/accountContext"
 import { AccountActionTypes } from "reducers/accountReducer"
 import { uploadFileToIPFS } from "pinata"
-import { notification, message } from "antd"
+
 import CopyToClipboard from "react-copy-to-clipboard"
+import axios from "axios"
 
 const xrpl = require("xrpl")
 type UploadNFTType = {
@@ -148,9 +149,6 @@ const UploadNFT: React.FC<UploadNFTType> = ({ walletAddress }) => {
    
     }
 
-
-
-  
   
     // show a notfication
    }

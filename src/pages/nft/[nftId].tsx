@@ -8,6 +8,7 @@ import {
   updateNFTs,
 } from "contexts/accountContext"
 import styles from "./NFTDetail.module.scss"
+import { useRouter } from "next/router"
 
 const xrpl = require("xrpl")
 
@@ -61,6 +62,10 @@ const NFTDetail = () => {
 
     client.disconnect()
   }
+  const router = useRouter()
+  console.log(router.query.params)
+  
+  
   return (
     <div className={styles.nft}>
       <img

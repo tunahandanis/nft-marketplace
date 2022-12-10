@@ -11,17 +11,17 @@ const Collections = () => {
   const [collections, setCollections] = useState()
 
   useEffect(() => {
-    fetchCollections()
+    //fetchCollections()
   }, [])
 
-  const fetchCollections = async () => {
-    const res = await fetch("http://localhost:3001/getCollections")
-    const json = await res.json()
+  // const fetchCollections = async () => {
+  //   const res = await fetch("http://localhost:3001/getCollections")
+  //   const json = await res.json()
 
-    setCollections(json)
-  }
+  //   setCollections(json)
+  // }
 
-  console.log(collections)
+  // console.log(collections)
 
   return (
     <div className={styles.collections}>

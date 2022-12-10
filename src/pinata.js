@@ -84,6 +84,10 @@ export const uploadFileToIPFS = async (file /* nft_name, description */) => {
         "image uploaded",
         "https://gateway.pinata.cloud/ipfs/" + response.data.IpfsHash
       )
+      console.log("image uploaded", "https://gateway.pinata.cloud/ipfs/" + response.data.IpfsHash);
+      
+      console.log("Response after upload", response)
+      
       return {
         success: true,
         pinataURL:
@@ -114,14 +118,34 @@ export const uploadFromBuffer = async (buffer) => {
       {
         maxBodyLength: "Infinity",
         headers: {
-          "Content-Type": `multipart/form-data; boundary=${data._boundary}`,
-          Authorization: JWT,
-        },
-      }
-    )
+            'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
+            Authorization: JWT,
+            
+        }
+      });
+  
+      console.log(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  } 
 
-    console.log(res.data)
-  } catch (error) {
-    console.log(error)
-  }
-}
+  export const getNFTMetadata = async (uri) => {
+    try {
+    // 
+    
+      const res = await axios.get(uri, {
+       
+        headers: {
+            Authorization: JWT,
+            pinata_api_key: "98b227205a75e86ced70",
+            pinata_secret_api_key:"4dbbf292047abcb8584c913873d8fbabed457b5d5d753144541f2b0c71687fae",
+        }
+      });
+  
+      console.log("response from IPFS" +  res);
+      return res
+    } catch (error) {
+      console.log(error);
+    }
+  } 

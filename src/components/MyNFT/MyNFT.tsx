@@ -98,12 +98,14 @@ const MyNFT: React.FC<MyNFTType> = ({
 
   const hideModal = () => setIsModalVisible(false)
   const showModal = () => setIsModalVisible(true)
+const NFTImage = xrpl.convertHexToString(nft?.URI)
 
+console.log("Image resource ", NFTImage)
   return (
     <Col span={6}>
       <article className={styles.nftsCard}>
         <img
-          src="https://w0.peakpx.com/wallpaper/284/26/HD-wallpaper-portrait-display-vertical-artwork-digital-art-space-stars-milky-way-planet-blue.jpg"
+          src={NFTImage}
           alt="nft collection image"
         />
         <div
