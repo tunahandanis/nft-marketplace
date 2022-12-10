@@ -11,7 +11,8 @@ import {
 } from "contexts/accountContext"
 import { AccountActionTypes } from "reducers/accountReducer"
 import { uploadFileToIPFS } from "pinata"
-// import CopyToClipboard from "react-copy-to-clipboard"
+import { notification, message } from "antd"
+import CopyToClipboard from "react-copy-to-clipboard"
 
 const xrpl = require("xrpl")
 type UploadNFTType = {
@@ -24,10 +25,10 @@ const UploadNFT: React.FC<UploadNFTType> = ({ walletAddress }) => {
   const [imageUrl, setImageUrl] = useState<string>()
   const [nameInput, setNameInput] = useState<string>()
   const [descriptionInput, setDescriptionInput] = useState<string>()
-  //  const [pinataResponse, setPinataResponse] = useState("")
-  /* const [token, setToken] = useState(
+  const [pinataResponse, setPinataResponse] = useState("")
+  const [token, setToken] = useState(
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweEVGRDlmRDBkZTI2M2ZBMmY5YTRkMDA5MWNDRUU3YjQ3RTlFMDQwYWQiLCJpc3MiOiJ3ZWIzLXN0b3JhZ2UiLCJpYXQiOjE2NzAxNzUzOTA3NTgsIm5hbWUiOiJ4cnBfZ2VuZXJhdGl2ZV9haSJ9.yTWTdTEc_OEd6igRJl3JGp0Sd3jueJgxuFd5ieiM3a0"
-  ) */
+  )
   const [imageBlob, setImageBlob] = useState<any>()
   const [cid /* setCid */] = useState("")
   const [isUploading, setIsUploading] = useState<boolean>()
@@ -66,12 +67,12 @@ const UploadNFT: React.FC<UploadNFTType> = ({ walletAddress }) => {
     //   payload: account_nfts
     // });
 
+
     const user_nfts = await accountState.client.request({
       command: "account_nfts",
       account: accountState.account?.address,
       ledger_index: "validated",
     })
-
     accountDispatch({
       type: AccountActionTypes.SET_ACCOUNT_NFTS,
       payload: user_nfts.result.account_nfts,
@@ -83,23 +84,27 @@ const UploadNFT: React.FC<UploadNFTType> = ({ walletAddress }) => {
       "nameInput",
       "descriptionInput"
     )
-    console.log("accountState", user_nfts)
+    console.log("Pinata Response ", pinataResponse)
 
     // Mint the NFT and display the IPFS url
 
-    const mintTransactionBlob = {
-      TransactionType: "NFTokenMint",
-      Account: accountState.wallet?.classicAddress,
-      URI: xrpl.convertStringToHex(`https://gateway.pinata.cloud/ipfs/}`),
-      Flags: 8,
-      TransferFee: 0,
-      NFTokenTaxon: 0, //Required, but if you have no use for it, set to zero.
-    }
-    const signedTx = await accountState.wallet?.sign(mintTransactionBlob)
-    console.log("The transaction was signed " + signedTx + " address => ")
-    const tx = await accountState.client.submitAndWait(mintTransactionBlob, {
-      wallet: accountState?.wallet,
-    })
+    if(pinataResponse.success) {
+      const mintTransactionBlob = {
+        TransactionType: "NFTokenMint",
+        Account: accountState.wallet?.classicAddress,
+        URI: xrpl.convertStringToHex(pinataResponse?.pinataURL),
+        Flags: 8,
+        TransferFee: 0,
+        NFTokenTaxon: 0, //Required, but if you have no use for it, set to zero.
+      }
+      
+      const signedTx = await accountState.wallet?.sign(mintTransactionBlob)
+      console.log("The transaction was signed " + signedTx + " address => ")
+      const tx = await accountState.client.submitAndWait(mintTransactionBlob, {
+        wallet: accountState?.wallet,
+      })
+
+     
 
     // response = await client.request({
     //   command: "account_nfts",
@@ -131,8 +136,24 @@ const UploadNFT: React.FC<UploadNFTType> = ({ walletAddress }) => {
     updateNFTs(accountDispatch, accountState.account!.address)
     updateBalance(accountDispatch, accountState.account!.address)
 
+
+
+    console.log( tx.result.URI  )
+    const metaDataHex =tx.result.URI
+    const stringMetaDataURI = xrpl.convertHexToString(metaDataHex)
+    console.log(stringMetaDataURI)
+    const metaDataResponse = await axios.get("api/get_nft_metadata/")
+
+    console.log( metaDataResponse)
+   
+    }
+
+
+
+  
+  
     // show a notfication
-  }
+   }
 
   return (
     <div className={styles.uploadCard}>
