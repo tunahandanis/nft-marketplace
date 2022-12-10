@@ -8,8 +8,6 @@ import styles from "./MyNFTs.module.scss"
 
 // eslint-disable-next-line no-unused-vars
 const UserNFTs = () => {
-  const [isCreatingOffer, setIsCreatingOffer] = useState(false)
-  const [offer, setOffer] = useState("")
   const [nfts, setNfts] = useState<any>()
   const [collections, setCollections] = useState([]) // initial state must not be undefined, it should stay as at least an empty array
   // get account from context and retrieve account nfts

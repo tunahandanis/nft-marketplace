@@ -1,8 +1,13 @@
 import { Col, Button, Input, Select, Modal } from "antd"
 import { useState } from "react"
 import { PlusOutlined } from "@ant-design/icons"
+import { useAccountContext, getSellOffer } from "contexts/accountContext"
+import { notification } from "antd"
+import { SmileOutlined } from "@ant-design/icons"
 
 import styles from "./MyNFT.module.scss"
+
+const xrpl = require("xrpl")
 
 type MyNFTType = {
   nft: object
@@ -27,6 +32,39 @@ const MyNFT: React.FC<MyNFTType> = ({
   const [collectionInput, setCollectionInput] = useState("")
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [selectedCollection, setSelectedCollection] = useState()
+  const [isLoading, setIsLoading] = useState(false)
+
+  const [accountState, accountDispatch] = useAccountContext()
+
+  const createSellOffer = async (tokenId) => {
+    setIsLoading(true)
+    console.log(tokenId)
+
+    const wallet = xrpl.Wallet.fromSeed(accountState.account?.secret)
+    const client = new xrpl.Client("wss://s.altnet.rippletest.net:51233")
+    await client.connect()
+    console.log("\n\n----------------Create Sell Offer----------------")
+
+    const transactionBlob = {
+      TransactionType: "NFTokenCreateOffer",
+      Account: wallet.address,
+      NFTokenID: tokenId,
+      Amount: xrpl.xrpToDrops(offer),
+      Flags: 1,
+    }
+
+    const tx = await client.submitAndWait(transactionBlob, { wallet })
+
+    setIsLoading(false)
+
+    notification.open({
+      message: "Your sell offer was created successfully",
+      placement: "bottomRight",
+      icon: <SmileOutlined style={{ color: "#86dc3d" }} />,
+    })
+
+    client.disconnect()
+  }
 
   const collectionOptions = collections?.map((collection) => {
     return { value: collection.name, label: collection.name }
@@ -80,6 +118,7 @@ const MyNFT: React.FC<MyNFTType> = ({
               </div>
               <div className={styles.nftsSecondButtonContainer}>
                 <Button
+                  loading={isLoading}
                   className={styles.nftsCancelButton}
                   onClick={() => {
                     setOffer("")
@@ -90,12 +129,14 @@ const MyNFT: React.FC<MyNFTType> = ({
                 </Button>
 
                 <Button
+                  loading={isLoading}
                   className={styles.nftsSellButton}
-                  onClick={() => {
+                  /* onClick={() => {
                     if (offer && selectedCollection && makeSellOffer) {
                       makeSellOffer(selectedCollection, nft.NFTokenID, offer)
                     }
-                  }}
+                  }} */
+                  onClick={() => createSellOffer(nft.NFTokenID)}
                 >
                   Create
                 </Button>

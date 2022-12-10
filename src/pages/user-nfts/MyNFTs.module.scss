@@ -12,6 +12,10 @@
     padding: 1em 10em 4em;
   }
 
+  &Collection {
+    display: flex;
+  }
+
   &CollectionName {
     color: $secondary-color;
     font-size: 1.8rem;

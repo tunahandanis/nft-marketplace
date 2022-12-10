@@ -198,6 +198,20 @@ const updateBalance = async (
   await client.disconnect()
 }
 
+const getSellOffers = async (tokenId) => {
+  // setIsLoading(true);
+  const client = new xrpl.Client("wss://s.altnet.rippletest.net:51233")
+  await client.connect()
+  console.log(tokenId)
+  let nftSellOffers
+  nftSellOffers = await client.request({
+    method: "nft_sell_offers",
+    nft_id: tokenId,
+  })
+
+  return nftSellOffers.result.offers
+}
+
 const useAccountContext = () => useContext(AccountContext)
 
 export {
@@ -206,4 +220,5 @@ export {
   useAccountContext,
   updateNFTs,
   updateBalance,
+  getSellOffers,
 }
