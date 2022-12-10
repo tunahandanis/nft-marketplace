@@ -1,22 +1,28 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { Row } from "antd"
 import { useEffect, useState } from "react"
 import { useAccountContext } from "contexts/accountContext"
 import MyNFT from "components/MyNFT/MyNFT"
-import { useRouter } from "next/router"
 
 import styles from "./MyNFTs.module.scss"
+
+type CollectionType = {
+  name: string
+  collectionNfts: {
+    tokenId: string
+    price: string
+  }[]
+}
 
 // eslint-disable-next-line no-unused-vars
 const UserNFTs = () => {
   const [nfts, setNfts] = useState<any>()
-  const [collections, setCollections] = useState([]) // initial state must not be undefined, it should stay as at least an empty array
+  const [collections, setCollections] = useState<CollectionType[]>([]) // initial state must not be undefined, it should stay as at least an empty array
   // get account from context and retrieve account nfts
-  const [accountState, accountDispatch] = useAccountContext()
-
-  const router = useRouter()
+  const [accountState] = useAccountContext()
 
   // You can use the userWalletAddress to pull from database
-  const userWalletAddress = router.query.userAddress
 
   const addCollection = (name: string) => {
     if (collections) {
@@ -41,7 +47,7 @@ const UserNFTs = () => {
     setCollections(newCollections)
   }
 
-  const cancelSellOffer = (nftId: string) => {}
+  // const cancelSellOffer = (nftId: string) => {}
 
   useEffect(() => {
     if (accountState.account) {
@@ -57,13 +63,14 @@ const UserNFTs = () => {
         {nfts && (
           <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
             {nfts
-              .filter((nft) => {
+              .filter((nft: any) => {
                 return !collections.some(
                   (collection) =>
+                    //@ts-ignore
                     collection.collectionNfts.tokenId === nft.NFTokenID
                 )
               })
-              .map((nft) => (
+              .map((nft: any) => (
                 <MyNFT
                   nft={nft}
                   key={nft.NFTokenID}
@@ -89,21 +96,23 @@ const UserNFTs = () => {
                   (collectionNft, index, array) => (
                     <MyNFT
                       nft={nfts.filter(
-                        (nft) => nft.NFTokenID === collectionNft.tokenId
+                        (nft: any) => nft.NFTokenID === collectionNft.tokenId
                       )}
                       nftInCollection={
                         array.filter((collectionNft) => {
                           return nfts.filter(
-                            (nft) => nft.NFTokenID === collectionNft.tokenId
+                            (nft: any) =>
+                              nft.NFTokenID === collectionNft.tokenId
                           )
                         })[0]
                       }
                       key={
                         "On collection NFTokenID: " +
+                        //@ts-ignore
                         collection.collectionNfts.tokenId
                       }
                       isBeingSold
-                      cancelSellOffer={cancelSellOffer}
+                      // cancelSellOffer={cancelSellOffer}
                     />
                   )
                 )}

@@ -71,6 +71,7 @@ module.exports = {
     "no-shadow": "off",
     "arrow-body-style": "off",
     "consistent-return": "off",
+    "no-nested-ternary": "off",
     "@typescript-eslint/no-shadow": ["off"],
     "@typescript-eslint/semi": "off",
     "@typescript-eslint/comma-dangle": "off",

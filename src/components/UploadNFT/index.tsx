@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react"
 import { UploadOutlined, CheckOutlined } from "@ant-design/icons"
-import { Input, Button } from "antd"
+import { Input, Button, notification } from "antd"
 import styles from "components/UploadNFT/UploadNFT.module.scss"
 
 import {
@@ -10,8 +11,7 @@ import {
 } from "contexts/accountContext"
 import { AccountActionTypes } from "reducers/accountReducer"
 import { uploadFileToIPFS } from "pinata"
-import { notification, message } from "antd"
-import CopyToClipboard from "react-copy-to-clipboard"
+// import CopyToClipboard from "react-copy-to-clipboard"
 
 const xrpl = require("xrpl")
 type UploadNFTType = {
@@ -20,16 +20,16 @@ type UploadNFTType = {
   walletAddress?: string
 }
 
-const UploadNFT: React.FC<UploadNFTType> = ({ mintNft, walletAddress }) => {
+const UploadNFT: React.FC<UploadNFTType> = ({ walletAddress }) => {
   const [imageUrl, setImageUrl] = useState<string>()
   const [nameInput, setNameInput] = useState<string>()
   const [descriptionInput, setDescriptionInput] = useState<string>()
-  const [pinataResponse, setPinataResponse] = useState("")
-  const [token, setToken] = useState(
+  //  const [pinataResponse, setPinataResponse] = useState("")
+  /* const [token, setToken] = useState(
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweEVGRDlmRDBkZTI2M2ZBMmY5YTRkMDA5MWNDRUU3YjQ3RTlFMDQwYWQiLCJpc3MiOiJ3ZWIzLXN0b3JhZ2UiLCJpYXQiOjE2NzAxNzUzOTA3NTgsIm5hbWUiOiJ4cnBfZ2VuZXJhdGl2ZV9haSJ9.yTWTdTEc_OEd6igRJl3JGp0Sd3jueJgxuFd5ieiM3a0"
-  )
+  ) */
   const [imageBlob, setImageBlob] = useState<any>()
-  const [cid, setCid] = useState("")
+  const [cid /* setCid */] = useState("")
   const [isUploading, setIsUploading] = useState<boolean>()
   // get wallet from accountContext
 
@@ -77,8 +77,9 @@ const UploadNFT: React.FC<UploadNFTType> = ({ mintNft, walletAddress }) => {
       payload: user_nfts.result.account_nfts,
     })
 
-    const pinataResponse = await uploadFileToIPFS(
+    /*  const pinataResponse =  */ await uploadFileToIPFS(
       imageBlob,
+      //@ts-ignore
       "nameInput",
       "descriptionInput"
     )
@@ -110,6 +111,7 @@ const UploadNFT: React.FC<UploadNFTType> = ({ mintNft, walletAddress }) => {
       <a
         href={"https://blockexplorer.one/xrp/testnet/tx/" + tx.result.hash}
         target="_blank"
+        rel="noreferrer"
       >
         <span style={{ color: "#40a9ff", cursor: "pointer" }}>
           {tx.result.hash.slice(0, 30) + "..."}

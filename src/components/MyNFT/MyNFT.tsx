@@ -1,21 +1,23 @@
-import { Col, Button, Input, Select, Modal } from "antd"
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable no-unused-vars */
+import { Col, Button, Input, Select, Modal, notification } from "antd"
 import { useState } from "react"
-import { PlusOutlined } from "@ant-design/icons"
+
+import { SmileOutlined, PlusOutlined } from "@ant-design/icons"
 import { useAccountContext } from "contexts/accountContext"
-import { notification } from "antd"
-import { SmileOutlined } from "@ant-design/icons"
 
 import styles from "./MyNFT.module.scss"
 
 const xrpl = require("xrpl")
 
 type MyNFTType = {
-  nft: object
-  nftInCollection: {
+  nft: any
+  nftInCollection?: {
     price: string
     tokenId: string
   }
   collections?: any
+  // eslint-disable-next-line no-unused-vars
   addCollection?: (name: string) => void
   isBeingSold?: boolean
   makeSellOffer?: (
@@ -23,7 +25,7 @@ type MyNFTType = {
     tokenId: string,
     price: string
   ) => void
-  cancelSellOffer?: (nftId: string) => void
+  // cancelSellOffer?: (nftId: string) => void
 }
 
 // eslint-disable-next-line no-unused-vars
@@ -34,7 +36,7 @@ const MyNFT: React.FC<MyNFTType> = ({
   addCollection,
   isBeingSold,
   makeSellOffer,
-  cancelSellOffer,
+  // cancelSellOffer,
 }) => {
   const [isCreatingOffer, setIsCreatingOffer] = useState(false)
   const [offer, setOffer] = useState("")
@@ -69,6 +71,7 @@ const MyNFT: React.FC<MyNFTType> = ({
       <a
         href={"https://blockexplorer.one/xrp/testnet/tx/" + tx.result.hash}
         target="_blank"
+        rel="noreferrer"
       >
         <span style={{ color: "#40a9ff", cursor: "pointer" }}>
           {tx.result.hash.slice(0, 30) + "..."}
@@ -89,7 +92,7 @@ const MyNFT: React.FC<MyNFTType> = ({
     client.disconnect()
   }
 
-  const collectionOptions = collections?.map((collection) => {
+  const collectionOptions = collections?.map((collection: any) => {
     return { value: collection.name, label: collection.name }
   })
 
@@ -185,11 +188,11 @@ const MyNFT: React.FC<MyNFTType> = ({
               <Button
                 danger
                 className={styles.nftsBurnButton}
-                onClick={() => {
+                /* onClick={() => {
                   if (cancelSellOffer) {
                     cancelSellOffer(nftInCollection.tokenId)
                   }
-                }}
+                }} */
               >
                 Cancel Sell Offer
               </Button>
@@ -199,7 +202,7 @@ const MyNFT: React.FC<MyNFTType> = ({
                   src="https://changenow.io/images/cached/xrp.png"
                   alt="nft price in xrp"
                 />
-                <span>{nftInCollection.price}</span>
+                <span>{nftInCollection?.price}</span>
               </div>
             </div>
           )}
@@ -212,6 +215,7 @@ const MyNFT: React.FC<MyNFTType> = ({
         onCancel={hideModal}
         footer={[
           <Button
+            key="create"
             onClick={() => {
               if (collectionInput.trim() !== "" && addCollection) {
                 addCollection(collectionInput)

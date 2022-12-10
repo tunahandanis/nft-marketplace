@@ -6,8 +6,6 @@ import { CopyToClipboard } from "react-copy-to-clipboard"
 
 import { notification, message } from "antd"
 
-import { postData } from "utils/http"
-
 import {
   AccountAction,
   AccountActionTypes,
@@ -47,6 +45,7 @@ async function connectWallet(
   let wallet
   try {
     client = new xrpl.Client("wss://s.altnet.rippletest.net:51233")
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     await client.connect((value: any) => {
       console.log("Connected!", value)
     })
@@ -198,7 +197,7 @@ const updateBalance = async (
   await client.disconnect()
 }
 
-const getSellOffers = async (tokenId) => {
+const getSellOffers = async (tokenId: string) => {
   // setIsLoading(true);
   const client = new xrpl.Client("wss://s.altnet.rippletest.net:51233")
   await client.connect()

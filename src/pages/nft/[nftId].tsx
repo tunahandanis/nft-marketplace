@@ -1,13 +1,13 @@
 import { useState } from "react"
 import { Button, notification } from "antd"
-import styles from "./NFTDetail.module.scss"
+import { SmileOutlined } from "@ant-design/icons"
 import {
   useAccountContext,
   getSellOffers,
   updateBalance,
   updateNFTs,
 } from "contexts/accountContext"
-import { SmileOutlined } from "@ant-design/icons"
+import styles from "./NFTDetail.module.scss"
 
 const xrpl = require("xrpl")
 
@@ -25,7 +25,7 @@ const NFTDetail = () => {
     await client.connect()
 
     const sellOffers = await getSellOffers(
-      "00080000A849B0FD754DE67ED9F9DD26B7563C0DAAB439D80000099B00000000"
+      "00080000AF38CDFC66B79A30488C10C62ED6CE4B35403DAD0000099B00000000"
     )
 
     const transactionBlob = {
@@ -41,6 +41,7 @@ const NFTDetail = () => {
       <a
         href={"https://blockexplorer.one/xrp/testnet/tx/" + tx.result.hash}
         target="_blank"
+        rel="noreferrer"
       >
         <span style={{ color: "#40a9ff", cursor: "pointer" }}>
           {tx.result.hash.slice(0, 30) + "..."}
