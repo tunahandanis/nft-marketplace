@@ -2,6 +2,8 @@
 import { useState } from "react"
 import { UploadOutlined, CheckOutlined } from "@ant-design/icons"
 import { Input, Button, notification } from "antd"
+import axios from "axios"
+
 import styles from "components/UploadNFT/UploadNFT.module.scss"
 
 import {
@@ -11,9 +13,6 @@ import {
 } from "contexts/accountContext"
 import { AccountActionTypes } from "reducers/accountReducer"
 import { uploadFileToIPFS } from "pinata"
-
-import CopyToClipboard from "react-copy-to-clipboard"
-import axios from "axios"
 
 const xrpl = require("xrpl")
 type UploadNFTType = {
@@ -68,7 +67,6 @@ const UploadNFT: React.FC<UploadNFTType> = ({ walletAddress }) => {
     //   payload: account_nfts
     // });
 
-
     const user_nfts = await accountState.client.request({
       command: "account_nfts",
       account: accountState.account?.address,
@@ -89,7 +87,7 @@ const UploadNFT: React.FC<UploadNFTType> = ({ walletAddress }) => {
 
     // Mint the NFT and display the IPFS url
 
-    if(pinataResponse.success) {
+    if (pinataResponse.success) {
       const mintTransactionBlob = {
         TransactionType: "NFTokenMint",
         Account: accountState.wallet?.classicAddress,
@@ -98,60 +96,54 @@ const UploadNFT: React.FC<UploadNFTType> = ({ walletAddress }) => {
         TransferFee: 0,
         NFTokenTaxon: 0, //Required, but if you have no use for it, set to zero.
       }
-      
+
       const signedTx = await accountState.wallet?.sign(mintTransactionBlob)
       console.log("The transaction was signed " + signedTx + " address => ")
       const tx = await accountState.client.submitAndWait(mintTransactionBlob, {
         wallet: accountState?.wallet,
       })
 
-     
+      // response = await client.request({
+      //   command: "account_nfts",
+      //   account: address,
+      //   ledger_index: "validated",
+      // })
+      console.table(tx)
+      const btn = (
+        <a
+          href={"https://blockexplorer.one/xrp/testnet/tx/" + tx.result.hash}
+          target="_blank"
+          rel="noreferrer"
+        >
+          <span style={{ color: "#40a9ff", cursor: "pointer" }}>
+            {tx.result.hash.slice(0, 30) + "..."}
+          </span>
+        </a>
+      )
+      notification.open({
+        message: `Your NFT has been minted`,
+        description: "Click to view on explorer:",
+        btn,
+        placement: "bottomRight",
 
-    // response = await client.request({
-    //   command: "account_nfts",
-    //   account: address,
-    //   ledger_index: "validated",
-    // })
-    console.table(tx)
-    const btn = (
-      <a
-        href={"https://blockexplorer.one/xrp/testnet/tx/" + tx.result.hash}
-        target="_blank"
-        rel="noreferrer"
-      >
-        <span style={{ color: "#40a9ff", cursor: "pointer" }}>
-          {tx.result.hash.slice(0, 30) + "..."}
-        </span>
-      </a>
-    )
-    notification.open({
-      message: `Your NFT has been minted`,
-      description: "Click to view on explorer:",
-      btn,
-      placement: "bottomRight",
+        duration: 5,
+        icon: <CheckOutlined style={{ color: "#108ee9" }} />,
+      })
+      setIsUploading(false)
+      updateNFTs(accountDispatch, accountState.account!.address)
+      updateBalance(accountDispatch, accountState.account!.address)
 
-      duration: 5,
-      icon: <CheckOutlined style={{ color: "#108ee9" }} />,
-    })
-    setIsUploading(false)
-    updateNFTs(accountDispatch, accountState.account!.address)
-    updateBalance(accountDispatch, accountState.account!.address)
+      console.log(tx.result.URI)
+      const metaDataHex = tx.result.URI
+      const stringMetaDataURI = xrpl.convertHexToString(metaDataHex)
+      console.log(stringMetaDataURI)
+      const metaDataResponse = await axios.get("api/get_nft_metadata/")
 
-
-
-    console.log( tx.result.URI  )
-    const metaDataHex =tx.result.URI
-    const stringMetaDataURI = xrpl.convertHexToString(metaDataHex)
-    console.log(stringMetaDataURI)
-    const metaDataResponse = await axios.get("api/get_nft_metadata/")
-
-    console.log( metaDataResponse)
-   
+      console.log(metaDataResponse)
     }
 
-  
     // show a notfication
-   }
+  }
 
   return (
     <div className={styles.uploadCard}>
