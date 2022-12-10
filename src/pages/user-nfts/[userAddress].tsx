@@ -34,7 +34,7 @@ const UserNFTs = () => {
     }
   }
 
-  async function insertCollection(collectionName, tokenId) {
+  async function insertCollection(collectionName: string, tokenId: string) {
     const newCollection = {
       collectionName: collectionName,
       nfts: [tokenId],
