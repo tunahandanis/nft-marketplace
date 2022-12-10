@@ -3,7 +3,7 @@ const mongoose = require("mongoose")
 const collectionSchema = mongoose.Schema({
   ownerWalletAddress: String,
   collectionName: String,
-  nfts: [String],
+  nfts: [{ tokenId: String, price: String, nftName: String, imageUrl: String }],
 })
 
 const Collection = mongoose.model("Collection", collectionSchema)

@@ -1,8 +1,8 @@
 @import "../../styles/colors.scss";
 
 .nft {
-  width: 800px;
-  height: 400px;
+  width: 700px;
+  height: 350px;
   background-color: lighten($primary-color, 10%);
   border-radius: 20px;
   margin: 8em auto;
@@ -17,10 +17,20 @@
     background-color: transparent !important;
     transition: all 0.3s ease;
     border-radius: 5px;
-    margin: 1.25em auto;
+    margin: 2em auto;
     &:hover {
       background-color: $secondary-color !important;
       color: #fff !important;
+    }
+  }
+
+  &BuyButtonDisabled {
+    color: hsl(0, 0%, 70%) !important;
+    border: 2px solid hsl(0, 0%, 70%) !important;
+
+    &:hover {
+      background-color: transparent !important;
+      color: hsl(0, 0%, 70%) !important;
     }
   }
 
@@ -38,7 +48,7 @@
 
   &Name {
     color: hsl(0, 0%, 90%);
-    font-size: 2.3rem;
+    font-size: 2.1rem;
     text-align: center;
     margin-top: 0.5em;
   }
@@ -49,18 +59,11 @@
   &Owner {
     color: hsl(0, 0%, 85%);
     font-size: 1.1rem;
-    margin-top: 1.5em;
+    margin-top: 2.2em;
   }
 
   &Description {
     margin-top: 2em;
-  }
-
-  &Address,
-  &Owner {
-    span {
-      color: $secondary-color;
-    }
   }
 
   &Price {
@@ -81,4 +84,9 @@
       color: $secondary-color !important;
     }
   }
+}
+
+.nftsSellerAddress {
+  color: $secondary-color;
+  cursor: pointer;
 }

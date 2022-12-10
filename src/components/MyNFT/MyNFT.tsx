@@ -23,7 +23,9 @@ type MyNFTType = {
   makeSellOffer?: (
     collectionName: string,
     tokenId: string,
-    price: string
+    price: string,
+    nftName: string,
+    imageUrl: string
   ) => void
   // cancelSellOffer?: (nftId: string) => void
 }
@@ -44,6 +46,12 @@ const MyNFT: React.FC<MyNFTType> = ({
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [selectedCollection, setSelectedCollection] = useState<string>()
   const [isLoading, setIsLoading] = useState(false)
+
+  // These will change after we get the my nfts page db connection
+  const [imageUrl, setImageUrl] = useState(
+    "https://w0.peakpx.com/wallpaper/284/26/HD-wallpaper-portrait-display-vertical-artwork-digital-art-space-stars-milky-way-planet-blue.jpg"
+  )
+  const [nftName, setNftName] = useState("NFT Name Here")
 
   const [accountState, accountDispatch] = useAccountContext()
 
@@ -87,7 +95,7 @@ const MyNFT: React.FC<MyNFTType> = ({
     })
 
     if (makeSellOffer && selectedCollection) {
-      makeSellOffer(selectedCollection, tokenId, offer)
+      makeSellOffer(selectedCollection, tokenId, offer, nftName, imageUrl)
     }
     client.disconnect()
   }
@@ -98,18 +106,13 @@ const MyNFT: React.FC<MyNFTType> = ({
 
   const hideModal = () => setIsModalVisible(false)
   const showModal = () => setIsModalVisible(true)
-const NFTImage = xrpl.convertHexToString(nft?.URI)
+  const NFTImage = xrpl.convertHexToString(nft?.URI)
 
-
-
-console.log("Image resource ", NFTImage)
+  console.log("Image resource ", NFTImage)
   return (
     <Col span={6}>
       <article className={styles.nftsCard}>
-        <img
-          src={NFTImage}
-          alt="nft collection image"
-        />
+        <img src={NFTImage} alt="nft collection image" />
         <div
           className={`${styles.nftsCardTextContainer} ${
             isCreatingOffer &&
@@ -117,7 +120,7 @@ console.log("Image resource ", NFTImage)
             styles.nftsCardSecondTextContainer
           }`}
         >
-          <p className={styles.nftsCardTitle}>NFT Name Here</p>
+          <p className={styles.nftsCardTitle}>{nftName}</p>
           {isCreatingOffer && !isBeingSold ? (
             <>
               <div className={styles.nftsInputContainer}>

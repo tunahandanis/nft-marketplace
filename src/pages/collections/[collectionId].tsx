@@ -1,80 +1,65 @@
+import { useState, useEffect } from "react"
 import { useRouter } from "next/router"
 import { Row, Col } from "antd"
 import Link from "next/link"
 
-import CollectionCard from "components/CollectionCard"
+import NFTCard from "components/NFTCard"
 
 import styles from "../../styles/path-styles/Collections.module.scss"
 
-const nftInfos = [
-  {
-    name: "Random nft",
-    description: " Lorem ipsum dolor sit",
-    price: 5,
-    id: 23561,
-    imageUrl:
-      "https://images.wallpaperscraft.com/image/single/air_balloon_aerostat_art_128614_1920x1080.jpg",
-  },
-
-  {
-    name: "Another random nft",
-    description: " Lorem ipsum dolor sit",
-    price: 3,
-    id: 53251,
-    imageUrl:
-      "https://images.wallpaperscraft.com/image/single/air_balloon_aerostat_art_128614_1920x1080.jpg",
-  },
-
-  {
-    name: "Another random nft",
-    description: " Lorem ipsum dolor sit",
-    price: 10,
-    id: 64312,
-    imageUrl:
-      "https://images.wallpaperscraft.com/image/single/air_balloon_aerostat_art_128614_1920x1080.jpg",
-  },
-
-  {
-    name: "Random nft",
-    description: " Lorem ipsum dolor sit",
-    price: 150,
-    id: 64314,
-    imageUrl:
-      "https://images.wallpaperscraft.com/image/single/air_balloon_aerostat_art_128614_1920x1080.jpg",
-  },
-
-  {
-    name: "Random nft",
-    description: " Lorem ipsum dolor sit",
-    price: 67,
-    id: 35643,
-    imageUrl:
-      "https://images.wallpaperscraft.com/image/single/air_balloon_aerostat_art_128614_1920x1080.jpg",
-  },
-
-  {
-    name: "Random nft",
-    description: " Lorem ipsum dolor sit",
-    price: 1,
-    id: 75424,
-    imageUrl:
-      "https://images.wallpaperscraft.com/image/single/air_balloon_aerostat_art_128614_1920x1080.jpg",
-  },
-]
+type CollectionType = {
+  collectionName: string
+  ownerWalletAddress: string
+  _v: number
+  _id: string
+  nfts: {
+    imageUrl: string
+    tokenId: string
+    nftName: string
+    price: string
+    _id: string
+  }[]
+}
 
 const Collection = () => {
   const router = useRouter()
+
+  const [collection, setCollection] = useState<CollectionType>()
+
+  useEffect(() => {
+    fetchCollections()
+  }, [])
+
+  const fetchCollections = async () => {
+    const res = await fetch("http://localhost:3001/getCollections")
+    const json = await res.json()
+
+    const collectionId = router.query.collectionId
+
+    const filteredCollection = json.filter(
+      (collection: CollectionType) => collection._id === collectionId
+    )[0]
+
+    setCollection(filteredCollection)
+  }
+
+  console.log(collection)
+
   return (
     <div>
-      <h2 className={styles.collectionTitle}>
-        Collection: {router.query.collectionId}
-      </h2>
+      <h2 className={styles.collectionTitle}>{collection?.collectionName}</h2>
       <section className={styles.collectionGrid}>
         <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-          {nftInfos.map((nft) => (
-            <Col span={6} key={nft.id}>
-              <Link href={`/nft/${nft.id}`} className={styles.collectionLink}>
-                <CollectionCard nft={nft} />
+          {collection?.nfts?.map((nft) => (
+            <Col span={6} key={nft.tokenId}>
+              <Link
+                href={{
+                  pathname: `/nft/${nft.tokenId}`,
+                  query: { collectionName: collection.collectionName },
+                }}
+                className={styles.collectionLink}
+              >
+                <NFTCard nft={nft} />
               </Link>
             </Col>
           ))}

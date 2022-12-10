@@ -1,6 +1,9 @@
-import { useState } from "react"
-import { Button, notification } from "antd"
+import { useState, useEffect } from "react"
+import { Button, message, notification } from "antd"
 import { SmileOutlined } from "@ant-design/icons"
+import { useRouter } from "next/router"
+import CopyToClipboard from "react-copy-to-clipboard"
+
 import {
   useAccountContext,
   getSellOffers,
@@ -8,16 +11,59 @@ import {
   updateNFTs,
 } from "contexts/accountContext"
 import styles from "./NFTDetail.module.scss"
-import { useRouter } from "next/router"
 
 const xrpl = require("xrpl")
 
+type NFTType = {
+  imageUrl: string
+  tokenId: string
+  nftName: string
+  price: string
+  _id: string
+}
+
+type CollectionType = {
+  collectionName: string
+  ownerWalletAddress: string
+  _v: number
+  _id: string
+  nfts: NFTType[]
+}
+
 const NFTDetail = () => {
-  // We're going to get the NFT's address/id from router, then we're going to pull information on it using the address/id
+  const router = useRouter()
 
   const [isLoading, setIsLoading] = useState(false)
 
+  const [seller, setSeller] = useState()
+
+  const [nft, setNft] = useState<NFTType>()
+
   const [accountState, accountDispatch] = useAccountContext()
+
+  useEffect(() => {
+    fetchCollections()
+  }, [])
+
+  const fetchCollections = async () => {
+    const res = await fetch("http://localhost:3001/getCollections")
+    const json = await res.json()
+
+    const collectionName = router.query.collectionName
+
+    const filteredCollection = json.filter(
+      (collection: CollectionType) =>
+        collection.collectionName === collectionName
+    )[0]
+
+    setSeller(filteredCollection.ownerWalletAddress)
+
+    const filteredNft = filteredCollection.nfts.filter(
+      (nft) => nft.tokenId === router.query.nftId
+    )[0]
+
+    setNft(filteredNft)
+  }
 
   const acceptSellOffer = async () => {
     setIsLoading(true)
@@ -25,9 +71,10 @@ const NFTDetail = () => {
     const client = new xrpl.Client("wss://s.altnet.rippletest.net:51233")
     await client.connect()
 
-    const sellOffers = await getSellOffers(
-      "00080000AF38CDFC66B79A30488C10C62ED6CE4B35403DAD0000099B00000000"
-    )
+    let sellOffers
+    if (nft) {
+      sellOffers = await getSellOffers(nft.tokenId)
+    }
 
     const transactionBlob = {
       TransactionType: "NFTokenAcceptOffer",
@@ -62,28 +109,31 @@ const NFTDetail = () => {
 
     client.disconnect()
   }
-  const router = useRouter()
   console.log(router.query.params)
-  
-  
+
   return (
     <div className={styles.nft}>
-      <img
-        src="https://images.wallpaperscraft.com/image/single/air_balloon_aerostat_art_128614_1920x1080.jpg"
-        alt="nft image"
-        className={styles.nftImage}
-      />
+      <img src={nft?.imageUrl} alt="nft image" className={styles.nftImage} />
       <div className={styles.nftInfo}>
-        <h2 className={styles.nftName}>NFT Name Here</h2>
-        <p className={styles.nftDescription}>
-          NFT description will be written here
-        </p>
+        <h2 className={styles.nftName}>{nft?.nftName}</h2>
         <p className={styles.nftAddress}>
-          NFT Address: <span></span>
+          <CopyToClipboard
+            //@ts-ignore
+            text={seller}
+            onCopy={() => {
+              message.open({
+                type: "info",
+                content: "Copied to clipboard",
+              })
+            }}
+          >
+            <span>
+              Seller Address:{" "}
+              <span className={styles.nftsSellerAddress}>{seller}</span>
+            </span>
+          </CopyToClipboard>
         </p>
-        <p className={styles.nftOwner}>
-          Owner: <span>Walter White</span>
-        </p>
+
         <div className={styles.nftPrice}>
           <span>Price: </span>
 
@@ -91,14 +141,17 @@ const NFTDetail = () => {
             src="https://changenow.io/images/cached/xrp.png"
             alt="nft price in xrp"
           />
-          <span className={styles.nftPriceValue}>13.63</span>
+          <span className={styles.nftPriceValue}>{nft?.price}</span>
         </div>
         <Button
           onClick={acceptSellOffer}
           type="primary"
-          className={styles.nftBuyButton}
+          className={`${styles.nftBuyButton} ${
+            !accountState.account && styles.nftBuyButtonDisabled
+          }`}
           size="large"
           loading={isLoading}
+          disabled={!accountState.account}
         >
           Buy
         </Button>

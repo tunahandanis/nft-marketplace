@@ -55,10 +55,23 @@ const UserNFTs = () => {
 
   }
 
-  async function insertCollection(collectionName: string, tokenId: string) {
+  async function insertCollection(
+    collectionName: string,
+    tokenId: string,
+    price: string,
+    nftName: string,
+    imageUrl: string
+  ) {
     const newCollection = {
       collectionName: collectionName,
-      nfts: [tokenId],
+      nfts: [
+        {
+          tokenId: tokenId,
+          price: price,
+          nftName: nftName,
+          imageUrl: imageUrl,
+        },
+      ],
       ownerWalletAddress: accountState.account?.address,
     }
 
@@ -68,7 +81,9 @@ const UserNFTs = () => {
   const makeSellOffer = (
     collectionName: string,
     tokenId: string,
-    price: string
+    price: string,
+    nftName: string,
+    imageUrl: string
   ) => {
     const collectionIndex = collections.findIndex(
       (obj) => obj.name === collectionName
@@ -79,7 +94,7 @@ const UserNFTs = () => {
 
     setCollections(newCollections)
 
-    insertCollection(collectionName, tokenId)
+    insertCollection(collectionName, tokenId, price, nftName, imageUrl)
   }
 
   // const cancelSellOffer = (nftId: string) => {}
