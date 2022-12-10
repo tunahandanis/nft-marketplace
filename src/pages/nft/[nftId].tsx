@@ -25,7 +25,7 @@ const NFTDetail = () => {
     await client.connect()
 
     const sellOffers = await getSellOffers(
-      "000800006EF8CAD65510456463547CC62017EB1AFA5558F70000099B00000000"
+      "00080000A849B0FD754DE67ED9F9DD26B7563C0DAAB439D80000099B00000000"
     )
 
     const transactionBlob = {

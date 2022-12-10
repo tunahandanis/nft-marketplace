@@ -1,7 +1,7 @@
 import { Col, Button, Input, Select, Modal } from "antd"
 import { useState } from "react"
 import { PlusOutlined } from "@ant-design/icons"
-import { useAccountContext, getSellOffer } from "contexts/accountContext"
+import { useAccountContext } from "contexts/accountContext"
 import { notification } from "antd"
 import { SmileOutlined } from "@ant-design/icons"
 
