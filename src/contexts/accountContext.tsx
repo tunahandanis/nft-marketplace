@@ -158,15 +158,15 @@ async function connectWallet(
 async function updateUserWallet(wallet: string) {
   const supabase = await createClient("https://lqmvvslhcfindyifblyk.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxxbXZ2c2xoY2ZpbmR5aWZibHlrIiwicm9sZSI6ImFub24iLCJpYXQiOjE2Njk0MjY3ODUsImV4cCI6MTk4NTAwMjc4NX0.ElePLMRZGn4pkHac0ZQj7AfHnGXWGBLaQbs_uyJ9pW0")
   const { data, error } = await supabase
-  .from('collection')
+  .from('collections')
   .insert({
-    wallet_address: "sadasdasdadadas",
-    collection :  {
-      name: "Sample collection"
+    wallet_address: wallet?.classicAddress,
+    collections :  {
+    
     }
   })
   // retrieve the list of all wallets
-  console.log("The data received from insert => " + data)
+  console.log("The data received from insert => ", error)
 }
 
 async function insertNFTForSale(cid: string) {

@@ -7,29 +7,29 @@ const testIds = [
   42153513, 35125312, 258225567, 26901285, 12570493, 24697043, 98172063,
 ]
 
-const Collections = () => {
-  const [collections, setCollections] = useState()
 
-  useEffect(() => {
-    //fetchCollections()
-  }, [])
+const getCollections = async () => {
 
-  // const fetchCollections = async () => {
-  //   const res = await fetch("http://localhost:3001/getCollections")
-  //   const json = await res.json()
+const collectionsResponse = await fetch("/api/collections/")
+const collections = await collectionsResponse.json()
+console.log("getting collections", collections)
+return  collections.data
+}
+const  Collections =  () => {
 
-  //   setCollections(json)
-  // }
 
-  // console.log(collections)
-
+ const collections = getCollections()
+  console.log(collections)
+ // console.log("Connection =>" + response)
   return (
+    <>
+  
     <div className={styles.collections}>
       <h2 className={styles.collectionsTitle}>NFT Collections</h2>
       <section className={styles.collectionsGrid}>
         <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
           {testIds.map((id) => (
-            <Col span={6} key={id}>
+            <Col span={6} >
               <Link
                 href={`/collections/${id}`}
                 className={styles.collectionsLink}
@@ -52,6 +52,7 @@ const Collections = () => {
         </Row>
       </section>
     </div>
+    </>
   )
 }
 

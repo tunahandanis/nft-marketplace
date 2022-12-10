@@ -13,6 +13,7 @@ export default async function handler(
 ) { 
     //const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY)
 
+   
 
     const response = await getNFTMetadata("https://gateway.pinata.cloud/ipfs/QmXotS9bET35emmAJptig3oaPktdLYGQY9RDUgtGMCXzkm")
     console.log("getting NFTmeta data", response?.data)

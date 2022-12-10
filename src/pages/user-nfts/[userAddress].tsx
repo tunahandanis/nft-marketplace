@@ -26,12 +26,51 @@ const UserNFTs = () => {
 
   // You can use the userWalletAddress to pull from database
 
+<<<<<<< HEAD
   const addCollection = (name: string) => {
     if (collections) {
       setCollections((prev) => [...prev, { name: name, collectionNfts: [] }])
+=======
+  const addCollection = async (name: string) => {
+
+   if (collections) {
+    // insert into the collections database colum 
+   const addCollection = await fetch('/api/collections', {
+      method: 'POST',
+      body: JSON.stringify({ name: name, nftIDs: [], wallet_address: accountState.account?.classicAddress }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    console.log("=== Adding Collection ====", addCollection.json() )
+
+      setCollections((prev) => [...prev, { name: name, nftIDs: [] }])
+      
+>>>>>>> 056fc0d (User's Collection)
     } else {
       setCollections([{ name: name, collectionNfts: [] }])
     }
+
+
+  }
+
+  const addCollectionsToDb = async ( collection: object ) => {
+    const addCollectionResponse =  await fetch(`/api/collections?walletAddress=${accountState.account?.address}`, {
+    
+    })
+
+    console.log(addCollectionResponse)
+
+
+  }
+
+  const getUserCollection = async (wallet: string) => {
+    console.log("===== getting user's collections ==== ")
+    const addCollectionResponse =  await fetch(`/api/collections?walletAddress=${accountState.account?.address}`)
+    const collections = await addCollectionResponse.json()
+  //  setCollections(collections.collections)
+    console.log("User's collection", collections.collections)
+
   }
 
   async function insertCollection(collectionName: string, tokenId: string) {
@@ -66,6 +105,7 @@ const UserNFTs = () => {
   useEffect(() => {
     if (accountState.account) {
       setNfts(accountState.account!.nfts)
+      getUserCollection(accountState.account?.classicAddress)
     }
   }, [accountState])
 

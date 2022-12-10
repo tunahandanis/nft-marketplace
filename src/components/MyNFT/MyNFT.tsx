@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-unused-vars */
 import { Col, Button, Input, Select, Modal, notification } from "antd"
@@ -5,6 +6,11 @@ import { useState } from "react"
 
 import { SmileOutlined, PlusOutlined } from "@ant-design/icons"
 import { useAccountContext } from "contexts/accountContext"
+=======
+import { Col, Button, Input, Select, Modal } from "antd"
+import { useEffect, useState } from "react"
+import { PlusOutlined } from "@ant-design/icons"
+>>>>>>> 056fc0d (User's Collection)
 
 import styles from "./MyNFT.module.scss"
 
@@ -99,6 +105,8 @@ const MyNFT: React.FC<MyNFTType> = ({
   const hideModal = () => setIsModalVisible(false)
   const showModal = () => setIsModalVisible(true)
 const NFTImage = xrpl.convertHexToString(nft?.URI)
+
+
 
 console.log("Image resource ", NFTImage)
   return (
