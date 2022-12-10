@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { Row } from "antd"
+import axios from "axios"
+
 import { useEffect, useState } from "react"
 import { useAccountContext } from "contexts/accountContext"
 import MyNFT from "components/MyNFT/MyNFT"
@@ -32,6 +34,16 @@ const UserNFTs = () => {
     }
   }
 
+  async function insertCollection(collectionName, tokenId) {
+    const newCollection = {
+      collectionName: collectionName,
+      nfts: [tokenId],
+      ownerWalletAddress: accountState.account?.address,
+    }
+
+    axios.post("http://localhost:3001/createCollection", newCollection)
+  }
+
   const makeSellOffer = (
     collectionName: string,
     tokenId: string,
@@ -45,6 +57,8 @@ const UserNFTs = () => {
     newCollections[collectionIndex].collectionNfts.push({ tokenId, price })
 
     setCollections(newCollections)
+
+    insertCollection(collectionName, tokenId)
   }
 
   // const cancelSellOffer = (nftId: string) => {}
