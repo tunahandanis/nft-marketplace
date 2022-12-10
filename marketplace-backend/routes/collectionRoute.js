@@ -32,4 +32,8 @@ router.route("/createCollection").post((req, res) => {
   )
 })
 
+router.route("/getCollections").get((req, res) => {
+  Collection.find().then((foundCollections) => res.json(foundCollections))
+})
+
 module.exports = router

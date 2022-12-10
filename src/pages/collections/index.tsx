@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react"
 import { Row, Col } from "antd"
 import Link from "next/link"
 import styles from "../../styles/path-styles/Collections.module.scss"
@@ -7,6 +8,21 @@ const testIds = [
 ]
 
 const Collections = () => {
+  const [collections, setCollections] = useState()
+
+  useEffect(() => {
+    fetchCollections()
+  }, [])
+
+  const fetchCollections = async () => {
+    const res = await fetch("http://localhost:3001/getCollections")
+    const json = await res.json()
+
+    setCollections(json)
+  }
+
+  console.log(collections)
+
   return (
     <div className={styles.collections}>
       <h2 className={styles.collectionsTitle}>NFT Collections</h2>
