@@ -1,7 +1,12 @@
 import { useState } from "react"
 import { Button, notification } from "antd"
 import styles from "./NFTDetail.module.scss"
-import { useAccountContext, getSellOffers } from "contexts/accountContext"
+import {
+  useAccountContext,
+  getSellOffers,
+  updateBalance,
+  updateNFTs,
+} from "contexts/accountContext"
 import { SmileOutlined } from "@ant-design/icons"
 
 const xrpl = require("xrpl")
@@ -20,7 +25,7 @@ const NFTDetail = () => {
     await client.connect()
 
     const sellOffers = await getSellOffers(
-      "000800001C86886CE1C49F25DC7DF088CE1C7D49AF777E1416E5DA9C00000001"
+      "000800006EF8CAD65510456463547CC62017EB1AFA5558F70000099B00000000"
     )
 
     const transactionBlob = {
@@ -30,14 +35,28 @@ const NFTDetail = () => {
         sellOffers && sellOffers[sellOffers?.length - 1].nft_offer_index,
     }
 
-    await client.submitAndWait(transactionBlob, { wallet })
+    const tx = await client.submitAndWait(transactionBlob, { wallet })
+
+    const btn = (
+      <a
+        href={"https://blockexplorer.one/xrp/testnet/tx/" + tx.result.hash}
+        target="_blank"
+      >
+        <span style={{ color: "#40a9ff", cursor: "pointer" }}>
+          {tx.result.hash.slice(0, 30) + "..."}
+        </span>
+      </a>
+    )
 
     notification.open({
       message: "You successfully bought the NFT",
       placement: "bottomRight",
+      btn,
       icon: <SmileOutlined style={{ color: "#108ee9" }} />,
     })
     setIsLoading(false)
+    updateNFTs(accountDispatch, accountState.account!.address)
+    updateBalance(accountDispatch, accountState.account!.address)
 
     client.disconnect()
   }

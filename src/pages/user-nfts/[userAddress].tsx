@@ -20,19 +20,23 @@ const UserNFTs = () => {
 
   const addCollection = (name: string) => {
     if (collections) {
-      setCollections((prev) => [...prev, { name: name, nftIDs: [] }])
+      setCollections((prev) => [...prev, { name: name, collectionNfts: [] }])
     } else {
-      setCollections([{ name: name, nftIDs: [] }])
+      setCollections([{ name: name, collectionNfts: [] }])
     }
   }
 
-  const makeSellOffer = (collectionName: string, id: string, price: string) => {
+  const makeSellOffer = (
+    collectionName: string,
+    tokenId: string,
+    price: string
+  ) => {
     const collectionIndex = collections.findIndex(
       (obj) => obj.name === collectionName
     )
 
     const newCollections = [...collections]
-    newCollections[collectionIndex].nftIDs.push(id)
+    newCollections[collectionIndex].collectionNfts.push({ tokenId, price })
 
     setCollections(newCollections)
   }
@@ -54,9 +58,9 @@ const UserNFTs = () => {
           <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
             {nfts
               .filter((nft) => {
-                console.log(nft)
-                return !collections.some((collection) =>
-                  collection.nftIDs.includes(nft.NFTokenID)
+                return !collections.some(
+                  (collection) =>
+                    collection.collectionNfts.tokenId === nft.NFTokenID
                 )
               })
               .map((nft) => (
@@ -76,18 +80,33 @@ const UserNFTs = () => {
           return (
             <div key={collection.name} className={styles.nftsCollection}>
               <h3 className={styles.nftsCollectionName}>{collection.name}</h3>
+
               <Row
                 gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}
                 className={styles.nftsCollectionGrid}
               >
-                {collection.nftIDs.map((id) => (
-                  <MyNFT
-                    nft={nfts.filter((nft) => nft.NFTokenID === id)}
-                    key={"On collection NFTokenID: " + collection.nftIDs}
-                    isBeingSold
-                    cancelSellOffer={cancelSellOffer}
-                  />
-                ))}
+                {collection.collectionNfts.map(
+                  (collectionNft, index, array) => (
+                    <MyNFT
+                      nft={nfts.filter(
+                        (nft) => nft.NFTokenID === collectionNft.tokenId
+                      )}
+                      nftInCollection={
+                        array.filter((collectionNft) => {
+                          return nfts.filter(
+                            (nft) => nft.NFTokenID === collectionNft.tokenId
+                          )
+                        })[0]
+                      }
+                      key={
+                        "On collection NFTokenID: " +
+                        collection.collectionNfts.tokenId
+                      }
+                      isBeingSold
+                      cancelSellOffer={cancelSellOffer}
+                    />
+                  )
+                )}
               </Row>
             </div>
           )

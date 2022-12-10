@@ -11,16 +11,22 @@ const xrpl = require("xrpl")
 
 type MyNFTType = {
   nft: object
+  nftInCollection: object
   collections?: any
   addCollection?: (name: string) => void
   isBeingSold?: boolean
-  makeSellOffer?: (collectionName: string, URI: string, price: string) => void
+  makeSellOffer?: (
+    collectionName: string,
+    tokenId: string,
+    price: string
+  ) => void
   cancelSellOffer?: (nftId: string) => void
 }
 
 // eslint-disable-next-line no-unused-vars
 const MyNFT: React.FC<MyNFTType> = ({
   nft,
+  nftInCollection,
   collections,
   addCollection,
   isBeingSold,
@@ -38,7 +44,6 @@ const MyNFT: React.FC<MyNFTType> = ({
 
   const createSellOffer = async (tokenId) => {
     setIsLoading(true)
-    console.log(tokenId)
 
     const wallet = xrpl.Wallet.fromSeed(accountState.account?.secret)
     const client = new xrpl.Client("wss://s.altnet.rippletest.net:51233")
@@ -57,12 +62,27 @@ const MyNFT: React.FC<MyNFTType> = ({
 
     setIsLoading(false)
 
+    const btn = (
+      <a
+        href={"https://blockexplorer.one/xrp/testnet/tx/" + tx.result.hash}
+        target="_blank"
+      >
+        <span style={{ color: "#40a9ff", cursor: "pointer" }}>
+          {tx.result.hash.slice(0, 30) + "..."}
+        </span>
+      </a>
+    )
+
     notification.open({
       message: "Your sell offer was created successfully",
       placement: "bottomRight",
+      btn,
       icon: <SmileOutlined style={{ color: "#86dc3d" }} />,
     })
 
+    if (makeSellOffer) {
+      makeSellOffer(selectedCollection, tokenId, offer)
+    }
     client.disconnect()
   }
 
@@ -131,12 +151,11 @@ const MyNFT: React.FC<MyNFTType> = ({
                 <Button
                   loading={isLoading}
                   className={styles.nftsSellButton}
-                  /* onClick={() => {
-                    if (offer && selectedCollection && makeSellOffer) {
-                      makeSellOffer(selectedCollection, nft.NFTokenID, offer)
+                  onClick={() => {
+                    if (offer && selectedCollection) {
+                      createSellOffer(nft.NFTokenID)
                     }
-                  }} */
-                  onClick={() => createSellOffer(nft.NFTokenID)}
+                  }}
                 >
                   Create
                 </Button>
@@ -165,12 +184,20 @@ const MyNFT: React.FC<MyNFTType> = ({
                 className={styles.nftsBurnButton}
                 onClick={() => {
                   if (cancelSellOffer) {
-                    cancelSellOffer(nft.NFTokenID)
+                    cancelSellOffer(nftInCollection.tokenId)
                   }
                 }}
               >
                 Cancel Sell Offer
               </Button>
+              <div className={styles.nftsPrice}>
+                Price:
+                <img
+                  src="https://changenow.io/images/cached/xrp.png"
+                  alt="nft price in xrp"
+                />
+                <span>{nftInCollection.price}</span>
+              </div>
             </div>
           )}
         </div>

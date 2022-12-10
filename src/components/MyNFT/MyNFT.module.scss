@@ -118,8 +118,34 @@
 
 .nftsCollectionButtonContainer {
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  margin-top: -0.6em;
+
+  button {
+    display: flex;
+    justify-content: center;
+  }
 }
 
-.nftsCollectionName {
+.nftsPrice {
+  font-size: 1rem;
+  margin-top: 0.3em;
+  margin-left: 0.1em;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  span {
+    color: $secondary-color;
+    margin-left: 0.1em;
+  }
+
+  img {
+    height: 22px;
+    width: 22px;
+    object-fit: cover;
+    margin-left: 0.5em;
+  }
 }
