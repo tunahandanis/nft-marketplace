@@ -11,7 +11,10 @@ const xrpl = require("xrpl")
 
 type MyNFTType = {
   nft: object
-  nftInCollection: object
+  nftInCollection: {
+    price: string
+    tokenId: string
+  }
   collections?: any
   addCollection?: (name: string) => void
   isBeingSold?: boolean
@@ -37,12 +40,12 @@ const MyNFT: React.FC<MyNFTType> = ({
   const [offer, setOffer] = useState("")
   const [collectionInput, setCollectionInput] = useState("")
   const [isModalVisible, setIsModalVisible] = useState(false)
-  const [selectedCollection, setSelectedCollection] = useState()
+  const [selectedCollection, setSelectedCollection] = useState<string>()
   const [isLoading, setIsLoading] = useState(false)
 
   const [accountState, accountDispatch] = useAccountContext()
 
-  const createSellOffer = async (tokenId) => {
+  const createSellOffer = async (tokenId: string) => {
     setIsLoading(true)
 
     const wallet = xrpl.Wallet.fromSeed(accountState.account?.secret)
@@ -80,7 +83,7 @@ const MyNFT: React.FC<MyNFTType> = ({
       icon: <SmileOutlined style={{ color: "#86dc3d" }} />,
     })
 
-    if (makeSellOffer) {
+    if (makeSellOffer && selectedCollection) {
       makeSellOffer(selectedCollection, tokenId, offer)
     }
     client.disconnect()

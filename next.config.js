@@ -5,6 +5,10 @@ const nextConfig = {
   env: {
     AI_API_KEY: process.env.AI_API_KEY,
   },
-};
 
-module.exports = nextConfig;
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+}
+
+module.exports = nextConfig
