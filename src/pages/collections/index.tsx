@@ -21,6 +21,7 @@ const Collections = () => {
         <h2 className={styles.collectionsTitle}>NFT Collections</h2>
         <section className={styles.collectionsGrid}>
           <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
+            {/*@ts-ignore*/}
             {collectionsInState?.map((collection) => (
               <Col span={6} key={collection._id}>
                 <Link
