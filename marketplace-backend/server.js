@@ -17,6 +17,7 @@ mongoose
   .catch((err) => console.error(err))
 
 app.use("/", require("./routes/collectionRoute"))
+app.use("/", require("./routes/nftRoute"))
 
 app.listen(3001, () => {
   console.log("Express server running on 3001")

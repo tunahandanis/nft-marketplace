@@ -128,12 +128,36 @@ const UserNFTs = () => {
 
   useEffect(() => {
     if (accountState.account) {
-      setNfts(accountState.account!.nfts)
-      //@ts-ignore
-      // getUserCollection(accountState.account?.classicAddress)
+      fetchNfts()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [accountState])
+  }, [accountState, bool])
+
+  const fetchNfts = async () => {
+    if (accountState.account) {
+      const res = await fetch("http://localhost:3001/getNfts")
+      const json = await res.json()
+
+      const relevantNfts = json.filter((nft) =>
+        accountState.account!.nfts.some((el) =>
+          Object.values(el).includes(nft.tokenId)
+        )
+      )
+
+      const nftToBeOnState = accountState.account!.nfts.map((nft) => {
+        return {
+          ...nft,
+          nftName: relevantNfts.filter(
+            (relevantNft) => relevantNft.tokenId === nft.NFTokenID
+          )[0].nftName,
+        }
+      })
+
+      console.log(nftToBeOnState)
+
+      setNfts(nftToBeOnState)
+    }
+  }
 
   return (
     <div className={styles.nfts}>
@@ -181,7 +205,7 @@ const UserNFTs = () => {
                 {collection.nfts?.map((collectionNft, index, array) => (
                   <MyNFT
                     nft={
-                      nfts.filter(
+                      nfts?.filter(
                         (nft: any) => nft.NFTokenID === collectionNft.tokenId
                       )[0]
                     }

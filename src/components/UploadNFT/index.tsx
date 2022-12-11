@@ -10,6 +10,7 @@ import {
   useAccountContext,
   updateNFTs,
   updateBalance,
+  getLastMintedNft,
 } from "contexts/accountContext"
 import { AccountActionTypes } from "reducers/accountReducer"
 import { uploadFileToIPFS } from "pinata"
@@ -136,8 +137,23 @@ const UploadNFT: React.FC<UploadNFTType> = ({ walletAddress }) => {
 
       console.log(metaDataResponse)
 
-      // show a notfication
+      const nftsResponse = await getLastMintedNft(accountState.account!.address)
+
+      const userNfts = nftsResponse.result.account_nfts
+
+      const lastMintedNft = userNfts[userNfts.length - 1]
+
+      insertNft(lastMintedNft.NFTokenID)
     }
+  }
+
+  async function insertNft(tokenId: string) {
+    const newNft = {
+      nftName: nameInput,
+      tokenId: tokenId,
+    }
+
+    axios.post("http://localhost:3001/createNft", newNft)
   }
 
   return (
@@ -162,11 +178,6 @@ const UploadNFT: React.FC<UploadNFTType> = ({ walletAddress }) => {
               placeholder="NFT Name"
               defaultValue={nameInput}
               onChange={(e) => setNameInput(e.target.value)}
-            />
-            <Input
-              placeholder="NFT Description"
-              defaultValue={descriptionInput}
-              onChange={(e) => setDescriptionInput(e.target.value)}
             />
           </div>
           <Button

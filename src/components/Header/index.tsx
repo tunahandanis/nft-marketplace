@@ -52,20 +52,6 @@ const Header = () => {
                 </li>
               </Link>
               <li>
-                <Dropdown
-                  overlay={
-                    <Menu>
-                      <Menu.Item>Help Center</Menu.Item>
-                      <Menu.Item>Docs</Menu.Item>
-                    </Menu>
-                  }
-                  placement="bottom"
-                  arrow
-                >
-                  <Space className={styles.navChild}>Learn</Space>
-                </Dropdown>
-              </li>
-              <li>
                 {accountState.account?.address ? (
                   <Dropdown
                     overlay={

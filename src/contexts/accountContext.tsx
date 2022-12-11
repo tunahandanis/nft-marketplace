@@ -225,6 +225,20 @@ const updateBalance = async (
   await client.disconnect()
 }
 
+const getLastMintedNft = async (address: string) => {
+  let client
+  client = new xrpl.Client("wss://s.altnet.rippletest.net:51233")
+  await client.connect()
+
+  const user_nfts = await client.request({
+    command: "account_nfts",
+    account: address,
+    ledger_index: "validated",
+  })
+
+  return user_nfts
+}
+
 const getSellOffers = async (tokenId: string) => {
   // setIsLoading(true);
   const client = new xrpl.Client("wss://s.altnet.rippletest.net:51233")
@@ -249,4 +263,5 @@ export {
   updateBalance,
   getSellOffers,
   updateUserWallet,
+  getLastMintedNft,
 }

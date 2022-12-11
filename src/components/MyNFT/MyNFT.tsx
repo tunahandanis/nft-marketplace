@@ -12,8 +12,6 @@ const xrpl = require("xrpl")
 
 type MyNFTType = {
   nft: any
-
-  collections?: any
   collectionsInUI?: any
   collectionsForPrice?: any
   // eslint-disable-next-line no-unused-vars
@@ -32,8 +30,6 @@ type MyNFTType = {
 // eslint-disable-next-line no-unused-vars
 const MyNFT: React.FC<MyNFTType> = ({
   nft,
-  nftInCollection,
-  collections,
   collectionsInUI,
   collectionsForPrice,
   addCollection,
@@ -53,7 +49,7 @@ const MyNFT: React.FC<MyNFTType> = ({
   const [imageUrl, setImageUrl] = useState(
     "https://w0.peakpx.com/wallpaper/284/26/HD-wallpaper-portrait-display-vertical-artwork-digital-art-space-stars-milky-way-planet-blue.jpg"
   )
-  const [nftName, setNftName] = useState("NFT Name Here")
+  const [nftName, setNftName] = useState(nft?.nftName)
 
   const [accountState, accountDispatch] = useAccountContext()
 
