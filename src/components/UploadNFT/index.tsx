@@ -77,16 +77,14 @@ const UploadNFT: React.FC<UploadNFTType> = ({ walletAddress }) => {
       payload: user_nfts.result.account_nfts,
     })
 
-    /*  const pinataResponse =  */ await uploadFileToIPFS(
+     const pinataResponse =  await uploadFileToIPFS(
       imageBlob,
-      //@ts-ignore
-      "nameInput",
-      "descriptionInput"
     )
     console.log("accountState", user_nfts)
 
     // Mint the NFT and display the IPFS url
-
+if (pinataResponse?.success) {
+  
     const mintTransactionBlob = {
       TransactionType: "NFTokenMint",
       Account: accountState.wallet?.classicAddress,
@@ -132,6 +130,8 @@ const UploadNFT: React.FC<UploadNFTType> = ({ walletAddress }) => {
     updateBalance(accountDispatch, accountState.account!.address)
 
     // show a notfication
+  
+}
   }
 
   return (
