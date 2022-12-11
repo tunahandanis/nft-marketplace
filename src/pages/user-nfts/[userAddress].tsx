@@ -150,7 +150,7 @@ const UserNFTs = () => {
           ...nft,
           nftName: relevantNfts.filter(
             (relevantNft) => relevantNft.tokenId === nft.NFTokenID
-          )[0].nftName,
+          )[0]?.nftName,
         }
       })
 
