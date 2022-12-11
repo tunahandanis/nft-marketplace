@@ -124,10 +124,13 @@ export const uploadFromBuffer = async (buffer) => {
         }
       });
   
-      console.log(res.data);
+   
+       console.log("this was the response " ,res.data);
+      return res.data
     } catch (error) {
       console.log(error);
     }
+  return null
   } 
 
   export const getNFTMetadata = async (uri) => {
