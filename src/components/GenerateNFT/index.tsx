@@ -1,4 +1,4 @@
-/* eslint no-use-before-define: 0 */  // --> OFF
+/* eslint no-use-before-define: 0 */ // --> OFF
 
 import { useState } from "react"
 import { Input, Button, notification } from "antd"
@@ -358,30 +358,29 @@ const GenerateNFT: React.FC<GenerateNFTType> = ({ walletAddress }) => {
           {imageUrl && <img src={imageUrl} alt="generated nft image" />}
         </div>
 
-        {imageUrl ||
-          (true && (
-            <>
-              <div className={styles.generateInputContainer}>
-                <Input
-                  placeholder="NFT Name"
-                  defaultValue={nameInput}
-                  onChange={(e) => setNameInput(e.target.value)}
-                />
-              </div>
-              <Button
-                type="primary"
-                size="large"
-                className={`${styles.generateMintNftButton} ${
-                  !walletAddress && styles.generateMintNftButtonDisabled
-                }`}
-                onClick={() => mintNftAndPushToWeb3(uri)}
-                disabled={!walletAddress}
-                loading={isUploading}
-              >
-                Mint NFT
-              </Button>
-            </>
-          ))}
+        {imageUrl && (
+          <>
+            <div className={styles.generateInputContainer}>
+              <Input
+                placeholder="NFT Name"
+                defaultValue={nameInput}
+                onChange={(e) => setNameInput(e.target.value)}
+              />
+            </div>
+            <Button
+              type="primary"
+              size="large"
+              className={`${styles.generateMintNftButton} ${
+                !walletAddress && styles.generateMintNftButtonDisabled
+              }`}
+              onClick={() => mintNftAndPushToWeb3(uri)}
+              disabled={!walletAddress}
+              loading={isUploading}
+            >
+              Mint NFT
+            </Button>
+          </>
+        )}
       </div>
       {!imageUrl && (
         <>
