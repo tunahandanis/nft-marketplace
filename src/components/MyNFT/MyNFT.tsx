@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-unused-vars */
 import { Col, Button, Input, Select, Modal, notification } from "antd"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 import { SmileOutlined, PlusOutlined } from "@ant-design/icons"
 import { useAccountContext } from "contexts/accountContext"
@@ -12,11 +12,10 @@ const xrpl = require("xrpl")
 
 type MyNFTType = {
   nft: any
-  nftInCollection?: {
-    price: string
-    tokenId: string
-  }
+
   collections?: any
+  collectionsInUI?: any
+  collectionsForPrice?: any
   // eslint-disable-next-line no-unused-vars
   addCollection?: (name: string) => void
   isBeingSold?: boolean
@@ -35,6 +34,8 @@ const MyNFT: React.FC<MyNFTType> = ({
   nft,
   nftInCollection,
   collections,
+  collectionsInUI,
+  collectionsForPrice,
   addCollection,
   isBeingSold,
   makeSellOffer,
@@ -46,6 +47,7 @@ const MyNFT: React.FC<MyNFTType> = ({
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [selectedCollection, setSelectedCollection] = useState<string>()
   const [isLoading, setIsLoading] = useState(false)
+  const [nftWithPrice, setNftWithPrice] = useState()
 
   // These will change after we get the my nfts page db connection
   const [imageUrl, setImageUrl] = useState(
@@ -54,6 +56,24 @@ const MyNFT: React.FC<MyNFTType> = ({
   const [nftName, setNftName] = useState("NFT Name Here")
 
   const [accountState, accountDispatch] = useAccountContext()
+
+  useEffect(() => {
+    if (nft) {
+      setImageUrl(xrpl.convertHexToString(nft?.URI))
+    } // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  useEffect(() => {
+    const nfts = collectionsForPrice
+      ?.reduce((prev, next) => [...prev, next.nfts], [])
+      .flat(1)
+
+    const nftWithPrice = nfts?.filter(
+      (nftIn) => nftIn.tokenId === nft.NFTokenID
+    )
+
+    setNftWithPrice(nftWithPrice?.[0])
+  }, [])
 
   const createSellOffer = async (tokenId: string) => {
     setIsLoading(true)
@@ -100,19 +120,20 @@ const MyNFT: React.FC<MyNFTType> = ({
     client.disconnect()
   }
 
-  const collectionOptions = collections?.map((collection: any) => {
-    return { value: collection.name, label: collection.name }
+  const collectionOptions = collectionsInUI?.map((collection: any) => {
+    return {
+      value: collection.collectionName,
+      label: collection.collectionName,
+    }
   })
 
   const hideModal = () => setIsModalVisible(false)
   const showModal = () => setIsModalVisible(true)
-  const NFTImage = xrpl.convertHexToString(nft?.URI)
 
-  console.log("Image resource ", NFTImage)
   return (
     <Col span={6}>
       <article className={styles.nftsCard}>
-        <img src={NFTImage} alt="nft collection image" />
+        <img src={imageUrl} alt="nft collection image" />
         <div
           className={`${styles.nftsCardTextContainer} ${
             isCreatingOffer &&
@@ -209,7 +230,7 @@ const MyNFT: React.FC<MyNFTType> = ({
                   src="https://changenow.io/images/cached/xrp.png"
                   alt="nft price in xrp"
                 />
-                <span>{nftInCollection?.price}</span>
+                <span>{nftWithPrice?.price}</span>
               </div>
             </div>
           )}

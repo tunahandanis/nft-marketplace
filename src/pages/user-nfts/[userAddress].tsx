@@ -20,17 +20,44 @@ type CollectionType = {
 // eslint-disable-next-line no-unused-vars
 const UserNFTs = () => {
   const [nfts, setNfts] = useState<any>()
-  const [collections, setCollections] = useState<CollectionType[]>([]) // initial state must not be undefined, it should stay as at least an empty array
-  // get account from context and retrieve account nfts
+
+  const [collections, setCollections] = useState<CollectionType[]>([])
+  const [collectionsInUI, setCollectionsInUI] = useState()
+
+  const [bool, setBool] = useState(false)
+
   const [accountState] = useAccountContext()
 
   // You can use the userWalletAddress to pull from database
 
+  useEffect(() => {
+    fetchCollections()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [accountState, bool])
+
+  const fetchCollections = async () => {
+    if (accountState.account) {
+      const res = await fetch("http://localhost:3001/getCollections")
+      const json = await res.json()
+
+      const ownerCollections = json.filter(
+        (collection) =>
+          collection.ownerWalletAddress === accountState?.account?.address
+      )
+
+      setCollections(ownerCollections)
+      setCollectionsInUI(ownerCollections)
+    }
+  }
+
   const addCollection = (name: string) => {
-    if (collections) {
-      setCollections((prev) => [...prev, { name: name, collectionNfts: [] }])
+    if (collectionsInUI) {
+      setCollectionsInUI((prev) => [
+        ...prev,
+        { collectionName: name, nfts: [] },
+      ])
     } else {
-      setCollections([{ name: name, collectionNfts: [] }])
+      setCollectionsInUI([{ collectionName: name, nfts: [] }])
     }
   }
 
@@ -44,7 +71,7 @@ const UserNFTs = () => {
 
   } */
 
-  const getUserCollection = async (/* wallet: string */) => {
+  /* const getUserCollection = async (wallet: string) => {
     console.log("===== getting user's collections ==== ")
     const addCollectionResponse = await fetch(
       `/api/collections?walletAddress=${accountState.account?.address}`
@@ -52,7 +79,7 @@ const UserNFTs = () => {
     const collections = await addCollectionResponse.json()
     //  setCollections(collections.collections)
     console.log("User's collection", collections.collections)
-  }
+  } */
 
   async function insertCollection(
     collectionName: string,
@@ -75,6 +102,7 @@ const UserNFTs = () => {
     }
 
     axios.post("http://localhost:3001/createCollection", newCollection)
+    setBool((prev) => !prev)
   }
 
   const makeSellOffer = (
@@ -84,14 +112,14 @@ const UserNFTs = () => {
     nftName: string,
     imageUrl: string
   ) => {
-    const collectionIndex = collections.findIndex(
+    /*  const collectionIndex = collections.findIndex(
       (obj) => obj.name === collectionName
-    )
+    ) */
 
-    const newCollections = [...collections]
+    /*  const newCollections = [...collections]
     newCollections[collectionIndex].collectionNfts.push({ tokenId, price })
 
-    setCollections(newCollections)
+    setCollections(newCollections) */
 
     insertCollection(collectionName, tokenId, price, nftName, imageUrl)
   }
@@ -102,12 +130,11 @@ const UserNFTs = () => {
     if (accountState.account) {
       setNfts(accountState.account!.nfts)
       //@ts-ignore
-      getUserCollection(accountState.account?.classicAddress)
+      // getUserCollection(accountState.account?.classicAddress)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accountState])
 
-  console.log(nfts)
   return (
     <div className={styles.nfts}>
       <h2 className={styles.nftsTitle}>My NFTs</h2>
@@ -116,10 +143,11 @@ const UserNFTs = () => {
           <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
             {nfts
               .filter((nft: any) => {
-                return !collections.some(
-                  (collection) =>
-                    //@ts-ignore
-                    collection.collectionNfts.tokenId === nft.NFTokenID
+                return !collections.some((collection) =>
+                  //@ts-ignore
+                  collection.nfts.some(
+                    (nftIn) => nftIn?.tokenId === nft.NFTokenID
+                  )
                 )
               })
               .map((nft: any) => (
@@ -127,6 +155,7 @@ const UserNFTs = () => {
                   nft={nft}
                   key={nft.NFTokenID}
                   collections={collections}
+                  collectionsInUI={collectionsInUI}
                   addCollection={addCollection}
                   makeSellOffer={makeSellOffer}
                 />
@@ -137,37 +166,35 @@ const UserNFTs = () => {
       <section className={styles.nftsCollection}>
         {collections.map((collection) => {
           return (
-            <div key={collection.name} className={styles.nftsCollection}>
-              <h3 className={styles.nftsCollectionName}>{collection.name}</h3>
+            <div
+              key={collection.collectionName}
+              className={styles.nftsCollection}
+            >
+              <h3 className={styles.nftsCollectionName}>
+                {collection.collectionName}
+              </h3>
 
               <Row
                 gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}
                 className={styles.nftsCollectionGrid}
               >
-                {collection.collectionNfts.map(
-                  (collectionNft, index, array) => (
-                    <MyNFT
-                      nft={nfts.filter(
+                {collection.nfts?.map((collectionNft, index, array) => (
+                  <MyNFT
+                    nft={
+                      nfts.filter(
                         (nft: any) => nft.NFTokenID === collectionNft.tokenId
-                      )}
-                      nftInCollection={
-                        array.filter((collectionNft) => {
-                          return nfts.filter(
-                            (nft: any) =>
-                              nft.NFTokenID === collectionNft.tokenId
-                          )
-                        })[0]
-                      }
-                      key={
-                        "On collection NFTokenID: " +
-                        //@ts-ignore
-                        collection.collectionNfts.tokenId
-                      }
-                      isBeingSold
-                      // cancelSellOffer={cancelSellOffer}
-                    />
-                  )
-                )}
+                      )[0]
+                    }
+                    collectionsForPrice={collections}
+                    key={
+                      "On collection NFTokenID: " +
+                      //@ts-ignore
+                      collection.collectionNfts?.tokenId
+                    }
+                    isBeingSold
+                    // cancelSellOffer={cancelSellOffer}
+                  />
+                ))}
               </Row>
             </div>
           )
