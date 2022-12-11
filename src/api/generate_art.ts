@@ -63,7 +63,7 @@ export default async function handler(
     //   console.log("This image was retrieved" +  imageResponse);
     // });
 
-    res.status(200).json({ imageURL: image.data[0].url })
+      res.status(200).json({ imageURL: image.data[0].url, imageURI: pinataResponse?.IpfsHash})
   } else {
     // Handle any other HTTP method
     res.status(200).json({ imageURL: "Get request detected" })
