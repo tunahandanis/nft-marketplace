@@ -28,6 +28,7 @@ const Collection = () => {
 
   useEffect(() => {
     fetchCollections()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const fetchCollections = async () => {

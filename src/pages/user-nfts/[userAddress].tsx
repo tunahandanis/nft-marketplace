@@ -32,11 +32,9 @@ const UserNFTs = () => {
     } else {
       setCollections([{ name: name, collectionNfts: [] }])
     }
-
-
   }
 
-  const addCollectionsToDb = async ( collection: object ) => {
+  /*  const addCollectionsToDb = async ( collection: object ) => {
     const addCollectionResponse =  await fetch(`/api/collections?walletAddress=${accountState.account?.address}`, {
     
     })
@@ -44,15 +42,16 @@ const UserNFTs = () => {
     console.log(addCollectionResponse)
 
 
-  }
+  } */
 
-  const getUserCollection = async (wallet: string) => {
+  const getUserCollection = async (/* wallet: string */) => {
     console.log("===== getting user's collections ==== ")
-    const addCollectionResponse =  await fetch(`/api/collections?walletAddress=${accountState.account?.address}`)
+    const addCollectionResponse = await fetch(
+      `/api/collections?walletAddress=${accountState.account?.address}`
+    )
     const collections = await addCollectionResponse.json()
-  //  setCollections(collections.collections)
+    //  setCollections(collections.collections)
     console.log("User's collection", collections.collections)
-
   }
 
   async function insertCollection(
@@ -102,8 +101,10 @@ const UserNFTs = () => {
   useEffect(() => {
     if (accountState.account) {
       setNfts(accountState.account!.nfts)
+      //@ts-ignore
       getUserCollection(accountState.account?.classicAddress)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accountState])
 
   console.log(nfts)

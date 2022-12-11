@@ -43,6 +43,7 @@ const NFTDetail = () => {
 
   useEffect(() => {
     fetchCollections()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const fetchCollections = async () => {
@@ -59,7 +60,8 @@ const NFTDetail = () => {
     setSeller(filteredCollection.ownerWalletAddress)
 
     const filteredNft = filteredCollection.nfts.filter(
-      (nft) => nft.tokenId === router.query.nftId
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (nft: any) => nft.tokenId === router.query.nftId
     )[0]
 
     setNft(filteredNft)
