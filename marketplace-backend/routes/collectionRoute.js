@@ -32,6 +32,28 @@ router.route("/createCollection").post((req, res) => {
   )
 })
 
+router.route("/removeFromCollection").post((req, res) => {
+  const collectionName = req.body.collectionName
+  const collectionTokenId = req.body.tokenId
+
+  const filter = { collectionName: collectionName }
+
+  Collection.updateOne(
+    filter,
+
+    { $pull: { nfts: { tokenId: collectionTokenId } } },
+
+    (error, data) => {
+      if (error) {
+        console.log(error)
+      } else {
+        console.log(data)
+        res.sendStatus(200)
+      }
+    }
+  )
+})
+
 router.route("/getCollections").get((req, res) => {
   Collection.find().then((foundCollections) => res.json(foundCollections))
 })

@@ -69,7 +69,7 @@ const MyNFT: React.FC<MyNFTType> = ({
       .flat(1)
 
     const nftWithPrice = nfts?.filter(
-      (nftIn) => nftIn.tokenId === nft.NFTokenID
+      (nftIn) => nftIn.tokenId === nft?.NFTokenID
     )
 
     setNftWithPrice(nftWithPrice?.[0])

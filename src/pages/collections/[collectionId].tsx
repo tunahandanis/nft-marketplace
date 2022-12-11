@@ -51,19 +51,24 @@ const Collection = () => {
       <h2 className={styles.collectionTitle}>{collection?.collectionName}</h2>
       <section className={styles.collectionGrid}>
         <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-          {collection?.nfts?.map((nft) => (
-            <Col span={6} key={nft.tokenId}>
-              <Link
-                href={{
-                  pathname: `/nft/${nft.tokenId}`,
-                  query: { collectionName: collection.collectionName },
-                }}
-                className={styles.collectionLink}
-              >
-                <NFTCard nft={nft} />
-              </Link>
-            </Col>
-          ))}
+          {collection?.nfts?.map((nft) => {
+            if (nft?.tokenId) {
+              return (
+                <Col span={6} key={nft.tokenId}>
+                  <Link
+                    href={{
+                      pathname: `/nft/${nft.tokenId}`,
+                      query: { collectionName: collection.collectionName },
+                    }}
+                    className={styles.collectionLink}
+                  >
+                    <NFTCard nft={nft} />
+                  </Link>
+                </Col>
+              )
+              // eslint-disable-next-line no-else-return
+            } else return null
+          })}
         </Row>
       </section>
     </div>

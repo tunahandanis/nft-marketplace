@@ -11,6 +11,7 @@ import {
   updateNFTs,
 } from "contexts/accountContext"
 import styles from "./NFTDetail.module.scss"
+import axios from "axios"
 
 const xrpl = require("xrpl")
 
@@ -41,6 +42,8 @@ const NFTDetail = () => {
 
   const [accountState, accountDispatch] = useAccountContext()
 
+  const [collectionName, setCollectionName] = useState()
+
   useEffect(() => {
     fetchCollections()
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -51,13 +54,14 @@ const NFTDetail = () => {
     const json = await res.json()
 
     const collectionName = router.query.collectionName
+    setCollectionName(collectionName)
 
     const filteredCollection = json.filter(
       (collection: CollectionType) =>
         collection.collectionName === collectionName
     )[0]
 
-    setSeller(filteredCollection.ownerWalletAddress)
+    setSeller(filteredCollection?.ownerWalletAddress)
 
     const filteredNft = filteredCollection.nfts.filter(
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -65,6 +69,15 @@ const NFTDetail = () => {
     )[0]
 
     setNft(filteredNft)
+  }
+
+  async function deleteNft() {
+    const body = {
+      collectionName: collectionName,
+      tokenId: nft?.tokenId,
+    }
+
+    axios.post("http://localhost:3001/removeFromCollection", body)
   }
 
   const acceptSellOffer = async () => {
@@ -108,6 +121,7 @@ const NFTDetail = () => {
     setIsLoading(false)
     updateNFTs(accountDispatch, accountState.account!.address)
     updateBalance(accountDispatch, accountState.account!.address)
+    deleteNft()
 
     client.disconnect()
   }
@@ -131,7 +145,9 @@ const NFTDetail = () => {
           >
             <span>
               Seller Address:{" "}
-              <span className={styles.nftsSellerAddress}>{seller}</span>
+              <span className={styles.nftsSellerAddress}>
+                {seller?.slice(0, 30) + "..."}
+              </span>
             </span>
           </CopyToClipboard>
         </p>
