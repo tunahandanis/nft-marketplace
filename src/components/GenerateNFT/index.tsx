@@ -7,6 +7,7 @@ import { CheckOutlined } from "@ant-design/icons"
 
 import styles from "components/GenerateNFT/GenerateNFT.module.scss"
 import {
+  getLastMintedNft,
   updateBalance,
   updateNFTs,
   useAccountContext,
@@ -116,7 +117,6 @@ const GenerateNFT: React.FC<GenerateNFTType> = ({ walletAddress }) => {
   const [imageInput, setImageInput] = useState<string | undefined>("")
   const [isGenerateLoading, setIsGenerateLoading] = useState<boolean>()
   const [nameInput, setNameInput] = useState<string>()
-  const [descriptionInput, setDescriptionInput] = useState<string>()
 
   const [appendIllustrationText, setAppendIllustrationText] = useState("")
   const [appendPhotographicText, setAppendPhotographicText] = useState("")
@@ -314,7 +314,24 @@ const GenerateNFT: React.FC<GenerateNFTType> = ({ walletAddress }) => {
 
     console.log(metaDataResponse)
 
+    const nftsResponse = await getLastMintedNft(accountState.account!.address)
+
+    const userNfts = nftsResponse.result.account_nfts
+
+    const lastMintedNft = userNfts[userNfts.length - 1]
+
+    insertNft(lastMintedNft.NFTokenID)
+
     // show a notfication
+  }
+
+  async function insertNft(tokenId: string) {
+    const newNft = {
+      nftName: nameInput,
+      tokenId: tokenId,
+    }
+
+    axios.post("http://localhost:3001/createNft", newNft)
   }
 
   return (
@@ -341,34 +358,30 @@ const GenerateNFT: React.FC<GenerateNFTType> = ({ walletAddress }) => {
           {imageUrl && <img src={imageUrl} alt="generated nft image" />}
         </div>
 
-        {imageUrl && (
-          <>
-            <div className={styles.generateInputContainer}>
-              <Input
-                placeholder="NFT Name"
-                defaultValue={nameInput}
-                onChange={(e) => setNameInput(e.target.value)}
-              />
-              <Input
-                placeholder="NFT Description"
-                defaultValue={descriptionInput}
-                onChange={(e) => setDescriptionInput(e.target.value)}
-              />
-            </div>
-            <Button
-              type="primary"
-              size="large"
-              className={`${styles.generateMintNftButton} ${
-                !walletAddress && styles.generateMintNftButtonDisabled
-              }`}
-              onClick={() => mintNftAndPushToWeb3(uri)}
-              disabled={!walletAddress}
-              loading={isUploading}
-            >
-              Mint NFT
-            </Button>
-          </>
-        )}
+        {imageUrl ||
+          (true && (
+            <>
+              <div className={styles.generateInputContainer}>
+                <Input
+                  placeholder="NFT Name"
+                  defaultValue={nameInput}
+                  onChange={(e) => setNameInput(e.target.value)}
+                />
+              </div>
+              <Button
+                type="primary"
+                size="large"
+                className={`${styles.generateMintNftButton} ${
+                  !walletAddress && styles.generateMintNftButtonDisabled
+                }`}
+                onClick={() => mintNftAndPushToWeb3(uri)}
+                disabled={!walletAddress}
+                loading={isUploading}
+              >
+                Mint NFT
+              </Button>
+            </>
+          ))}
       </div>
       {!imageUrl && (
         <>
