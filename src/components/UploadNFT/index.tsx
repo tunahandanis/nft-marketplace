@@ -88,7 +88,7 @@ const UploadNFT: React.FC<UploadNFTType> = ({ walletAddress }) => {
     // Mint the NFT and display the IPFS url
 
     //@ts-ignore
-    if (pinataResponse.success) {
+
       const mintTransactionBlob = {
         TransactionType: "NFTokenMint",
         Account: accountState.wallet?.classicAddress,
@@ -142,7 +142,7 @@ const UploadNFT: React.FC<UploadNFTType> = ({ walletAddress }) => {
       const metaDataResponse = await axios.get("api/get_nft_metadata/")
 
       console.log(metaDataResponse)
-    }
+   
 
     // show a notfication
   }
