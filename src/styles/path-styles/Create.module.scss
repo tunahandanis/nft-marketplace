@@ -25,10 +25,10 @@
   }
 
   &TypeButtonUpload {
-    border-radius: 7px 0 0 7px;
+    border-radius: 0 7px 7px 0;
   }
 
   &TypeButtonGenerate {
-    border-radius: 0 7px 7px 0;
+    border-radius: 7px 0 0 7px;
   }
 }
