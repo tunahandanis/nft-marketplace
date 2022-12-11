@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint no-use-before-define: 0 */  // --> OFF
 
 import { useState } from "react"
 import { Input, Button, notification } from "antd"
