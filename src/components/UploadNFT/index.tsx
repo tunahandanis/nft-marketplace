@@ -25,7 +25,6 @@ type UploadNFTType = {
 const UploadNFT: React.FC<UploadNFTType> = ({ walletAddress }) => {
   const [imageUrl, setImageUrl] = useState<string>()
   const [nameInput, setNameInput] = useState<string>()
-  const [descriptionInput, setDescriptionInput] = useState<string>()
   // const [pinataResponse /*  setPinataResponse */] = useState("")
   /* const [token, setToken] = useState(
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweEVGRDlmRDBkZTI2M2ZBMmY5YTRkMDA5MWNDRUU3YjQ3RTlFMDQwYWQiLCJpc3MiOiJ3ZWIzLXN0b3JhZ2UiLCJpYXQiOjE2NzAxNzUzOTA3NTgsIm5hbWUiOiJ4cnBfZ2VuZXJhdGl2ZV9haSJ9.yTWTdTEc_OEd6igRJl3JGp0Sd3jueJgxuFd5ieiM3a0"

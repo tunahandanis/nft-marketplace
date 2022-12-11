@@ -3,7 +3,7 @@ import { Button, message, notification } from "antd"
 import { SmileOutlined } from "@ant-design/icons"
 import { useRouter } from "next/router"
 import CopyToClipboard from "react-copy-to-clipboard"
-
+import axios from "axios"
 import {
   useAccountContext,
   getSellOffers,
@@ -11,7 +11,6 @@ import {
   updateNFTs,
 } from "contexts/accountContext"
 import styles from "./NFTDetail.module.scss"
-import axios from "axios"
 
 const xrpl = require("xrpl")
 
@@ -54,6 +53,7 @@ const NFTDetail = () => {
     const json = await res.json()
 
     const collectionName = router.query.collectionName
+    //@ts-ignore
     setCollectionName(collectionName)
 
     const filteredCollection = json.filter(
@@ -146,6 +146,7 @@ const NFTDetail = () => {
             <span>
               Seller Address:{" "}
               <span className={styles.nftsSellerAddress}>
+                {/*@ts-ignore*/}
                 {seller?.slice(0, 30) + "..."}
               </span>
             </span>

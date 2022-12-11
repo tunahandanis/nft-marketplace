@@ -46,6 +46,8 @@
 
 .uploadInputContainer {
   padding: 2.5em 0 2em;
+  width: 100%;
+  text-align: center;
 
   ::placeholder {
     color: darken(#fff, 20%);
@@ -54,6 +56,7 @@
   input {
     margin: 1em 0;
     height: 40px;
+    width: 75%;
     background-color: lighten($primary-color, 40%);
     border: none;
     color: #fff;

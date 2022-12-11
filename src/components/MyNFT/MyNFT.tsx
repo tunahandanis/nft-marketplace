@@ -61,14 +61,15 @@ const MyNFT: React.FC<MyNFTType> = ({
 
   useEffect(() => {
     const nfts = collectionsForPrice
-      ?.reduce((prev, next) => [...prev, next.nfts], [])
+      ?.reduce((prev: any, next: any) => [...prev, next.nfts], [])
       .flat(1)
 
     const nftWithPrice = nfts?.filter(
-      (nftIn) => nftIn.tokenId === nft?.NFTokenID
+      (nftIn: any) => nftIn.tokenId === nft?.NFTokenID
     )
 
     setNftWithPrice(nftWithPrice?.[0])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const createSellOffer = async (tokenId: string) => {
@@ -226,6 +227,7 @@ const MyNFT: React.FC<MyNFTType> = ({
                   src="https://changenow.io/images/cached/xrp.png"
                   alt="nft price in xrp"
                 />
+                {/*@ts-ignore*/}
                 <span>{nftWithPrice?.price}</span>
               </div>
             </div>

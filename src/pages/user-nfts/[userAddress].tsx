@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
+// @ts-nocheck
 import { Row } from "antd"
 import axios from "axios"
 
@@ -41,7 +41,7 @@ const UserNFTs = () => {
       const json = await res.json()
 
       const ownerCollections = json.filter(
-        (collection) =>
+        (collection: any) =>
           collection.ownerWalletAddress === accountState?.account?.address
       )
 
@@ -52,6 +52,7 @@ const UserNFTs = () => {
 
   const addCollection = (name: string) => {
     if (collectionsInUI) {
+      //@ts-ignore
       setCollectionsInUI((prev) => [
         ...prev,
         { collectionName: name, nfts: [] },
@@ -202,7 +203,7 @@ const UserNFTs = () => {
                 gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}
                 className={styles.nftsCollectionGrid}
               >
-                {collection.nfts?.map((collectionNft, index, array) => (
+                {collection.nfts?.map((collectionNft) => (
                   <MyNFT
                     nft={
                       nfts?.filter(

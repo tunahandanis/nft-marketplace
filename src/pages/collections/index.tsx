@@ -35,7 +35,8 @@ const Collections = () => {
             {/*@ts-ignore*/}
             {collections?.map((collection) => {
               const nftsLength = collection.nfts.filter(
-                (nft) => nft?.tokenId !== undefined
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                (nft: any) => nft?.tokenId !== undefined
               ).length
 
               console.log(collection.nfts)
