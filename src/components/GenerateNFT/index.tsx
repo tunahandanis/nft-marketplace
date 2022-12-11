@@ -2,13 +2,18 @@
 
 import { useState } from "react"
 import { Input, Button, notification } from "antd"
-import styles from "components/GenerateNFT/GenerateNFT.module.scss"
-import { updateBalance, updateNFTs, useAccountContext } from "contexts/accountContext"
-import { AccountActionTypes } from "reducers/accountReducer"
-import { CheckOutlined } from "@ant-design/icons"
 import axios from "axios"
+import { CheckOutlined } from "@ant-design/icons"
 
-const xrpl = require('xrpl')
+import styles from "components/GenerateNFT/GenerateNFT.module.scss"
+import {
+  updateBalance,
+  updateNFTs,
+  useAccountContext,
+} from "contexts/accountContext"
+import { AccountActionTypes } from "reducers/accountReducer"
+
+const xrpl = require("xrpl")
 //import { uploadFileToIPFS } from "pinata"
 // import http from "http"
 const { TextArea } = Input
@@ -116,10 +121,10 @@ const GenerateNFT: React.FC<GenerateNFTType> = ({ walletAddress }) => {
   const [appendIllustrationText, setAppendIllustrationText] = useState("")
   const [appendPhotographicText, setAppendPhotographicText] = useState("")
   const [appendMovieText, setAppendMovieText] = useState("")
-  
+
   const [uri, setURI] = useState("")
 
-  const [imageBlob, setImageBlob] = useState<any>()
+  // const [imageBlob, setImageBlob] = useState<any>()
   const [cid /* setCid */] = useState("")
   const [isUploading, setIsUploading] = useState<boolean>()
   // get wallet from accountContext
@@ -169,8 +174,8 @@ const GenerateNFT: React.FC<GenerateNFTType> = ({ walletAddress }) => {
     const result = await response.json()
     setImageUrl(result.imageURL)
     setURI(result.imageURI)
-    console.log("The URI WAS Retrieved ==> "  , result.imageURI)
-  //  mintNftAndPushToWeb3(result.imageURI)
+    console.log("The URI WAS Retrieved ==> ", result.imageURI)
+    //  mintNftAndPushToWeb3(result.imageURI)
     console.log("Image has been loaded ...waiting for one more step")
     console.log(`Generative Art prompt text: ${result.imageURL}`)
     setIsGenerateLoading(false)
@@ -185,7 +190,7 @@ const GenerateNFT: React.FC<GenerateNFTType> = ({ walletAddress }) => {
     }
   }
 
-  const mintGeneratedImage = async (generatedImageURL: string) => {
+  /* const mintGeneratedImage = async (generatedImageURL: string) => {
     // const responseBlob = await fetch(imageUrl)
     // use fetch to avoid CORS issues with IPFS images
     // no-cors-fetch is not working
@@ -199,7 +204,7 @@ const GenerateNFT: React.FC<GenerateNFTType> = ({ walletAddress }) => {
     // await handleUpload(imageBlob);
     // console.log("cid", cid);
     // console.log("MINTING THIS NFT" + generatedImageURL, nameInput, descriptionInput)
-  }
+  } */
   /* const handleGetGeneratedImage = async (url: string) => {
     console.log("Image has been loaded ...")
     const response = await http.get(url)
@@ -229,6 +234,7 @@ const GenerateNFT: React.FC<GenerateNFTType> = ({ walletAddress }) => {
     console.log("cid", cid)
 
     setIsUploading(true)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     await accountState.client.connect((connection: any) => {
       console.log("connected to xrpl", connection)
     })
@@ -237,7 +243,6 @@ const GenerateNFT: React.FC<GenerateNFTType> = ({ walletAddress }) => {
     //   type: AccountActionTypes.SET_ACCOUNT_NFTS,
     //   payload: account_nfts
     // });
-
 
     const user_nfts = await accountState.client.request({
       command: "account_nfts",
@@ -252,27 +257,24 @@ const GenerateNFT: React.FC<GenerateNFTType> = ({ walletAddress }) => {
     //  const pinataResponse =  await uploadFileToIPFS(
     //   imageBlob
     // )
-  //  console.log("Pinata Response ", pinataResponse)
+    //  console.log("Pinata Response ", pinataResponse)
 
     // Mint the NFT and display the IPFS url
 
-    
-      const mintTransactionBlob = {
-        TransactionType: "NFTokenMint",
-        Account: accountState.wallet?.classicAddress,
-        URI: xrpl.convertStringToHex(`https://gateway.pinata.cloud/ipfs/${URI}`),
-        Flags: 8,
-        TransferFee: 0,
-        NFTokenTaxon: 0, //Required, but if you have no use for it, set to zero.
-      }
-      
-      const signedTx = await accountState.wallet?.sign(mintTransactionBlob)
-      console.log("The transaction was signed " + signedTx + " address => ")
-      const tx = await accountState.client.submitAndWait(mintTransactionBlob, {
-        wallet: accountState?.wallet,
-      })
+    const mintTransactionBlob = {
+      TransactionType: "NFTokenMint",
+      Account: accountState.wallet?.classicAddress,
+      URI: xrpl.convertStringToHex(`https://gateway.pinata.cloud/ipfs/${URI}`),
+      Flags: 8,
+      TransferFee: 0,
+      NFTokenTaxon: 0, //Required, but if you have no use for it, set to zero.
+    }
 
-     
+    const signedTx = await accountState.wallet?.sign(mintTransactionBlob)
+    console.log("The transaction was signed " + signedTx + " address => ")
+    const tx = await accountState.client.submitAndWait(mintTransactionBlob, {
+      wallet: accountState?.wallet,
+    })
 
     // response = await client.request({
     //   command: "account_nfts",
@@ -304,19 +306,16 @@ const GenerateNFT: React.FC<GenerateNFTType> = ({ walletAddress }) => {
     updateNFTs(accountDispatch, accountState.account!.address)
     updateBalance(accountDispatch, accountState.account!.address)
 
-    console.log( tx.result.URI  )
-    const metaDataHex =tx.result.URI
+    console.log(tx.result.URI)
+    const metaDataHex = tx.result.URI
     const stringMetaDataURI = xrpl.convertHexToString(metaDataHex)
     console.log(stringMetaDataURI)
     const metaDataResponse = await axios.get("api/get_nft_metadata/")
 
-    console.log( metaDataResponse)
-   
+    console.log(metaDataResponse)
 
-
-  
     // show a notfication
-   }
+  }
 
   return (
     <>
