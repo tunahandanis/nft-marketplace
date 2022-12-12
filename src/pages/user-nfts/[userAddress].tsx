@@ -28,10 +28,13 @@ const UserNFTs = () => {
 
   const [accountState] = useAccountContext()
 
-  // You can use the userWalletAddress to pull from database
-
   useEffect(() => {
-    fetchCollections()
+    if (accountState.account) {
+      fetchCollections()
+      fetchNfts()
+     
+    }
+ 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accountState, bool])
 
@@ -127,12 +130,7 @@ const UserNFTs = () => {
 
   // const cancelSellOffer = (nftId: string) => {}
 
-  useEffect(() => {
-    if (accountState.account) {
-      fetchNfts()
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [accountState, bool])
+
 
   const fetchNfts = async () => {
     if (accountState.account) {

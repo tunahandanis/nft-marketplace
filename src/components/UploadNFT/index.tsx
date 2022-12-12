@@ -132,9 +132,9 @@ const UploadNFT: React.FC<UploadNFTType> = ({ walletAddress }) => {
       const metaDataHex = tx.result.URI
       const stringMetaDataURI = xrpl.convertHexToString(metaDataHex)
       console.log(stringMetaDataURI)
-      const metaDataResponse = await axios.get("api/get_nft_metadata/")
+      //const metaDataResponse = await axios.get("api/get_nft_metadata/")
 
-      console.log(metaDataResponse)
+      //console.log(metaDataResponse)
 
       const nftsResponse = await getLastMintedNft(accountState.account!.address)
 

@@ -5,6 +5,6 @@ const nftSchema = mongoose.Schema({
   nftName: String,
 })
 
-const NFT = mongoose.model("NFT", nftSchema)
+const NFT = mongoose.model("NFT", nftSchema) || mongoose.model('NFT', nftSchema )
 
 module.exports = NFT

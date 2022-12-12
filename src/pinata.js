@@ -3,7 +3,7 @@
 import axios from "axios"
 import FormData from "form-data"
 const { Readable } = require("stream")
-const JWT = `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mb3JtYXRpb24iOnsiaWQiOiI1MDBjZDBlMi00NzA2LTQwYzMtYThkNy0wNDYyYTUwMjhiNTAiLCJlbWFpbCI6ImF0aGVuYW9pa29zQGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJwaW5fcG9saWN5Ijp7InJlZ2lvbnMiOlt7ImlkIjoiRlJBMSIsImRlc2lyZWRSZXBsaWNhdGlvbkNvdW50IjoxfSx7ImlkIjoiTllDMSIsImRlc2lyZWRSZXBsaWNhdGlvbkNvdW50IjoxfV0sInZlcnNpb24iOjF9LCJtZmFfZW5hYmxlZCI6ZmFsc2UsInN0YXR1cyI6IkFDVElWRSJ9LCJhdXRoZW50aWNhdGlvblR5cGUiOiJzY29wZWRLZXkiLCJzY29wZWRLZXlLZXkiOiI4NGIyYmFiMTk4M2Y4NjVjNjQ0ZSIsInNjb3BlZEtleVNlY3JldCI6IjM4MjBmN2E1NWJkMTgxOGM4M2EzMDVmNzJiZDZhMjQ4ZjM3NTZhYWQyZTI5MDJiMGMxM2RhZDNhOGNkOTRjODYiLCJpYXQiOjE2NzA4MzE5MDB9._MVXniScfQJV_fvxweO2cLoq3nGHHlc9FFc8ZTa-BFo`
+const JWT = `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mb3JtYXRpb24iOnsiaWQiOiI1MDBjZDBlMi00NzA2LTQwYzMtYThkNy0wNDYyYTUwMjhiNTAiLCJlbWFpbCI6ImF0aGVuYW9pa29zQGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJwaW5fcG9saWN5Ijp7InJlZ2lvbnMiOlt7ImlkIjoiRlJBMSIsImRlc2lyZWRSZXBsaWNhdGlvbkNvdW50IjoxfSx7ImlkIjoiTllDMSIsImRlc2lyZWRSZXBsaWNhdGlvbkNvdW50IjoxfV0sInZlcnNpb24iOjF9LCJtZmFfZW5hYmxlZCI6ZmFsc2UsInN0YXR1cyI6IkFDVElWRSJ9LCJhdXRoZW50aWNhdGlvblR5cGUiOiJzY29wZWRLZXkiLCJzY29wZWRLZXlLZXkiOiIyOWQ1ODVhOTllYjE0YjA4NjZhOCIsInNjb3BlZEtleVNlY3JldCI6IjQ1MzY2MTZmN2RkYWRkOTYwMGUyMWVlNzA4OWZhYmNlYjhmZjdkMmE1ZjQ1ZmExNGJiODVhMjdiOWRhY2YzNzAiLCJpYXQiOjE2NzA4NDAxMzh9.BsZaO3iJDoN5wKZfFgqyRtzRLwhnb_ZEcxX6042eBmA`
 
 export const uploadJSONToIPFS = async (JSONBody) => {
   const url = `https://api.pinata.cloud/pinning/pinJSONToIPFS`
@@ -73,9 +73,9 @@ export const uploadFileToIPFS = async (file /* nft_name, description */) => {
       maxBodyLength: "Infinity",
       headers: {
         "Content-Type": `multipart/form-data; boundary=${data._boundary}`,
-        pinata_api_key: "84b2bab1983f865c644e",
+        pinata_api_key: "29d585a99eb14b0866a8",
         pinata_secret_api_key:
-          "3820f7a55bd1818c83a305f72bd6a248f3756aad2e2902b0c13dad3a8cd94c86",
+          "4536616f7ddadd9600e21ee7089fabceb8ff7d2a5f45fa14bb85a27b9dacf370",
         Authorization: JWT,
       },
     })
