@@ -10,7 +10,7 @@ dbConnect()
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<any>
+  res: NextApiResponse
 ) {
 
     const collectionName = req.body.collectionName
