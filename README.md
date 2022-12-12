@@ -1,8 +1,8 @@
 ![AiArtNFT Logo](./doc/img/logo.png) 
 
-## Automate your ML, get your results as NFT
+## Generate artwork through AI, secure it as NFT
 
-Welcome to the home page of the AutoML.NFT dapp.
+Welcome to the home page of the AiArtNFT dapp.
 
 <hline>
 </hline>
@@ -28,7 +28,7 @@ The app was designed, developed, and implemented during the period of [XRPL Hack
 
 ![NFT Minting](./doc/img/ScreenB.png)
 
-## AutoML.NFT Team
+## AiArtNFT Team
 
 - [Tunahan Danis](https://github.com/tunahandanis) (Frontend development, Backend development, Web 3.0)
 
