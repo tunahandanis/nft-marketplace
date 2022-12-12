@@ -117,9 +117,9 @@ const MyNFT: React.FC<MyNFTType> = ({
       icon: <SmileOutlined style={{ color: "#86dc3d" }} />,
     })
 
-    if (nft.imagUrl && makeSellOffer && selectedCollection) {
+    if (nft.imageUrl && makeSellOffer && selectedCollection) {
       makeSellOffer(selectedCollection, tokenId, offer, nftName, nft.imageUrl)
-    } else if (!nft.imagUrl && makeSellOffer && selectedCollection) {
+    } else if (!nft.imageUrl && makeSellOffer && selectedCollection) {
       makeSellOffer(selectedCollection, tokenId, offer, nftName, imageUrl)
     }
     client.disconnect()
