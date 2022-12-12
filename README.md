@@ -37,7 +37,7 @@ _Istanbul, Turkey_
 
 - [Brian Lemba](https://github.com/Yakumwamba) (AI Generation, Web3/IPFS, Blockchain/XRP Integration, Backend development)
 
-_Ankara, Turkey_
+_Johannesburg, South Africa_
 
 - [Gurdal Ertek](https://github.com/gurdalertek) (Product design, Content curation, Documentation, Project management)
 
@@ -45,10 +45,4 @@ _Al Ain, United Arab Emirates_
 
 <!--- Member of [BlockBlockData](https://blockblockdata.com) Team; Associate Professor of Business Analytics, [UAE University](https://cbe.uaeu.ac.ae/en/departments/analytics/) --->
 
-
-## Start Here:
-
-- [**AutoML.NFT Dapp**](https://lucid-mayer-4a70a5.netlify.app/) is running live on the cloud.
-- [**Sample "restaurant" dataset**](https://www.dropbox.com/s/5q61bqr136m52sf/dataset.xlsx?dl=0) can be used to test the dapp. Under Role, role for "RestaurantID" should be "Id" and role for "Satisfaction" should be "Target".
-- [**Documentation**](./doc/Documentation.md) describes the project and the dapp.
-- [**YouTube Video**](https://youtu.be/CwoCla53aFI) is the demo video for the hackathon.
+![Project Team](./doc/img/Screen09.png)
