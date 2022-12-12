@@ -1,4 +1,4 @@
-const express = require("express")
+/* const express = require("express")
 const router = express.Router()
 const NFT = require("../../models/nftModel")
 
@@ -20,3 +20,4 @@ router.route("/getNfts").get((req, res) => {
 })
 
 module.exports = router
+ */
