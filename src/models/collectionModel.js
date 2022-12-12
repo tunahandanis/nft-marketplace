@@ -6,6 +6,5 @@ const collectionSchema = mongoose.Schema({
   nfts: [{ tokenId: String, price: String, nftName: String, imageUrl: String }],
 })
 
-const Collection = mongoose.model("Collection", collectionSchema)
-
-module.exports = Collection
+module.exports =
+  mongoose.models.Collection || mongoose.model("Collection", collectionSchema)
