@@ -12,7 +12,7 @@ Welcome to the home page of the AiArtNFT dapp.
 - [**AiArtNFT Dapp**](https://www.aiartnft.app/) is running live on the cloud.
 - [**Slide Deck**](https://heyzine.com/flip-book/f365cb1514.html) describes the project and the dapp.
 - [**YouTube Video**](https://youtu.be/guELHaItI8Q) is the demo video for the hackathon.
-- [**DevPost Page**](https://devpost.com/software/aiartnft-app) is the submission page, for the XRPL NFT hackathon in December 2022.
+- [**DevPost Page**](https://devpost.com/software/aiartnft-app) is the submission page for the XRPL NFT hackathon in December 2022.
 
 
 ## Executive Summary
