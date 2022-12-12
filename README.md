@@ -10,7 +10,7 @@ Welcome to the home page of the AiArtNFT dapp.
 ## Start Here:
 
 - [**AiArtNFT Dapp**](https://www.aiartnft.app/) is running live on the cloud.
-- [**Slide Deck**](https://heyzine.com/flip-book/f365cb1514.html describes the project and the dapp.
+- [**Slide Deck**](https://heyzine.com/flip-book/f365cb1514.html) describes the project and the dapp.
 - [**YouTube Video**](https://youtu.be/guELHaItI8Q) is the demo video for the hackathon.
 
 
