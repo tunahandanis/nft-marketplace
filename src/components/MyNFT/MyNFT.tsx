@@ -44,6 +44,7 @@ const MyNFT: React.FC<MyNFTType> = ({
   const [selectedCollection, setSelectedCollection] = useState<string>()
   const [isLoading, setIsLoading] = useState(false)
   const [nftWithPrice, setNftWithPrice] = useState()
+  const [imageUrl, setImageUrl] = useState("")
 
   // These will change after we get the my nfts page db connection
   /* const [imageUrl, setImageUrl] = useState(
@@ -53,11 +54,11 @@ const MyNFT: React.FC<MyNFTType> = ({
 
   const [accountState, accountDispatch] = useAccountContext()
 
-  /*  useEffect(() => {
+  useEffect(() => {
     if (nft) {
       setImageUrl(xrpl.convertHexToString(nft?.URI))
     } // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []) */
+  }, [])
 
   useEffect(() => {
     const nfts = collectionsForPrice
@@ -130,7 +131,10 @@ const MyNFT: React.FC<MyNFTType> = ({
   return (
     <Col span={6}>
       <article className={styles.nftsCard}>
-        <img src={nft.imageUrl} alt="nft collection image" />
+        <img
+          src={nft.imageUrl ? nft.imageUrl : imageUrl}
+          alt="nft collection image"
+        />
         <div
           className={`${styles.nftsCardTextContainer} ${
             isCreatingOffer &&
