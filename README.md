@@ -10,7 +10,7 @@ Welcome to the home page of the AutoML.NFT dapp.
 ## Start Here:
 
 - [**AiArtNFT Dapp**](https://www.aiartnft.app/) is running live on the cloud.
-- [**Slide Deck**](https://www.dropbox.com/s/qjk7ys4pk6622br/AiArtNFT_v04g.pdf?dl=0) describes the project and the dapp.
+- [**Slide Deck**](https://www.ertekprojects.com/ftp/other/AiArtNFT_v04g.pdf) describes the project and the dapp.
 - [**YouTube Video**](https://youtu.be/guELHaItI8Q) is the demo video for the hackathon.
 
 
