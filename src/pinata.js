@@ -141,8 +141,9 @@ export const uploadFromBuffer = async (buffer) => {
        
         headers: {
             Authorization: JWT,
-            pinata_api_key: "98b227205a75e86ced70",
-            pinata_secret_api_key:"4dbbf292047abcb8584c913873d8fbabed457b5d5d753144541f2b0c71687fae",
+            pinata_api_key: "84b2bab1983f865c644e",
+        pinata_secret_api_key:
+          "3820f7a55bd1818c83a305f72bd6a248f3756aad2e2902b0c13dad3a8cd94c86",
         }
       });
   
