@@ -331,7 +331,7 @@ const GenerateNFT: React.FC<GenerateNFTType> = ({ walletAddress }) => {
       tokenId: tokenId,
     }
 
-    axios.post("http://localhost:3001/createNft", newNft)
+    axios.post("/api/createNft", newNft)
   }
 
   return (

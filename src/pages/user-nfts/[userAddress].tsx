@@ -37,7 +37,7 @@ const UserNFTs = () => {
 
   const fetchCollections = async () => {
     if (accountState.account) {
-      const res = await fetch("http://localhost:3001/getCollections")
+      const res = await fetch("/api/getCollections")
       const json = await res.json()
 
       const ownerCollections = json.filter(
@@ -102,7 +102,7 @@ const UserNFTs = () => {
       ownerWalletAddress: accountState.account?.address,
     }
 
-    axios.post("http://localhost:3001/createCollection", newCollection)
+    axios.post("/api/createCollection", newCollection)
     setBool((prev) => !prev)
   }
 
@@ -136,7 +136,7 @@ const UserNFTs = () => {
 
   const fetchNfts = async () => {
     if (accountState.account) {
-      const res = await fetch("http://localhost:3001/getNfts")
+      const res = await fetch("/api/getNfts")
       const json = await res.json()
 
       const relevantNfts = json.filter((nft) =>

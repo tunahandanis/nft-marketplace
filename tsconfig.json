@@ -19,6 +19,6 @@
     "incremental": true,
     "isolatedModules": true
   },
-  "include": ["src", "marketplace-backend"],
+  "include": ["src", "utils"],
   "exclude": ["**/*.scss.d.ts"]
 }

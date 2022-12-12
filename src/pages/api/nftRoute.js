@@ -1,6 +1,6 @@
 const express = require("express")
 const router = express.Router()
-const NFT = require("../models/nftModel")
+const NFT = require("../../models/nftModel")
 
 router.route("/createNft").post((req, res) => {
   const nftName = req.body.nftName

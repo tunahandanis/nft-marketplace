@@ -19,7 +19,7 @@ const Collections = () => {
   }, [])
 
   const fetchCollections = async () => {
-    const res = await fetch("http://localhost:3001/getCollections")
+    const res = await fetch("/api/getCollections")
     const json = await res.json()
 
     setCollections(json)

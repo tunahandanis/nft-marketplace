@@ -1,6 +1,6 @@
 const express = require("express")
 const router = express.Router()
-const Collection = require("../models/collectionModel")
+const Collection = require("../../models/collectionModel")
 
 router.route("/createCollection").post((req, res) => {
   const collectionName = req.body.collectionName
@@ -52,10 +52,6 @@ router.route("/removeFromCollection").post((req, res) => {
       }
     }
   )
-})
-
-router.route("/getCollections").get((req, res) => {
-  Collection.find().then((foundCollections) => res.json(foundCollections))
 })
 
 module.exports = router

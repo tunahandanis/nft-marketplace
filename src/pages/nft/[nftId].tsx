@@ -49,7 +49,7 @@ const NFTDetail = () => {
   }, [])
 
   const fetchCollections = async () => {
-    const res = await fetch("http://localhost:3001/getCollections")
+    const res = await fetch("/api/getCollections")
     const json = await res.json()
 
     const collectionName = router.query.collectionName
@@ -77,7 +77,7 @@ const NFTDetail = () => {
       tokenId: nft?.tokenId,
     }
 
-    axios.post("http://localhost:3001/removeFromCollection", body)
+    axios.post("/api/removeFromCollection", body)
   }
 
   const acceptSellOffer = async () => {
