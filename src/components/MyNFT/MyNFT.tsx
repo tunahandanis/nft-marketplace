@@ -55,10 +55,15 @@ const MyNFT: React.FC<MyNFTType> = ({
   const [accountState, accountDispatch] = useAccountContext()
 
   useEffect(() => {
+    fetchFromIpfs()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  const fetchFromIpfs = () => {
     if (nft) {
       setImageUrl(xrpl.convertHexToString(nft?.URI))
-    } // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+    }
+  }
 
   useEffect(() => {
     const nfts = collectionsForPrice
@@ -130,11 +135,15 @@ const MyNFT: React.FC<MyNFTType> = ({
   const hideModal = () => setIsModalVisible(false)
   const showModal = () => setIsModalVisible(true)
 
+  console.log(nft)
+
+  if (!nft?.imageUrl && !imageUrl) fetchFromIpfs()
+
   return (
     <Col span={6}>
       <article className={styles.nftsCard}>
         <img
-          src={nft.imageUrl ? nft.imageUrl : imageUrl}
+          src={nft?.imageUrl ? nft.imageUrl : imageUrl}
           alt="nft collection image"
         />
         <div
