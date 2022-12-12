@@ -50,7 +50,7 @@ const Collections = () => {
                     >
                       <article className={styles.collectionsCard}>
                         <img
-                          src="/assets/question-mark.png"
+                          src={collection.nfts[0].imageUrl}
                           alt="nft collection image"
                         />
                         <div className={styles.collectionsCardTextContainer}>

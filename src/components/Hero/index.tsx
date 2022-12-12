@@ -8,7 +8,7 @@ const Hero = () => {
     <div className={styles.hero}>
       <div className={styles.heroText}>
         <Title className={styles.heroTitle}>
-          Generate, collect and sell exceptional NFTs
+          Mint, collect and sell AI-Generated NFTs
         </Title>
         <p className={styles.heroPara}>
           AiArtNFT is a pioneering Web 3 app where you can generate NFT art with
