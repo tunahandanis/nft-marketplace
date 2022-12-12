@@ -260,11 +260,11 @@ const GenerateNFT: React.FC<GenerateNFTType> = ({ walletAddress }) => {
     //  console.log("Pinata Response ", pinataResponse)
 
     // Mint the NFT and display the IPFS url
-
+    console.log("Minting image with URI", URI)
     const mintTransactionBlob = {
       TransactionType: "NFTokenMint",
       Account: accountState.wallet?.classicAddress,
-      URI: xrpl.convertStringToHex(`https://gateway.pinata.cloud/ipfs/${URI}`),
+      URI: xrpl.convertStringToHex(URI),
       Flags: 8,
       TransferFee: 0,
       NFTokenTaxon: 0, //Required, but if you have no use for it, set to zero.
@@ -310,9 +310,9 @@ const GenerateNFT: React.FC<GenerateNFTType> = ({ walletAddress }) => {
     const metaDataHex = tx.result.URI
     const stringMetaDataURI = xrpl.convertHexToString(metaDataHex)
     console.log(stringMetaDataURI)
-    const metaDataResponse = await axios.get("api/get_nft_metadata/")
+    //const metaDataResponse = await axios.get("api/get_nft_metadata/")
 
-    console.log(metaDataResponse)
+    //console.log(metaDataResponse)
 
     const nftsResponse = await getLastMintedNft(accountState.account!.address)
 
@@ -329,6 +329,7 @@ const GenerateNFT: React.FC<GenerateNFTType> = ({ walletAddress }) => {
     const newNft = {
       nftName: nameInput,
       tokenId: tokenId,
+      
     }
 
     axios.post("/api/createNft", newNft)

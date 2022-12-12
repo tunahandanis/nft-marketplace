@@ -124,9 +124,13 @@ export const uploadFromBuffer = async (buffer) => {
         }
       });
   
-   
+
        console.log("this was the response " ,res.data);
-      return res.data
+       return {
+        success: true,
+        pinataURL:
+          "https://gateway.pinata.cloud/ipfs/" + res.data.IpfsHash,
+      }
     } catch (error) {
       console.log(error);
     }
