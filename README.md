@@ -1,34 +1,54 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+![AiArtNFT Logo](./doc/img/logo.png) 
 
-## Getting Started
+## Automate your ML, get your results as NFT
 
-First, run the development server:
+Welcome to the home page of the AutoML.NFT dapp.
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+<hline>
+</hline>
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Start Here:
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+- [**AiArtNFT Dapp**](https://www.aiartnft.app/) is running live on the cloud.
+- [**Slide Deck**](https://www.dropbox.com/s/09abbzh2nint3pf/AiArtNFT%20-%20v04g.pdf?dl=0) describes the project and the dapp.
+- [**YouTube Video**](https://youtu.be/guELHaItI8Q) is the demo video for the hackathon.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## Executive Summary
+  
+**[AiArtNFT.app](https://AiArtNFT.app)** is 
+- an **NFT marketplace with built-in Generative AI system,** that 
+- **generates art from text**, using **OpenAI's DALL-E API**, and 
+- enables the selection of the generated image and immediate placement of that image into an NFT marketplace. 
 
-## Learn More
+The app was designed, developed, and implemented during the period of [XRPL Hackathon: NFT Launch Party](https://xrplnft.devpost.com/) by the project team. 
 
-To learn more about Next.js, take a look at the following resources:
+## AiArtNFT Screenshots
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+![NFT Collection](./doc/img/ScreenA.png)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+![NFT Minting](./doc/img/ScreenB.png)
 
-## Deploy on Vercel
+## AutoML.NFT Team
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- [Tunahan Danis](https://github.com/tunahandanis) (Frontend development, Backend development, Web 3.0)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+_Istanbul, Turkey_
+
+- [Brian Lemba](https://github.com/Yakumwamba) (AI Generation, Web3/IPFS, Blockchain/XRP Integration, Backend development)
+
+_Ankara, Turkey_
+
+- [Gurdal Ertek](https://github.com/gurdalertek) (Product design, Content curation, Documentation, Project management)
+
+_Al Ain, United Arab Emirates_
+
+<!--- Member of [BlockBlockData](https://blockblockdata.com) Team; Associate Professor of Business Analytics, [UAE University](https://cbe.uaeu.ac.ae/en/departments/analytics/) --->
+
+
+## Start Here:
+
+- [**AutoML.NFT Dapp**](https://lucid-mayer-4a70a5.netlify.app/) is running live on the cloud.
+- [**Sample "restaurant" dataset**](https://www.dropbox.com/s/5q61bqr136m52sf/dataset.xlsx?dl=0) can be used to test the dapp. Under Role, role for "RestaurantID" should be "Id" and role for "Satisfaction" should be "Target".
+- [**Documentation**](./doc/Documentation.md) describes the project and the dapp.
+- [**YouTube Video**](https://youtu.be/CwoCla53aFI) is the demo video for the hackathon.
