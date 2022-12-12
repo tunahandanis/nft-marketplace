@@ -1,4 +1,5 @@
 // @ts-nocheck
+
 import type { NextApiRequest, NextApiResponse } from "next"
 import { /* uploadFileToIPFS, */ uploadFromBuffer } from "pinata"
 //import { createClient } from '@supabase/supabase-js'
@@ -29,7 +30,7 @@ export default async function handler(
           "Content-Type": "application/json",
           // use env variable for this
 
-          Authorization: "Bearer " + process.env.AI_API_KEY,
+          Authorization: "Bearer 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" // + process.env.AI_API_KEY,
         },
       }
     )
@@ -37,6 +38,7 @@ export default async function handler(
     const image = await imageResp.json()
 
     console.log(image)
+    console.log("Generated the NFT Image")
 
     const imageData = await fetch(image.data[0].url, (imageResponse) => {
       let data = ""
@@ -50,6 +52,7 @@ export default async function handler(
         console.log("response was ====>" + data)
       })
       console.log(data)
+
     })
 
     const buffer = await (await imageData.blob()).arrayBuffer()
@@ -61,9 +64,13 @@ export default async function handler(
     //   await fetch('https://gateway.pinata.cloud/ipfs/' + pinataResponse.IpfsHash, (imageResponse) => {
 
     //   console.log("This image was retrieved" +  imageResponse);
-    // });
-
-    res.status(200).json({ imageURL: image.data[0].url })
+    //  });
+    if(pinataResponse?.pinataURL){
+      res.status(200).json({ imageURL: image.data[0].url, imageURI: pinataResponse?.pinataURL })
+    }else{
+      console.log("Response was null ")
+    }
+    
   } else {
     // Handle any other HTTP method
     res.status(200).json({ imageURL: "Get request detected" })
