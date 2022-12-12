@@ -10,16 +10,15 @@ Welcome to the home page of the AutoML.NFT dapp.
 ## Start Here:
 
 - [**AiArtNFT Dapp**](https://www.aiartnft.app/) is running live on the cloud.
-- [**Slide Deck**](https://www.dropbox.com/s/09abbzh2nint3pf/AiArtNFT%20-%20v04g.pdf?dl=0) describes the project and the dapp.
+- [**Slide Deck**](https://www.dropbox.com/s/qjk7ys4pk6622br/AiArtNFT_v04g.pdf?dl=0) describes the project and the dapp.
 - [**YouTube Video**](https://youtu.be/guELHaItI8Q) is the demo video for the hackathon.
 
 
 ## Executive Summary
   
-**[AiArtNFT.app](https://AiArtNFT.app)** is 
-- an **NFT marketplace with built-in Generative AI system,** that 
-- **generates art from text**, using **OpenAI's DALL-E API**, and 
-- enables the selection of the generated image and immediate placement of that image into an NFT marketplace. 
+**[AiArtNFT.app](https://AiArtNFT.app)** is an **NFT marketplace with built-in Generative AI system,** that **generates art from text**, using **OpenAI's DALL-E API**, and enables the selection of the generated image and immediate placement of that image into an NFT marketplace. 
+
+**Novelty** is that, while  it is possible to find many text-to-image generation web services  and many NFT marketplaces, to the best of our knowledge, there are only two Web 3 dApps, as hackathon projects that **integrate AI art generation with NFT marketplace.**
 
 The app was designed, developed, and implemented during the period of [XRPL Hackathon: NFT Launch Party](https://xrplnft.devpost.com/) by the project team. 
 
