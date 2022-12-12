@@ -50,7 +50,7 @@ const Collections = () => {
                     >
                       <article className={styles.collectionsCard}>
                         <img
-                          src="https://www.wallpaperflare.com/static/266/348/28/digital-art-pattern-vertical-portrait-display-wallpaper-preview.jpg"
+                          src="/assets/question-mark.png"
                           alt="nft collection image"
                         />
                         <div className={styles.collectionsCardTextContainer}>

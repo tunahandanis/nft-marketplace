@@ -156,10 +156,7 @@ const NFTDetail = () => {
         <div className={styles.nftPrice}>
           <span>Price: </span>
 
-          <img
-            src="https://changenow.io/images/cached/xrp.png"
-            alt="nft price in xrp"
-          />
+          <img src="/assets/xrp-logo.png" alt="nft price in xrp" />
           <span className={styles.nftPriceValue}>{nft?.price}</span>
         </div>
         <Button

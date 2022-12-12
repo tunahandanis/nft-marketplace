@@ -22,10 +22,7 @@ const NFTCard: React.FC<CardType> = ({ nft }) => {
         <div className={styles.collectionCardInfoBottom}>
           <p className={styles.collectionCardPrice}>Price:</p>
           <div className={styles.collectionCardPriceValue}>
-            <img
-              src="https://changenow.io/images/cached/xrp.png"
-              alt="xrp logo"
-            />{" "}
+            <img src="/assets/xrp-logo.png" alt="xrp logo" />
             <span>{nft.price}</span>
           </div>
         </div>

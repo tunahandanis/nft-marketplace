@@ -88,7 +88,7 @@ async function connectWallet(
         description: "Save this private seed value to recover later:",
         btn,
         placement: "bottomRight",
-        duration: 0,
+        duration: 8,
         icon: <CheckOutlined style={{ color: "#108ee9" }} />,
       })
     }

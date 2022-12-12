@@ -8,11 +8,11 @@ const Hero = () => {
     <div className={styles.hero}>
       <div className={styles.heroText}>
         <Title className={styles.heroTitle}>
-          Generate, collect and sell extraordinary NFTs
+          Generate, collect and sell exceptional NFTs
         </Title>
         <p className={styles.heroPara}>
-          AiArtNFT is the first-of-a-kind Web 3 app where you can generate NFT
-          art with AI and sell them immediately
+          AiArtNFT is a pioneering Web 3 app where you can generate NFT art with
+          AI and trade them immediately
         </p>
         <div className={styles.heroButtonContainer}>
           <Link href="/collections">
