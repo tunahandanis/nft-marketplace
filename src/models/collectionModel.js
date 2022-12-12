@@ -8,3 +8,4 @@ const collectionSchema = mongoose.Schema({
 
 module.exports =
   mongoose.models.Collection || mongoose.model("Collection", collectionSchema)
+  
