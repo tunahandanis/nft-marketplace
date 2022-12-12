@@ -1,7 +1,7 @@
 // @ts-nocheck
 import type { NextApiRequest, NextApiResponse } from "next"
 // import { getNFTMetadata, uploadFileToIPFS, uploadFromBuffer } from "pinata";
-import { createClient } from "@supabase/supabase-js"
+
 import dbConnect from "../../../utils/dbConnect"
 //const Collection = require("../../models/collectionModel")
 const NFT = require("../../models/nftModel")
@@ -16,7 +16,7 @@ export default async function handler(
   res: NextApiResponse<NFTMetadata>
 ) {
   //const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY)
-  const nfts = await NFT.find().then((foundNfts) => res.json(foundNfts))
+   await NFT.find().then((foundNfts) => res.json(foundNfts))
 
 //   res.send({nfts: nfts })
   }
