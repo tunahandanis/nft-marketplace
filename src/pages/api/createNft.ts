@@ -18,19 +18,26 @@ export default async function handler(
   //const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY)
   const nftName = req.body.nftName
   const tokenId = req.body.tokenId
-  const URI = req.body.URI
+  // const URI = req.body.URI
+  const imageUrl = req.body.imageUrl
 
   const newNft = new NFT({
     nftName,
     tokenId,
-    URI,
+    imageUrl,
+    // URI,
   })
 
   newNft.save()
   res.send(200)
 
-//   res.send({nfts: nfts })
-  }
+  //   res.send({nfts: nfts })
+}
 
-
-
+export const config = {
+  api: {
+    bodyParser: {
+      sizeLimit: "5mb", // Set desired value here
+    },
+  },
+}

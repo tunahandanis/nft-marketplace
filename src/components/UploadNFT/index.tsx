@@ -150,6 +150,7 @@ const UploadNFT: React.FC<UploadNFTType> = ({ walletAddress }) => {
     const newNft = {
       nftName: nameInput,
       tokenId: tokenId,
+      imageUrl: imageUrl,
     }
 
     axios.post("/api/createNft", newNft)

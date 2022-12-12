@@ -32,9 +32,8 @@ const UserNFTs = () => {
     if (accountState.account) {
       fetchCollections()
       fetchNfts()
-     
     }
- 
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accountState, bool])
 
@@ -130,8 +129,6 @@ const UserNFTs = () => {
 
   // const cancelSellOffer = (nftId: string) => {}
 
-
-
   const fetchNfts = async () => {
     if (accountState.account) {
       const res = await fetch("/api/getNfts")
@@ -149,6 +146,9 @@ const UserNFTs = () => {
           nftName: relevantNfts.filter(
             (relevantNft) => relevantNft.tokenId === nft.NFTokenID
           )[0]?.nftName,
+          imageUrl: relevantNfts.filter(
+            (relevantNft) => relevantNft.tokenId === nft.NFTokenID
+          )[0]?.imageUrl,
         }
       })
 
